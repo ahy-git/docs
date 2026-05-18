@@ -1,0 +1,81 @@
+/*
+	Resumo dos testes:
+	1. Testa copia normal quando size e maior que a string src.
+	2. Testa truncamento quando size limita a copia.
+	3. Testa size=1, onde so cabe o terminador nulo.
+	4. Testa size=0, onde dst nao deve ser alterado.
+	5. Verifica o retorno: sempre deve ser o tamanho de src.
+	6. Usa resultado esperado manual, pois strlcpy nao existe na glibc.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+
+static void	test_copia_normal(void)
+{
+	char	buf_ft[20];
+	size_t	r_ft;
+
+	r_ft = ft_strlcpy(buf_ft, "Hi", 20);
+	printf("Test: ft_strlcpy(dst, \"Hi\", 20) | copia normal\n");
+	printf("      size maior que src: copia completa, retorna len(src)\n");
+	printf("      entrada : src=\"Hi\", size=20\n");
+	printf("      esperado: buf=\"Hi\" retorno=2\n");
+	printf("FT  : buf=\"%s\" retorno=%zu\n", buf_ft, r_ft);
+	printf("ORIG: buf=\"Hi\" retorno=2\n");
+	printf("\n");
+}
+
+static void	test_truncamento(void)
+{
+	char	buf_ft[20];
+	size_t	r_ft;
+
+	r_ft = ft_strlcpy(buf_ft, "Hello World", 5);
+	printf("Test: ft_strlcpy(dst, \"Hello World\", 5) | truncamento\n");
+	printf("      size=5: copia 4 chars + \\0, retorna len(src)=11\n");
+	printf("      entrada : src=\"Hello World\", size=5\n");
+	printf("      esperado: buf=\"Hell\" retorno=11\n");
+	printf("FT  : buf=\"%s\" retorno=%zu\n", buf_ft, r_ft);
+	printf("ORIG: buf=\"Hell\" retorno=11\n");
+	printf("\n");
+}
+
+static void	test_size_um(void)
+{
+	char	buf_ft[20];
+	size_t	r_ft;
+
+	r_ft = ft_strlcpy(buf_ft, "abc", 1);
+	printf("Test: ft_strlcpy(dst, \"abc\", 1) | size=1\n");
+	printf("      size=1: so o \\0 cabe, buf vira string vazia\n");
+	printf("      entrada : src=\"abc\", size=1\n");
+	printf("      esperado: buf=\"\" retorno=3\n");
+	printf("FT  : buf=\"%s\" retorno=%zu\n", buf_ft, r_ft);
+	printf("ORIG: buf=\"\" retorno=3\n");
+	printf("\n");
+}
+
+static void	test_size_zero(void)
+{
+	char	buf_ft[20];
+	size_t	r_ft;
+
+	ft_strlcpy(buf_ft, "intacto", 20);
+	r_ft = ft_strlcpy(buf_ft, "abc", 0);
+	printf("Test: ft_strlcpy(dst, \"abc\", 0) | size=0\n");
+	printf("      size=0: nao toca dst, retorna len(src)=3\n");
+	printf("      entrada : dst=\"intacto\", src=\"abc\", size=0\n");
+	printf("      esperado: buf=\"intacto\" retorno=3\n");
+	printf("FT  : buf=\"%s\" retorno=%zu\n", buf_ft, r_ft);
+	printf("ORIG: buf=\"intacto\" retorno=3\n");
+}
+
+int	main(void)
+{
+	test_copia_normal();
+	test_truncamento();
+	test_size_um();
+	test_size_zero();
+	return (0);
+}

@@ -1,0 +1,116 @@
+/*
+	Resumo dos testes:
+	1. Testa split de frase normal separada por espaco.
+	2. Testa separadores consecutivos no inicio, meio e fim.
+	3. Testa separadores no inicio e no fim da string.
+	4. Testa string vazia, que deve gerar array vazio.
+	5. Testa string formada apenas por separadores.
+	6. Testa string sem delimitador, que deve retornar uma unica palavra.
+	7. Verifica se o array termina corretamente em NULL.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	free_split(char **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+static void	print_words(char *label, char **arr)
+{
+	int	i;
+
+	printf("%s", label);
+	if (!arr || !arr[0])
+	{
+		printf("(vazio)\n");
+		return ;
+	}
+	i = 0;
+	while (arr[i])
+	{
+		printf("%s", arr[i]);
+		if (arr[i + 1])
+			printf("|");
+		i++;
+	}
+	printf("\n");
+}
+
+static void	test_casos_normais(void)
+{
+	char	**r;
+
+	r = ft_split("Hello World 42", ' ');
+	printf("Test: ft_split(\"Hello World 42\", ' ') | frase normal\n");
+	printf("      entrada : s=\"Hello World 42\", c=' '\n");
+	printf("      esperado: Hello|World|42\n");
+	print_words("FT  : ", r);
+	printf("ORIG: Hello|World|42\n");
+	free_split(r);
+	printf("\n");
+	r = ft_split(",,abc,,def,,", ',');
+	printf("Test: ft_split(\",,abc,,def,,\", ',') | seps consecutivos\n");
+	printf("      entrada : s=\",,abc,,def,,\", c=','\n");
+	printf("      esperado: abc|def\n");
+	print_words("FT  : ", r);
+	printf("ORIG: abc|def\n");
+	free_split(r);
+	printf("\n");
+	r = ft_split("  abc def  ", ' ');
+	printf("Test: ft_split(\"  abc def  \", ' ') | sep inicio e fim\n");
+	printf("      entrada : s=\"  abc def  \", c=' '\n");
+	printf("      esperado: abc|def\n");
+	print_words("FT  : ", r);
+	printf("ORIG: abc|def\n");
+	free_split(r);
+}
+
+static void	test_casos_edge(void)
+{
+	char	**r;
+
+	r = ft_split("", ' ');
+	printf("Test: ft_split(\"\", ' ') | string vazia\n");
+	printf("      entrada : s=\"\", c=' '\n");
+	printf("      esperado: (vazio)\n");
+	print_words("FT  : ", r);
+	printf("ORIG: (vazio)\n");
+	free_split(r);
+	printf("\n");
+	r = ft_split("aaaa", 'a');
+	printf("Test: ft_split(\"aaaa\", 'a') | so separadores\n");
+	printf("      entrada : s=\"aaaa\", c='a'\n");
+	printf("      esperado: (vazio)\n");
+	print_words("FT  : ", r);
+	printf("ORIG: (vazio)\n");
+	free_split(r);
+	printf("\n");
+	r = ft_split("hello", '|');
+	printf("Test: ft_split(\"hello\", '|') | sem delimitador\n");
+	printf("      entrada : s=\"hello\", c='|'\n");
+	printf("      esperado: hello\n");
+	print_words("FT  : ", r);
+	printf("ORIG: hello\n");
+	free_split(r);
+}
+
+int	main(void)
+{
+	test_casos_normais();
+	printf("\n");
+	test_casos_edge();
+	return (0);
+}

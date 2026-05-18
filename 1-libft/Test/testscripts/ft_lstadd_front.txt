@@ -1,0 +1,88 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_lstadd_front em lista vazia adicionando C, B e A.
+	2. Verifica se cada novo no vira o primeiro da lista.
+	3. Confirma que a ordem final esperada e A B C.
+	4. Testa mistura de ft_lstadd_front com ft_lstadd_back.
+	5. Verifica protecao com lst=NULL para nao crashar.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	free_list(t_list *lst)
+{
+	t_list	*tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst);
+		lst = tmp;
+	}
+}
+
+static void	print_contents(char *label, t_list *lst)
+{
+	printf("%s", label);
+	while (lst)
+	{
+		printf(" %s", (char *)lst->content);
+		lst = lst->next;
+	}
+	printf("\n");
+}
+
+static void	test_insercao(void)
+{
+	t_list	*lst;
+
+	lst = NULL;
+	ft_lstadd_front(&lst, ft_lstnew("C"));
+	ft_lstadd_front(&lst, ft_lstnew("B"));
+	ft_lstadd_front(&lst, ft_lstnew("A"));
+	printf("Test: ft_lstadd_front x3 em lista vazia\n");
+	printf("      cada no inserido vira o novo primeiro da lista\n");
+	printf("      entrada : NULL -> front(C) -> front(B) -> front(A)\n");
+	printf("      esperado: A B C\n");
+	print_contents("FT  :", lst);
+	printf("ORIG: A B C\n");
+	free_list(lst);
+	printf("\n");
+}
+
+static void	test_mix_e_null(void)
+{
+	t_list	*lst;
+	t_list	*tmp_node;
+
+	lst = NULL;
+	ft_lstadd_front(&lst, ft_lstnew("B"));
+	ft_lstadd_back(&lst, ft_lstnew("C"));
+	ft_lstadd_front(&lst, ft_lstnew("A"));
+	printf("Test: front(B) back(C) front(A) | mix de insercoes\n");
+	printf("      add_front no inicio, add_back no final\n");
+	printf("      entrada : front(B), back(C), front(A)\n");
+	printf("      esperado: A B C\n");
+	print_contents("FT  :", lst);
+	printf("ORIG: A B C\n");
+	free_list(lst);
+	printf("\n");
+	tmp_node = ft_lstnew("X");
+	ft_lstadd_front(NULL, tmp_node);
+	printf("Test: ft_lstadd_front(NULL, node) | lst=NULL\n");
+	printf("      deve proteger contra lst nulo sem crashar\n");
+	printf("      entrada : lst=NULL, node valido\n");
+	printf("      esperado: sem crash\n");
+	printf("FT  : sem crash\n");
+	printf("ORIG: sem crash\n");
+	free(tmp_node);
+}
+
+int	main(void)
+{
+	test_insercao();
+	test_mix_e_null();
+	return (0);
+}

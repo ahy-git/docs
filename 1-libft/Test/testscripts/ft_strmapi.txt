@@ -1,0 +1,80 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_strmapi aplicando to_upper em uma string normal.
+	2. Testa string vazia, que deve retornar uma nova string vazia.
+	3. Testa preservacao de espacos, numeros e pontuacao.
+	4. Testa funcao que usa o indice para transformar os caracteres.
+	5. Testa troca seletiva de vogais por asterisco.
+	6. Testa caso sem vogais, onde a string deve permanecer igual.
+	7. Testa protecao com s=NULL para retornar NULL sem crashar.
+	8. Testa protecao com f=NULL para retornar NULL sem crashar.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static char	to_upper(unsigned int i, char c)
+{
+	(void)i;
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	return (c);
+}
+
+static char	add_index(unsigned int i, char c)
+{
+	return (c + i);
+}
+
+static char	mark_vowels(unsigned int i, char c)
+{
+	(void)i;
+	if (c == 'a' || c == 'e' || c == 'i')
+		return ('*');
+	if (c == 'o' || c == 'u')
+		return ('*');
+	return (c);
+}
+
+static void	print_value(char *label, char *value)
+{
+	if (!value)
+		printf("%s: (null)\n", label);
+	else
+		printf("%s: \"%s\"\n", label, value);
+}
+
+static void	test_case(char *title, char *input,
+	char *expected, char *result)
+{
+	printf("Test: ft_strmapi(%s, f) | %s\n", input, title);
+	printf("      aplica f em cada char criando nova string\n");
+	printf("      entrada : %s\n", input);
+	print_value("      esperado", expected);
+	print_value("FT  ", result);
+	print_value("ORIG", expected);
+	printf("\n");
+	free(result);
+}
+
+int	main(void)
+{
+	test_case("string normal com to_upper",
+		"\"hello\"", "HELLO", ft_strmapi("hello", to_upper));
+	test_case("string vazia com to_upper",
+		"\"\"", "", ft_strmapi("", to_upper));
+	test_case("preserva caracteres nao alfabeticos",
+		"\"Hi 42!\"", "HI 42!", ft_strmapi("Hi 42!", to_upper));
+	test_case("usa indice em cada caractere",
+		"\"AAAA\"", "ABCD", ft_strmapi("AAAA", add_index));
+	test_case("troca vogais por asterisco",
+		"\"banana\"", "b*n*n*", ft_strmapi("banana", mark_vowels));
+	test_case("sem vogais para trocar",
+		"\"xyz\"", "xyz", ft_strmapi("xyz", mark_vowels));
+	test_case("ponteiro NULL como string",
+		"NULL", NULL, ft_strmapi(NULL, to_upper));
+	test_case("ponteiro NULL como funcao",
+		"\"abc\"", NULL, ft_strmapi("abc", NULL));
+	return (0);
+}

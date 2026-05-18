@@ -1,0 +1,84 @@
+/*
+	Resumo dos testes:
+	1. Testa concatenacao normal quando tudo cabe no buffer.
+	2. Testa truncamento quando size limita a copia de src.
+	3. Testa size menor que len(dst), onde dst deve ficar intocado.
+	4. Testa size=0, onde nada deve ser escrito em dst.
+	5. Verifica o retorno: tamanho que a string teria se coubesse.
+	6. Usa resultado esperado manual, pois strlcat nao existe na glibc.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+
+static void	test_concat_normal(void)
+{
+	char	buf_ft[20];
+	size_t	r_ft;
+
+	ft_strlcpy(buf_ft, "Hi ", 20);
+	r_ft = ft_strlcat(buf_ft, "World", 20);
+	printf("Test: ft_strlcat(\"Hi \", \"World\", 20) | concat normal\n");
+	printf("      retorna len(dst)+len(src), buf contem resultado\n");
+	printf("      entrada : dst=\"Hi \", src=\"World\", size=20\n");
+	printf("      esperado: buf=\"Hi World\" retorno=8\n");
+	printf("FT  : buf=\"%s\" retorno=%zu\n", buf_ft, r_ft);
+	printf("ORIG: buf=\"Hi World\" retorno=8\n");
+	printf("\n");
+}
+
+static void	test_trunca(void)
+{
+	char	buf_ft[10];
+	size_t	r_ft;
+
+	ft_strlcpy(buf_ft, "Hi ", 10);
+	r_ft = ft_strlcat(buf_ft, "World", 6);
+	printf("Test: ft_strlcat(\"Hi \", \"World\", 6) | truncamento\n");
+	printf("      size=6: cabe \"Hi Wo\" mais \\0. retorno=len total\n");
+	printf("      entrada : dst=\"Hi \", src=\"World\", size=6\n");
+	printf("      esperado: buf=\"Hi Wo\" retorno=8\n");
+	printf("FT  : buf=\"%s\" retorno=%zu\n", buf_ft, r_ft);
+	printf("ORIG: buf=\"Hi Wo\" retorno=8\n");
+	printf("\n");
+}
+
+static void	test_size_menor_dst(void)
+{
+	char	buf_ft[10];
+	size_t	r_ft;
+
+	ft_strlcpy(buf_ft, "abc", 10);
+	r_ft = ft_strlcat(buf_ft, "X", 2);
+	printf("Test: ft_strlcat(\"abc\", \"X\", 2) | size menor que dst\n");
+	printf("      size < len(dst): dst intocado, retorno=size+len(src)\n");
+	printf("      entrada : dst=\"abc\", src=\"X\", size=2\n");
+	printf("      esperado: buf=\"abc\" retorno=3\n");
+	printf("FT  : buf=\"%s\" retorno=%zu\n", buf_ft, r_ft);
+	printf("ORIG: buf=\"abc\" retorno=3\n");
+	printf("\n");
+}
+
+static void	test_size_zero(void)
+{
+	char	buf_ft[10];
+	size_t	r_ft;
+
+	ft_strlcpy(buf_ft, "abc", 10);
+	r_ft = ft_strlcat(buf_ft, "XYZ", 0);
+	printf("Test: ft_strlcat(\"abc\", \"XYZ\", 0) | size=0\n");
+	printf("      size=0: dst intocado, retorno=len(src)=3\n");
+	printf("      entrada : dst=\"abc\", src=\"XYZ\", size=0\n");
+	printf("      esperado: buf=\"abc\" retorno=3\n");
+	printf("FT  : buf=\"%s\" retorno=%zu\n", buf_ft, r_ft);
+	printf("ORIG: buf=\"abc\" retorno=3\n");
+}
+
+int	main(void)
+{
+	test_concat_normal();
+	test_trunca();
+	test_size_menor_dst();
+	test_size_zero();
+	return (0);
+}

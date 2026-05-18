@@ -1,0 +1,108 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_lstmap em uma lista com 3 nos.
+	2. Verifica se f e aplicada em cada content da lista original.
+	3. Confirma que a nova lista recebe os contents transformados.
+	4. Verifica se a lista original continua intacta.
+	5. Compara o tamanho da lista original e da lista nova.
+	6. Testa protecao com lst=NULL para retornar NULL sem crashar.
+	7. Testa protecao com f=NULL para retornar NULL sem crashar.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	*uppercase_dup(void *content)
+{
+	char	*src;
+	char	*new;
+	int		i;
+
+	src = (char *)content;
+	new = malloc(ft_strlen(src) + 1);
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (src[i])
+	{
+		if (src[i] >= 'a' && src[i] <= 'z')
+			new[i] = src[i] - 32;
+		else
+			new[i] = src[i];
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
+}
+
+static void	print_contents(char *label, t_list *lst)
+{
+	printf("%s", label);
+	while (lst)
+	{
+		printf(" %s", (char *)lst->content);
+		lst = lst->next;
+	}
+	printf("\n");
+}
+
+static void	test_map_strings(void)
+{
+	t_list	*orig;
+	t_list	*mapped;
+
+	orig = ft_lstnew(ft_strdup("hello"));
+	ft_lstadd_back(&orig, ft_lstnew(ft_strdup("world")));
+	ft_lstadd_back(&orig, ft_lstnew(ft_strdup("42")));
+	mapped = ft_lstmap(orig, uppercase_dup, free);
+	printf("Test: ft_lstmap | [hello]->[world]->[42]\n");
+	printf("      nova lista transformada, orig deve ficar intacta\n");
+	printf("      entrada : [hello]->[world]->[42], f=uppercase\n");
+	printf("      esperado: HELLO WORLD 42\n");
+	print_contents("FT  :", mapped);
+	printf("ORIG: HELLO WORLD 42\n");
+	printf("\n");
+	printf("Test: orig intacta | sizes iguais apos ft_lstmap\n");
+	printf("      ft_lstmap nao modifica a lista original\n");
+	printf("      esperado orig: hello world 42 | sizes: 3 3\n");
+	print_contents("FT  :", orig);
+	printf("ORIG: hello world 42\n");
+	printf("FT  : sizes orig=%d mapped=%d\n",
+		ft_lstsize(orig), ft_lstsize(mapped));
+	printf("ORIG: sizes orig=3 mapped=3\n");
+	ft_lstclear(&orig, free);
+	ft_lstclear(&mapped, free);
+	printf("\n");
+}
+
+static void	test_protecoes(void)
+{
+	t_list	*orig;
+	t_list	*result;
+
+	result = ft_lstmap(NULL, uppercase_dup, free);
+	printf("Test: ft_lstmap(NULL, f, del) | lst=NULL\n");
+	printf("      deve retornar NULL sem crashar\n");
+	printf("      entrada : lst=NULL, f valida, del valida\n");
+	printf("      esperado: NULL\n");
+	printf("FT  : %s\n", result ? "ptr" : "NULL");
+	printf("ORIG: NULL\n");
+	printf("\n");
+	orig = ft_lstnew(ft_strdup("teste"));
+	result = ft_lstmap(orig, NULL, free);
+	printf("Test: ft_lstmap(lst, NULL, del) | f=NULL\n");
+	printf("      deve retornar NULL sem crashar\n");
+	printf("      entrada : lst valida, f=NULL, del valida\n");
+	printf("      esperado: NULL\n");
+	printf("FT  : %s\n", result ? "ptr" : "NULL");
+	printf("ORIG: NULL\n");
+	ft_lstclear(&orig, free);
+}
+
+int	main(void)
+{
+	test_map_strings();
+	test_protecoes();
+	return (0);
+}

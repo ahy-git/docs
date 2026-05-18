@@ -1,0 +1,85 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_lstlast com lista NULL.
+	2. Verifica se lista vazia retorna NULL sem crashar.
+	3. Testa lista com apenas 1 no.
+	4. Confirma que o unico no tambem e o ultimo.
+	5. Testa lista com 3 nos.
+	6. Verifica se retorna o ultimo no e se next dele e NULL.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	free_list(t_list *lst)
+{
+	t_list	*tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst);
+		lst = tmp;
+	}
+}
+
+static void	test_null(void)
+{
+	t_list	*result;
+
+	printf("Test: ft_lstlast(NULL) | lista vazia\n");
+	printf("      lista nula deve retornar NULL sem crashar\n");
+	printf("      entrada : lst=NULL\n");
+	printf("      esperado: NULL\n");
+	result = ft_lstlast(NULL);
+	printf("FT  : %s\n", result ? "ptr" : "NULL");
+	printf("ORIG: NULL\n");
+	printf("\n");
+}
+
+static void	test_um_no(void)
+{
+	t_list	*lst;
+	t_list	*result;
+
+	lst = ft_lstnew("unico");
+	printf("Test: ft_lstlast(lst) | lista com 1 no\n");
+	printf("      unico no e ao mesmo tempo primeiro e ultimo\n");
+	printf("      entrada : [unico]\n");
+	printf("      esperado: content=unico next=NULL\n");
+	result = ft_lstlast(lst);
+	printf("FT  : content=%s next=%s\n",
+		(char *)result->content, result->next ? "ptr" : "NULL");
+	printf("ORIG: content=unico next=NULL\n");
+	free_list(lst);
+	printf("\n");
+}
+
+static void	test_varios_nos(void)
+{
+	t_list	*lst;
+	t_list	*result;
+
+	lst = ft_lstnew("ultimo");
+	ft_lstadd_front(&lst, ft_lstnew("meio"));
+	ft_lstadd_front(&lst, ft_lstnew("primeiro"));
+	printf("Test: ft_lstlast(lst) | lista com 3 nos\n");
+	printf("      deve retornar o no criado primeiro no final\n");
+	printf("      entrada : [primeiro]->[meio]->[ultimo]\n");
+	printf("      esperado: content=ultimo next=NULL\n");
+	result = ft_lstlast(lst);
+	printf("FT  : content=%s next=%s\n",
+		(char *)result->content, result->next ? "ptr" : "NULL");
+	printf("ORIG: content=ultimo next=NULL\n");
+	free_list(lst);
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_null();
+	test_um_no();
+	test_varios_nos();
+	return (0);
+}

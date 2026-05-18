@@ -1,0 +1,76 @@
+/*
+	Resumo dos testes:
+	1. Testa busca de caractere presente no meio da string.
+	2. Testa se retorna a primeira ocorrencia quando o char repete.
+	3. Testa caractere ausente, que deve retornar NULL.
+	4. Testa string vazia com caractere comum.
+	5. Testa busca pelo proprio '\0', que deve retornar o fim da string.
+	6. Compara o resultado com strchr original da libc.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <string.h>
+
+static void	test_busca_normal(void)
+{
+	const char	*s;
+
+	s = "Hello, World!";
+	printf("Test: ft_strchr(s, 'W') | char presente na string\n");
+	printf("      retorna ponteiro para 'W', resto da string a seguir\n");
+	printf("      entrada : s=\"Hello, World!\", c='W'\n");
+	printf("      esperado: \"World!\"\n");
+	printf("FT  : %s\n", ft_strchr(s, 'W'));
+	printf("ORIG: %s\n", strchr(s, 'W'));
+	printf("\n");
+	printf("Test: ft_strchr(\"aaa\", 'a') | primeira ocorrencia\n");
+	printf("      deve retornar ponteiro para o PRIMEIRO 'a'\n");
+	printf("      entrada : s=\"aaa\", c='a'\n");
+	printf("      esperado: \"aaa\"\n");
+	printf("FT  : %s\n", ft_strchr("aaa", 'a'));
+	printf("ORIG: %s\n", strchr("aaa", 'a'));
+	printf("\n");
+}
+
+static void	test_busca_ausente(void)
+{
+	const char	*s;
+
+	s = "Hello, World!";
+	printf("Test: ft_strchr(s, 'z') | char ausente\n");
+	printf("      'z' nao existe em s, deve retornar NULL\n");
+	printf("      entrada : s=\"Hello, World!\", c='z'\n");
+	printf("      esperado: NULL\n");
+	printf("FT  : %s\n", ft_strchr(s, 'z') ? "ptr" : "NULL");
+	printf("ORIG: %s\n", strchr(s, 'z') ? "ptr" : "NULL");
+	printf("\n");
+	printf("Test: ft_strchr(\"\", 'a') | string vazia\n");
+	printf("      string vazia nao contem 'a', deve retornar NULL\n");
+	printf("      entrada : s=\"\", c='a'\n");
+	printf("      esperado: NULL\n");
+	printf("FT  : %s\n", ft_strchr("", 'a') ? "ptr" : "NULL");
+	printf("ORIG: %s\n", strchr("", 'a') ? "ptr" : "NULL");
+	printf("\n");
+}
+
+static void	test_busca_nulo(void)
+{
+	const char	*s;
+
+	s = "Hello, World!";
+	printf("Test: ft_strchr(s, '\\0') | buscar o proprio nulo\n");
+	printf("      \\0 e o terminador, strchr deve encontra-lo\n");
+	printf("      entrada : s=\"Hello, World!\", c='\\0'\n");
+	printf("      esperado: \"\" aponta para o \\0 final\n");
+	printf("FT  : \"%s\"\n", ft_strchr(s, '\0'));
+	printf("ORIG: \"%s\"\n", strchr(s, '\0'));
+}
+
+int	main(void)
+{
+	test_busca_normal();
+	test_busca_ausente();
+	test_busca_nulo();
+	return (0);
+}

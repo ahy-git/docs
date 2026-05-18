@@ -1,0 +1,59 @@
+/*
+	Resumo dos testes:
+	1. Testa caracteres printaveis validos: espaco, letra, '~' e digito.
+	2. Confirma que a ft_isprint deve retornar exatamente 1.
+	3. Testa caracteres nao printaveis: nulo, controles, DEL e 128.
+	4. Testa controles classicos: newline e tab.
+	5. Testa os vizinhos dos limites: 31, 32, 126 e 127.
+	6. Compara com isprint original convertendo retorno para 0 ou 1.
+*/
+
+#include "libft.h"
+#include <ctype.h>
+#include <stdio.h>
+
+int	main(void)
+{
+	printf("Test: isprint(' ' 'A' '~' '5') | printaveis validos\n");
+	printf("      subject: retorno deve ser 1, nao apenas nao-zero\n");
+	printf("      entrada : ' '=32, 'A'=65, '~'=126, '5'=53\n");
+	printf("      esperado: 1 1 1 1\n");
+	printf("FT  : %d %d %d %d\n",
+		ft_isprint(' '), ft_isprint('A'),
+		ft_isprint('~'), ft_isprint('5'));
+	printf("ORIG: %d %d %d %d\n",
+		isprint(' ') != 0, isprint('A') != 0,
+		isprint('~') != 0, isprint('5') != 0);
+	printf("\n");
+	printf("Test: isprint(0 31 127 128) | nao-printaveis e limites\n");
+	printf("      nulo, ultimo controle, DEL e primeiro extended\n");
+	printf("      entrada : 0, 31, 127, 128\n");
+	printf("      esperado: 0 0 0 0\n");
+	printf("FT  : %d %d %d %d\n",
+		ft_isprint(0), ft_isprint(31),
+		ft_isprint(127), ft_isprint(128));
+	printf("ORIG: %d %d %d %d\n",
+		isprint(0) != 0, isprint(31) != 0,
+		isprint(127) != 0, isprint(128) != 0);
+	printf("\n");
+	printf("Test: isprint('\\n' '\\t') | controles classicos\n");
+	printf("      newline=10 e tab=9 sao controles, nao printaveis\n");
+	printf("      entrada : '\\n'=10, '\\t'=9\n");
+	printf("      esperado: 0 0\n");
+	printf("FT  : %d %d\n",
+		ft_isprint('\n'), ft_isprint('\t'));
+	printf("ORIG: %d %d\n",
+		isprint('\n') != 0, isprint('\t') != 0);
+	printf("\n");
+	printf("Test: isprint(31 32 126 127) | vizinhos dos limites\n");
+	printf("      31=ultimo controle, 32=espaco, 126='~', 127=DEL\n");
+	printf("      entrada : 31, 32, 126, 127\n");
+	printf("      esperado: 0 1 1 0\n");
+	printf("FT  : %d %d %d %d\n",
+		ft_isprint(31), ft_isprint(32),
+		ft_isprint(126), ft_isprint(127));
+	printf("ORIG: %d %d %d %d\n",
+		isprint(31) != 0, isprint(32) != 0,
+		isprint(126) != 0, isprint(127) != 0);
+	return (0);
+}

@@ -1,0 +1,76 @@
+/*
+	Resumo dos testes:
+	1. Testa busca de um caractere presente dentro dos n bytes.
+	2. Testa quando n nao chega ate a posicao do caractere.
+	3. Testa caractere ausente, que deve retornar NULL.
+	4. Testa busca apos byte nulo, mostrando que memchr nao para no \0.
+	5. Testa n=0, que deve verificar zero bytes e retornar NULL.
+	6. Testa busca pelo proprio byte nulo como valor normal.
+	7. Compara com memchr original da libc.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <string.h>
+
+static void	test_busca_normal(void)
+{
+	const char	*s;
+
+	s = "Hello, World!";
+	printf("Test: ft_memchr(s, 'W', 13) | busca char presente\n");
+	printf("      deve retornar ponteiro para 'W' em s[7]\n");
+	printf("      entrada : s=\"Hello, World!\", c='W', n=13\n");
+	printf("      esperado: \"World!\"\n");
+	printf("FT  : %s\n", (char *)ft_memchr(s, 'W', 13));
+	printf("ORIG: %s\n", (char *)memchr(s, 'W', 13));
+	printf("\n");
+	printf("Test: ft_memchr(s, 'W', 5) | n menor que posicao do char\n");
+	printf("      'W' esta em s[7], mas n=5 nao chega ate la\n");
+	printf("      entrada : s=\"Hello, World!\", c='W', n=5\n");
+	printf("      esperado: NULL\n");
+	printf("FT  : %s\n", ft_memchr(s, 'W', 5) ? "ptr" : "NULL");
+	printf("ORIG: %s\n", memchr(s, 'W', 5) ? "ptr" : "NULL");
+	printf("\n");
+	printf("Test: ft_memchr(s, 'z', 13) | char ausente\n");
+	printf("      'z' nao existe em s, deve retornar NULL\n");
+	printf("      entrada : s=\"Hello, World!\", c='z', n=13\n");
+	printf("      esperado: NULL\n");
+	printf("FT  : %s\n", ft_memchr(s, 'z', 13) ? "ptr" : "NULL");
+	printf("ORIG: %s\n", memchr(s, 'z', 13) ? "ptr" : "NULL");
+	printf("\n");
+}
+
+static void	test_casos_especiais(void)
+{
+	const char	*s;
+
+	s = "abc\0def";
+	printf("Test: ft_memchr(\"abc\\0def\", 'd', 7) | byte apos nulo\n");
+	printf("      memchr varre bytes puros, \\0 nao e fim de string\n");
+	printf("      entrada : s=\"abc\\0def\", c='d', n=7\n");
+	printf("      esperado: def\n");
+	printf("FT  : %s\n", (char *)ft_memchr(s, 'd', 7));
+	printf("ORIG: %s\n", (char *)memchr(s, 'd', 7));
+	printf("\n");
+	printf("Test: ft_memchr(s, 'a', 0) | n=0\n");
+	printf("      n=0 significa zero bytes verificados, retorna NULL\n");
+	printf("      entrada : s=\"abc\\0def\", c='a', n=0\n");
+	printf("      esperado: NULL\n");
+	printf("FT  : %s\n", ft_memchr(s, 'a', 0) ? "ptr" : "NULL");
+	printf("ORIG: %s\n", memchr(s, 'a', 0) ? "ptr" : "NULL");
+	printf("\n");
+	printf("Test: ft_memchr(s, '\\0', 7) | buscar o proprio nulo\n");
+	printf("      memchr pode buscar \\0 como byte normal\n");
+	printf("      entrada : s=\"abc\\0def\", c=0, n=7\n");
+	printf("      esperado: ptr\n");
+	printf("FT  : %s\n", ft_memchr(s, '\0', 7) ? "ptr" : "NULL");
+	printf("ORIG: %s\n", memchr(s, '\0', 7) ? "ptr" : "NULL");
+}
+
+int	main(void)
+{
+	test_busca_normal();
+	test_casos_especiais();
+	return (0);
+}

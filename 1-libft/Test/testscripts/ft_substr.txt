@@ -1,0 +1,55 @@
+/*
+	Resumo dos testes:
+	1. Testa substring no meio da string.
+	2. Testa substring no comeco da string.
+	3. Testa len maior que o restante disponivel.
+	4. Testa start maior que o tamanho da string.
+	5. Testa start exatamente no '\0'.
+	6. Testa len=0, que deve retornar string vazia.
+	7. Testa string original vazia.
+	8. Testa string com apenas um caractere.
+	9. Verifica se ft_substr retorna uma nova string alocada.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	print_value(char *label, char *result)
+{
+	if (!result)
+		printf("%s: (null)\n", label);
+	else
+		printf("%s: \"%s\"\n", label, result);
+}
+
+static void	test_substr(char *s, unsigned int start, size_t len,
+	char *expected)
+{
+	char	*result;
+
+	printf("Test: ft_substr(\"%s\", %u, %zu)\n", s, start, len);
+	printf("      cria uma nova string a partir de start ate len chars\n");
+	printf("      entrada : \"%s\", %u, %zu\n", s, start, len);
+	printf("      esperado: \"%s\"\n", expected);
+	result = ft_substr(s, start, len);
+	print_value("FT  ", result);
+	print_value("ORIG", expected);
+	printf("\n");
+	free(result);
+}
+
+int	main(void)
+{
+	test_substr("Hello World", 6, 5, "World");
+	test_substr("Hello World", 0, 5, "Hello");
+	test_substr("Hello World", 6, 100, "World");
+	test_substr("Hello", 0, 100, "Hello");
+	test_substr("Hello", 10, 5, "");
+	test_substr("Hello", 5, 5, "");
+	test_substr("Hello", 0, 0, "");
+	test_substr("", 0, 5, "");
+	test_substr("X", 0, 1, "X");
+	test_substr("X", 1, 1, "");
+	return (0);
+}

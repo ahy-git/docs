@@ -1,0 +1,77 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_lstsize com lista NULL.
+	2. Verifica se lista vazia retorna 0 sem crashar.
+	3. Testa lista com apenas 1 no.
+	4. Testa lista com 5 nos.
+	5. Confirma que a funcao conta todos os nos ate o fim da lista.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	free_list(t_list *lst)
+{
+	t_list	*tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst);
+		lst = tmp;
+	}
+}
+
+static void	test_lista_vazia(void)
+{
+	printf("Test: ft_lstsize(NULL) | lista vazia\n");
+	printf("      lista nula deve retornar 0 sem crashar\n");
+	printf("      entrada : lst=NULL\n");
+	printf("      esperado: 0\n");
+	printf("FT  : %d\n", ft_lstsize(NULL));
+	printf("ORIG: 0\n");
+	printf("\n");
+}
+
+static void	test_um_no(void)
+{
+	t_list	*lst;
+
+	lst = ft_lstnew("unico");
+	printf("Test: ft_lstsize(lst) | lista com 1 no\n");
+	printf("      lista com um no deve retornar 1\n");
+	printf("      entrada : [unico]\n");
+	printf("      esperado: 1\n");
+	printf("FT  : %d\n", ft_lstsize(lst));
+	printf("ORIG: 1\n");
+	free_list(lst);
+	printf("\n");
+}
+
+static void	test_varios_nos(void)
+{
+	t_list	*lst;
+
+	lst = ft_lstnew("A");
+	ft_lstadd_back(&lst, ft_lstnew("B"));
+	ft_lstadd_back(&lst, ft_lstnew("C"));
+	ft_lstadd_back(&lst, ft_lstnew("D"));
+	ft_lstadd_back(&lst, ft_lstnew("E"));
+	printf("Test: ft_lstsize(lst) | lista com 5 nos\n");
+	printf("      deve contar todos os nos da lista\n");
+	printf("      entrada : [A]->[B]->[C]->[D]->[E]\n");
+	printf("      esperado: 5\n");
+	printf("FT  : %d\n", ft_lstsize(lst));
+	printf("ORIG: 5\n");
+	free_list(lst);
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_lista_vazia();
+	test_um_no();
+	test_varios_nos();
+	return (0);
+}

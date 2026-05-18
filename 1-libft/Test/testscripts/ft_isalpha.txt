@@ -1,0 +1,57 @@
+/*
+	Resumo dos testes:
+	1. Testa letras validas: maiuscula, minuscula e letra comum.
+	2. Confirma que a ft_isalpha deve retornar exatamente 1.
+	3. Testa caracteres que nao sao letras: digito, especial, nulo e DEL.
+	4. Testa os limites dos intervalos alfabeticos: A, Z, a e z.
+	5. Testa caracteres vizinhos dos intervalos, que devem retornar 0.
+	6. Compara com isalpha original convertendo retorno para 0 ou 1.
+*/
+
+#include "libft.h"
+#include <ctype.h>
+#include <stdio.h>
+
+int	main(void)
+{
+	printf("Test: isalpha('A' 'z' 'g') | letras maiuscula, minuscula\n");
+	printf("      subject: retorno deve ser 1, nao apenas nao-zero\n");
+	printf("      entrada : 'A'=65, 'z'=122, 'g'=103\n");
+	printf("      esperado: 1 1 1\n");
+	printf("FT  : %d %d %d\n",
+		ft_isalpha('A'), ft_isalpha('z'), ft_isalpha('g'));
+	printf("ORIG: %d %d %d\n",
+		isalpha('A') != 0, isalpha('z') != 0, isalpha('g') != 0);
+	printf("\n");
+	printf("Test: isalpha('5' '!' 0 127) | nao-alfabeticos\n");
+	printf("      digito, especial, nulo e DEL devem retornar 0\n");
+	printf("      entrada : '5'=53, '!'=33, 0, 127\n");
+	printf("      esperado: 0 0 0 0\n");
+	printf("FT  : %d %d %d %d\n",
+		ft_isalpha('5'), ft_isalpha('!'),
+		ft_isalpha(0), ft_isalpha(127));
+	printf("ORIG: %d %d %d %d\n",
+		isalpha('5') != 0, isalpha('!') != 0,
+		isalpha(0) != 0, isalpha(127) != 0);
+	printf("\n");
+	printf("Test: isalpha('A' 'Z' 'a' 'z') | limites dos intervalos\n");
+	printf("      primeiro e ultimo maiusculo, primeiro e ultimo minusc\n");
+	printf("      entrada : 'A'=65, 'Z'=90, 'a'=97, 'z'=122\n");
+	printf("      esperado: 1 1 1 1\n");
+	printf("FT  : %d %d %d %d\n",
+		ft_isalpha('A'), ft_isalpha('Z'),
+		ft_isalpha('a'), ft_isalpha('z'));
+	printf("ORIG: %d %d %d %d\n",
+		isalpha('A') != 0, isalpha('Z') != 0,
+		isalpha('a') != 0, isalpha('z') != 0);
+	printf("\n");
+	printf("Test: isalpha('[' 96 91) | vizinhos dos intervalos\n");
+	printf("      caracteres logo apos 'Z'(90) e antes de 'a'(97)\n");
+	printf("      entrada : '['=91, 96=backtick, '@'=64\n");
+	printf("      esperado: 0 0 0\n");
+	printf("FT  : %d %d %d\n",
+		ft_isalpha('['), ft_isalpha(96), ft_isalpha('@'));
+	printf("ORIG: %d %d %d\n",
+		isalpha('[') != 0, isalpha(96) != 0, isalpha('@') != 0);
+	return (0);
+}

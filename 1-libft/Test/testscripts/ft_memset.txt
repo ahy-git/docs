@@ -1,0 +1,90 @@
+/*
+	Resumo dos testes:
+	1. Testa preenchimento parcial com caractere 'A'.
+	2. Verifica se apenas os primeiros n bytes sao alterados.
+	3. Testa preenchimento completo com byte 0.
+	4. Verifica se todos os bytes sao zerados quando n cobre o buffer.
+	5. Testa n=0, que nao deve alterar nenhum byte do buffer.
+	6. Compara o resultado com memset original da libc.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <string.h>
+
+static void	print_bytes(char *label, char *buf, int n)
+{
+	int	i;
+
+	printf("%s", label);
+	i = 0;
+	while (i < n)
+	{
+		printf("%d ", (unsigned char)buf[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+static void	test_preenche_char(void)
+{
+	char	buf_ft[10];
+	char	buf_orig[10];
+
+	ft_memset(buf_ft, 0, 10);
+	ft_memset(buf_orig, 0, 10);
+	ft_memset(buf_ft, 'A', 5);
+	memset(buf_orig, 'A', 5);
+	printf("Test: ft_memset(buf, 'A', 5) | preenche com char\n");
+	printf("      preenche 5 bytes com 'A'=65, resto intacto\n");
+	printf("      entrada : buf[10]=0, c='A'=65, n=5\n");
+	printf("      esperado: 65 65 65 65 65 0 0 0 0 0\n");
+	print_bytes("FT  : ", buf_ft, 10);
+	print_bytes("ORIG: ", buf_orig, 10);
+	printf("\n");
+}
+
+static void	test_zera_bytes(void)
+{
+	char	buf_ft[10];
+	char	buf_orig[10];
+
+	ft_memset(buf_ft, 'X', 10);
+	ft_memset(buf_orig, 'X', 10);
+	ft_memset(buf_ft, 0, 10);
+	memset(buf_orig, 0, 10);
+	printf("Test: ft_memset(buf, 0, 10) | zera tudo\n");
+	printf("      preenche todos os bytes com 0\n");
+	printf("      entrada : buf[10]='X'=88, c=0, n=10\n");
+	printf("      esperado: 0 0 0 0 0 0 0 0 0 0\n");
+	print_bytes("FT  : ", buf_ft, 10);
+	print_bytes("ORIG: ", buf_orig, 10);
+	printf("\n");
+}
+
+static void	test_n_zero(void)
+{
+	char	buf_ft[10];
+	char	buf_orig[10];
+	size_t	n;
+
+	n = 0;
+	ft_memset(buf_ft, 'X', 10);
+	ft_memset(buf_orig, 'X', 10);
+	ft_memset(buf_ft, 'Z', n);
+	memset(buf_orig, 'Z', n);
+	printf("Test: ft_memset(buf, 'Z', 0) | n=0\n");
+	printf("      n=0 nao deve tocar nada no buffer\n");
+	printf("      entrada : buf[10]='X'=88, c='Z', n=0\n");
+	printf("      esperado: 88 88 88 88 88 88 88 88 88 88\n");
+	print_bytes("FT  : ", buf_ft, 10);
+	print_bytes("ORIG: ", buf_orig, 10);
+}
+
+int	main(void)
+{
+	test_preenche_char();
+	test_zera_bytes();
+	test_n_zero();
+	return (0);
+}

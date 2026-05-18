@@ -1,0 +1,58 @@
+/*
+	Resumo dos testes:
+	1. Testa o zero, que deve virar a string "0".
+	2. Testa numeros positivos simples.
+	3. Testa numeros negativos simples.
+	4. Testa negativos de um e dois digitos.
+	5. Testa INT_MAX, maior valor possivel de int.
+	6. Testa INT_MIN, caso critico por nao caber positivo em int.
+	7. Verifica se a funcao retorna uma string alocada corretamente.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+static void	test_itoa(char *desc, char *entrada, char *esperado, int n)
+{
+	char	*result;
+
+	printf("Test: ft_itoa(%d) | %s\n", n, desc);
+	printf("      entrada : %s\n", entrada);
+	printf("      esperado: \"%s\"\n", esperado);
+	result = ft_itoa(n);
+	printf("FT  : \"%s\"\n", result ? result : "NULL");
+	printf("ORIG: \"%s\"\n", esperado);
+	free(result);
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_itoa("zero absoluto",
+		"n=0",
+		"0", 0);
+	test_itoa("positivo simples",
+		"n=42",
+		"42", 42);
+	test_itoa("negativo simples",
+		"n=-42",
+		"-42", -42);
+	test_itoa("negativo um digito",
+		"n=-9",
+		"-9", -9);
+	test_itoa("INT_MAX limite superior",
+		"n=2147483647",
+		"2147483647", INT_MAX);
+	test_itoa("INT_MIN limite inferior critico",
+		"n=-2147483648",
+		"-2147483648", INT_MIN);
+	test_itoa("negativo dois digitos",
+		"n=-10",
+		"-10", -10);
+	test_itoa("negativo -1",
+		"n=-1",
+		"-1", -1);
+	return (0);
+}

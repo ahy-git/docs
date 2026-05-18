@@ -1,0 +1,91 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_lstclear em uma lista com 3 nos.
+	2. Verifica se del e chamado uma vez para cada content.
+	3. Verifica se, depois do clear, lst vira NULL.
+	4. Testa lista vazia, onde del nao deve ser chamado.
+	5. Testa protecao com lst=NULL para nao crashar.
+	6. Testa protecao com del=NULL para nao crashar.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+static int	g_del_count = 0;
+
+static void	del(void *ptr)
+{
+	g_del_count++;
+	free(ptr);
+}
+
+static void	test_lista_cheia(void)
+{
+	t_list	*lst;
+
+	lst = ft_lstnew(strdup("A"));
+	ft_lstadd_back(&lst, ft_lstnew(strdup("B")));
+	ft_lstadd_back(&lst, ft_lstnew(strdup("C")));
+	g_del_count = 0;
+	printf("Test: ft_lstclear(&lst, del) | lista com 3 nos\n");
+	printf("      del chamado por no, lst deve virar NULL\n");
+	printf("      entrada : [A]->[B]->[C], del=free\n");
+	printf("      esperado: del=3 lst=NULL\n");
+	ft_lstclear(&lst, del);
+	printf("FT  : del=%d lst=%s\n", g_del_count, lst ? "ptr" : "NULL");
+	printf("ORIG: del=3 lst=NULL\n");
+	printf("\n");
+}
+
+static void	test_lista_vazia(void)
+{
+	t_list	*lst;
+
+	lst = NULL;
+	g_del_count = 0;
+	printf("Test: ft_lstclear(&lst, del) | lista vazia lst=NULL\n");
+	printf("      del nao deve ser chamado, lst continua NULL\n");
+	printf("      entrada : lst=NULL, del=free\n");
+	printf("      esperado: del=0 lst=NULL\n");
+	ft_lstclear(&lst, del);
+	printf("FT  : del=%d lst=%s\n", g_del_count, lst ? "ptr" : "NULL");
+	printf("ORIG: del=0 lst=NULL\n");
+	printf("\n");
+}
+
+static void	test_protecoes(void)
+{
+	t_list	*lst;
+
+	printf("Test: ft_lstclear(NULL, del) | lst=NULL\n");
+	printf("      deve proteger contra ponteiro nulo sem crashar\n");
+	printf("      entrada : lst=NULL, del valido\n");
+	printf("      esperado: sem crash\n");
+	ft_lstclear(NULL, del);
+	printf("FT  : sem crash\n");
+	printf("ORIG: sem crash\n");
+	printf("\n");
+	lst = ft_lstnew(strdup("X"));
+	printf("Test: ft_lstclear(&lst, NULL) | del=NULL\n");
+	printf("      deve proteger contra del nulo sem crashar\n");
+	printf("      entrada : lst valida, del=NULL\n");
+	printf("      esperado: sem crash\n");
+	ft_lstclear(&lst, NULL);
+	printf("FT  : sem crash\n");
+	printf("ORIG: sem crash\n");
+	if (lst)
+	{
+		free(lst->content);
+		free(lst);
+	}
+}
+
+int	main(void)
+{
+	test_lista_cheia();
+	test_lista_vazia();
+	test_protecoes();
+	return (0);
+}

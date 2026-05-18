@@ -1,0 +1,39 @@
+/*
+	Resumo dos testes:
+	1. Testa conversao da primeira letra minuscula: 'a' para 'A'.
+	2. Testa conversao da ultima letra minuscula: 'z' para 'Z'.
+	3. Testa letras maiusculas, que devem continuar iguais.
+	4. Testa numero, que deve continuar igual.
+	5. Testa pontuacao, que deve continuar igual.
+	6. Testa espaco, que deve continuar igual.
+	7. Testa uma letra minuscula no meio do alfabeto.
+	8. Compara o resultado com toupper original da libc.
+*/
+
+#include "libft.h"
+#include <ctype.h>
+#include <stdio.h>
+
+static void	test_toupper(int c, char *desc)
+{
+	printf("Test: ft_toupper('%c') | %s\n", c, desc);
+	printf("      converte minuscula para maiuscula\n");
+	printf("      entrada : '%c'\n", c);
+	printf("      esperado: mesmo resultado da toupper original\n");
+	printf("FT  : %c\n", ft_toupper(c));
+	printf("ORIG: %c\n", toupper(c));
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_toupper('a', "primeira letra minuscula");
+	test_toupper('z', "ultima letra minuscula");
+	test_toupper('A', "maiuscula deve continuar igual");
+	test_toupper('Z', "maiuscula deve continuar igual");
+	test_toupper('5', "numero deve continuar igual");
+	test_toupper('!', "pontuacao deve continuar igual");
+	test_toupper(' ', "espaco deve continuar igual");
+	test_toupper('m', "letra minuscula no meio do alfabeto");
+	return (0);
+}

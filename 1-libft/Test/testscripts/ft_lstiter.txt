@@ -1,0 +1,87 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_lstiter em uma lista com 3 nos.
+	2. Verifica se a funcao f e aplicada ao content de cada no.
+	3. Confirma que o conteudo pode ser modificado pela funcao f.
+	4. Verifica que a estrutura da lista continua igual.
+	5. Testa protecao com lst=NULL para nao crashar.
+	6. Testa protecao com f=NULL para nao crashar.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	to_upper_first(void *content)
+{
+	char	*s;
+
+	s = (char *)content;
+	if (s && s[0] >= 'a' && s[0] <= 'z')
+		s[0] = s[0] - 32;
+}
+
+static void	free_list(t_list *lst)
+{
+	t_list	*tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst->content);
+		free(lst);
+		lst = tmp;
+	}
+}
+
+static void	test_modifica(void)
+{
+	t_list	*lst;
+
+	lst = ft_lstnew(ft_strdup("hello"));
+	ft_lstadd_back(&lst, ft_lstnew(ft_strdup("world")));
+	ft_lstadd_back(&lst, ft_lstnew(ft_strdup("42")));
+	printf("Test: ft_lstiter(lst, to_upper_first) | modifica conteudo\n");
+	printf("      f aplicada a cada no, modifica o primeiro char\n");
+	printf("      entrada : [hello]->[world]->[42]\n");
+	printf("      esperado: Hello World 42\n");
+	ft_lstiter(lst, to_upper_first);
+	printf("FT  : %s %s %s\n",
+		(char *)lst->content,
+		(char *)lst->next->content,
+		(char *)lst->next->next->content);
+	printf("ORIG: Hello World 42\n");
+	free_list(lst);
+	printf("\n");
+}
+
+static void	test_protecoes(void)
+{
+	t_list	*lst;
+
+	printf("Test: ft_lstiter(NULL, f) | lst=NULL\n");
+	printf("      deve proteger contra lst nulo sem crashar\n");
+	printf("      entrada : lst=NULL, f valida\n");
+	printf("      esperado: sem crash\n");
+	ft_lstiter(NULL, to_upper_first);
+	printf("FT  : sem crash\n");
+	printf("ORIG: sem crash\n");
+	printf("\n");
+	lst = ft_lstnew(ft_strdup("intacto"));
+	printf("Test: ft_lstiter(lst, NULL) | f=NULL\n");
+	printf("      deve proteger contra f nula sem crashar\n");
+	printf("      entrada : lst valida, f=NULL\n");
+	printf("      esperado: sem crash content=intacto\n");
+	ft_lstiter(lst, NULL);
+	printf("FT  : sem crash content=%s\n", (char *)lst->content);
+	printf("ORIG: sem crash content=intacto\n");
+	free_list(lst);
+}
+
+int	main(void)
+{
+	test_modifica();
+	test_protecoes();
+	return (0);
+}
+

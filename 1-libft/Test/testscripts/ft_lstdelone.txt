@@ -1,0 +1,94 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_lstdelone em um no simples com content alocado.
+	2. Verifica se del e chamado exatamente uma vez.
+	3. Verifica se a funcao libera apenas o no recebido.
+	4. Testa se ft_lstdelone nao mexe em lst->next.
+	5. Testa protecao com node=NULL para nao crashar.
+	6. Testa protecao com del=NULL para nao crashar.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static int	g_del_count = 0;
+
+static void	del(void *ptr)
+{
+	g_del_count++;
+	free(ptr);
+}
+
+static void	test_delone_simples(void)
+{
+	t_list	*node;
+
+	node = ft_lstnew(ft_strdup("A"));
+	g_del_count = 0;
+	printf("Test: ft_lstdelone(node, del) | no com ft_strdup\n");
+	printf("      del deve ser chamado 1x, no deve ser liberado\n");
+	printf("      entrada : node->content=ft_strdup(\"A\"), del=free\n");
+	printf("      esperado: del=1 sem crash\n");
+	ft_lstdelone(node, del);
+	printf("FT  : del=%d sem crash\n", g_del_count);
+	printf("ORIG: del=1 sem crash\n");
+	printf("\n");
+}
+
+static void	test_nao_toca_next(void)
+{
+	t_list	*a;
+	t_list	*b;
+
+	a = ft_lstnew(ft_strdup("A"));
+	b = ft_lstnew(ft_strdup("B"));
+	a->next = b;
+	g_del_count = 0;
+	printf("Test: ft_lstdelone(a, del) | a->next = b\n");
+	printf("      deve deletar apenas a, b deve sobreviver intacto\n");
+	printf("      entrada : [A]->[B], delone(a)\n");
+	printf("      esperado: del=1 b->content=B\n");
+	ft_lstdelone(a, del);
+	printf("FT  : del=%d b->content=%s\n",
+		g_del_count, (char *)b->content);
+	printf("ORIG: del=1 b->content=B\n");
+	free(b->content);
+	free(b);
+	printf("\n");
+}
+
+static void	test_protecoes(void)
+{
+	t_list	*node;
+
+	printf("Test: ft_lstdelone(NULL, del) | node=NULL\n");
+	printf("      deve proteger contra node nulo sem crashar\n");
+	printf("      entrada : node=NULL, del valido\n");
+	printf("      esperado: sem crash\n");
+	ft_lstdelone(NULL, del);
+	printf("FT  : sem crash\n");
+	printf("ORIG: sem crash\n");
+	printf("\n");
+	node = ft_lstnew(ft_strdup("X"));
+	printf("Test: ft_lstdelone(node, NULL) | del=NULL\n");
+	printf("      deve proteger contra del nulo sem crashar\n");
+	printf("      entrada : node valido, del=NULL\n");
+	printf("      esperado: sem crash\n");
+	ft_lstdelone(node, NULL);
+	printf("FT  : sem crash\n");
+	printf("ORIG: sem crash\n");
+	if (node)
+	{
+		free(node->content);
+		free(node);
+	}
+}
+
+int	main(void)
+{
+	test_delone_simples();
+	test_nao_toca_next();
+	test_protecoes();
+	return (0);
+}

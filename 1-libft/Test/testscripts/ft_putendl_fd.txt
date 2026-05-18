@@ -1,0 +1,68 @@
+/*
+	Resumo dos testes:
+	1. Testa escrita de string normal seguida de newline.
+	2. Testa string vazia, que deve escrever apenas newline.
+	3. Testa string com espaco.
+	4. Testa outra string curta comum.
+	5. Usa pipe para capturar os bytes escritos sem sujar stdout.
+	6. Compara quantidade de bytes e valores escritos.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <unistd.h>
+
+static void	print_result(char *label, char *buf, ssize_t count)
+{
+	int	i;
+
+	printf("%s count=%zd bytes=", label, count);
+	i = 0;
+	while (i < count)
+	{
+		printf("%u", (unsigned char)buf[i]);
+		if (i + 1 < count)
+			printf(" ");
+		i++;
+	}
+	printf("\n");
+}
+
+static void	test_putendl(char *s, char *name, char *expected)
+{
+	int		fd[2];
+	char	buf[100];
+	ssize_t	count;
+
+	printf("Test: ft_putendl_fd(%s, fd) | escreve string + newline\n",
+		name);
+	printf("      escreve a string seguida de byte 10 no fd informado\n");
+	printf("      entrada : s=%s\n", name);
+	printf("      esperado: %s\n", expected);
+	if (pipe(fd) == -1)
+	{
+		printf("FT  : pipe error\n");
+		printf("ORIG: %s\n", expected);
+		return ;
+	}
+	ft_putendl_fd(s, fd[1]);
+	close(fd[1]);
+	count = read(fd[0], buf, 100);
+	close(fd[0]);
+	print_result("FT  :", buf, count);
+	printf("ORIG: %s\n", expected);
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_putendl("Hello", "\"Hello\"",
+		"count=6 bytes=72 101 108 108 111 10");
+	test_putendl("", "\"\"",
+		"count=1 bytes=10");
+	test_putendl("42 SP", "\"42 SP\"",
+		"count=6 bytes=52 50 32 83 80 10");
+	test_putendl("ERR", "\"ERR\"",
+		"count=4 bytes=69 82 82 10");
+	return (0);
+}

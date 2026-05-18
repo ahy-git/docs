@@ -1,0 +1,93 @@
+/*
+	Resumo dos testes:
+	1. Testa copia normal sem sobreposicao de memoria.
+	2. Testa overlap quando dst esta depois de src.
+	3. Testa overlap quando dst esta antes de src.
+	4. Verifica se ft_memmove copia na direcao correta em cada overlap.
+	5. Testa n=0, que nao deve alterar o buffer.
+	6. Compara o resultado com memmove original da libc.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <string.h>
+
+static void	test_sem_overlap(void)
+{
+	char	src_ft[20];
+	char	dst_ft[20];
+	char	src_orig[20];
+	char	dst_orig[20];
+
+	ft_memcpy(src_ft, "hello world", 12);
+	ft_memcpy(src_orig, "hello world", 12);
+	ft_memset(dst_ft, 0, 20);
+	ft_memset(dst_orig, 0, 20);
+	ft_memmove(dst_ft, src_ft, 12);
+	memmove(dst_orig, src_orig, 12);
+	printf("Test: ft_memmove(dst, \"hello world\", 12) | sem overlap\n");
+	printf("      copia normal sem sobreposicao de buffers\n");
+	printf("      entrada : src=\"hello world\", n=12\n");
+	printf("      esperado: \"hello world\"\n");
+	printf("FT  : %s\n", dst_ft);
+	printf("ORIG: %s\n", dst_orig);
+	printf("\n");
+}
+
+static void	test_overlap_dst_depois(void)
+{
+	char	buf_ft[] = "abcdef";
+	char	buf_orig[] = "abcdef";
+
+	ft_memmove(buf_ft + 2, buf_ft, 4);
+	memmove(buf_orig + 2, buf_orig, 4);
+	printf("Test: ft_memmove(buf+2, buf, 4) | dst depois de src\n");
+	printf("      sobreposicao: dst esta a frente de src no buffer\n");
+	printf("      entrada : buf=\"abcdef\", src=buf, dst=buf+2, n=4\n");
+	printf("      esperado: \"ababcd\"\n");
+	printf("FT  : %s\n", buf_ft);
+	printf("ORIG: %s\n", buf_orig);
+	printf("\n");
+}
+
+static void	test_overlap_dst_antes(void)
+{
+	char	buf_ft[] = "abcdef";
+	char	buf_orig[] = "abcdef";
+
+	ft_memmove(buf_ft, buf_ft + 2, 4);
+	memmove(buf_orig, buf_orig + 2, 4);
+	printf("Test: ft_memmove(buf, buf+2, 4) | dst antes de src\n");
+	printf("      sobreposicao: src esta a frente de dst no buffer\n");
+	printf("      entrada : buf=\"abcdef\", src=buf+2, dst=buf, n=4\n");
+	printf("      esperado: \"cdefef\"\n");
+	printf("FT  : %s\n", buf_ft);
+	printf("ORIG: %s\n", buf_orig);
+	printf("\n");
+}
+
+static void	test_n_zero(void)
+{
+	char	buf_ft[] = "abcdef";
+	char	buf_orig[] = "abcdef";
+	size_t	n;
+
+	n = 0;
+	ft_memmove(buf_ft + 2, buf_ft, n);
+	memmove(buf_orig + 2, buf_orig, n);
+	printf("Test: ft_memmove(dst, src, 0) | n=0\n");
+	printf("      n=0 nao deve tocar nada no destino\n");
+	printf("      entrada : buf=\"abcdef\", n=0\n");
+	printf("      esperado: \"abcdef\"\n");
+	printf("FT  : %s\n", buf_ft);
+	printf("ORIG: %s\n", buf_orig);
+}
+
+int	main(void)
+{
+	test_sem_overlap();
+	test_overlap_dst_depois();
+	test_overlap_dst_antes();
+	test_n_zero();
+	return (0);
+}

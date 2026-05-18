@@ -1,0 +1,85 @@
+/*
+	Resumo dos testes:
+	1. Testa copia normal com ft_memcpy copiando uma string completa.
+	2. Verifica se o byte nulo final tambem e copiado quando incluido em n.
+	3. Testa n=0, que nao deve alterar o destino.
+	4. Testa copia parcial copiando apenas parte da origem.
+	5. Compara o resultado com memcpy original da libc.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <string.h>
+
+static void	test_copia_normal(void)
+{
+	char	src[20];
+	char	dst_ft[20];
+	char	dst_orig[20];
+
+	ft_memset(src, 0, 20);
+	ft_memset(dst_ft, 0, 20);
+	ft_memset(dst_orig, 0, 20);
+	ft_memcpy(src, "hello world", 12);
+	ft_memcpy(dst_ft, src, 12);
+	memcpy(dst_orig, src, 12);
+	printf("Test: ft_memcpy(dst, \"hello world\", 12) | copia normal\n");
+	printf("      copia 12 bytes incluindo o \\0 final\n");
+	printf("      entrada : src=\"hello world\", n=12\n");
+	printf("      esperado: \"hello world\"\n");
+	printf("FT  : %s\n", dst_ft);
+	printf("ORIG: %s\n", dst_orig);
+	printf("\n");
+}
+
+static void	test_n_zero(void)
+{
+	char	dst_ft[20];
+	char	dst_orig[20];
+	size_t	n;
+
+	n = 0;
+	ft_memset(dst_ft, 'X', 20);
+	ft_memset(dst_orig, 'X', 20);
+	dst_ft[19] = '\0';
+	dst_orig[19] = '\0';
+	ft_memcpy(dst_ft, "hello", n);
+	memcpy(dst_orig, "hello", n);
+	printf("Test: ft_memcpy(dst, src, 0) | n=0\n");
+	printf("      n=0 nao deve tocar nada no destino\n");
+	printf("      entrada : dst cheio de 'X', src=\"hello\", n=0\n");
+	printf("      esperado: dst intacto, primeiro byte 'X'=88\n");
+	printf("FT  : primeiro_byte=%d\n", (unsigned char)dst_ft[0]);
+	printf("ORIG: primeiro_byte=%d\n", (unsigned char)dst_orig[0]);
+	printf("\n");
+}
+
+static void	test_copia_parcial(void)
+{
+	char	src[20];
+	char	dst_ft[20];
+	char	dst_orig[20];
+
+	ft_memset(src, 0, 20);
+	ft_memset(dst_ft, 0, 20);
+	ft_memset(dst_orig, 0, 20);
+	ft_memcpy(src, "abcdef", 7);
+	ft_memcpy(dst_ft, src, 3);
+	memcpy(dst_orig, src, 3);
+	dst_ft[3] = '\0';
+	dst_orig[3] = '\0';
+	printf("Test: ft_memcpy(dst, \"abcdef\", 3) | copia parcial\n");
+	printf("      copia apenas os 3 primeiros bytes de src\n");
+	printf("      entrada : src=\"abcdef\", n=3\n");
+	printf("      esperado: \"abc\"\n");
+	printf("FT  : %s\n", dst_ft);
+	printf("ORIG: %s\n", dst_orig);
+}
+
+int	main(void)
+{
+	test_copia_normal();
+	test_n_zero();
+	test_copia_parcial();
+	return (0);
+}

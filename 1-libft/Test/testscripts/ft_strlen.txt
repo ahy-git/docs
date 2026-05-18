@@ -1,0 +1,37 @@
+/*
+	Resumo dos testes:
+	1. Testa string normal com 5 caracteres.
+	2. Testa string vazia, que deve retornar 0.
+	3. Testa string com apenas 1 caractere.
+	4. Testa string com espaco no meio.
+	5. Verifica se ft_strlen conta caracteres ate o '\0'.
+	6. Compara o resultado com strlen original da libc.
+*/
+
+#include "libft.h"
+#include <string.h>
+#include <stdio.h>
+
+static void	test_strlen(char *str, char *desc, char *why, char *expected)
+{
+	printf("Test: ft_strlen(\"%s\") | %s\n", str, desc);
+	printf("      %s\n", why);
+	printf("      entrada : \"%s\"\n", str);
+	printf("      esperado: %s\n", expected);
+	printf("FT  : %zu\n", ft_strlen(str));
+	printf("ORIG: %zu\n", strlen(str));
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_strlen("Hello", "string normal de 5 chars",
+		"caso basico, sem casos especiais", "5");
+	test_strlen("", "string vazia",
+		"deve retornar 0 sem crash", "0");
+	test_strlen("a", "string de um unico char",
+		"limite inferior de string nao vazia", "1");
+	test_strlen("42 Sao Paulo", "string com espaco",
+		"espaco tambem conta como caractere", "12");
+	return (0);
+}

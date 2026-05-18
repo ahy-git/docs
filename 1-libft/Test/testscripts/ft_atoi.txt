@@ -1,0 +1,52 @@
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+int	main(void)
+{
+	/*
+		Testa conversoes basicas:
+		"42" deve virar 42.
+		"-42" deve virar -42.
+		"+42" deve virar 42.
+		"   -42abc" deve ignorar espacos, ler -42 e parar no 'a'.
+		"\t\n  7" deve ignorar tab, newline e espacos antes do 7.
+	*/
+	printf("Test: \"42\" \"-42\" \"+42\" \"   -42abc\" \"\\t\\n  7\"\n");
+	printf("FT  : %d %d %d %d %d\n",
+		ft_atoi("42"), ft_atoi("-42"), ft_atoi("+42"),
+		ft_atoi("   -42abc"), ft_atoi("\t\n  7"));
+	printf("ORIG: %d %d %d %d %d\n",
+		atoi("42"), atoi("-42"), atoi("+42"),
+		atoi("   -42abc"), atoi("\t\n  7"));
+	printf("\n");
+
+	/*
+		Testa entradas invalidas:
+		"+-5" nao e numero valido porque tem dois sinais.
+		"--5" tambem nao e valido pelo mesmo motivo.
+		"abc" nao comeca com numero.
+		"" e string vazia.
+		Todos devem retornar 0, igual atoi.
+	*/
+	printf("Test: \"+-5\" \"--5\" \"abc\" \"\"\n");
+	printf("FT  : %d %d %d %d\n",
+		ft_atoi("+-5"), ft_atoi("--5"), ft_atoi("abc"), ft_atoi(""));
+	printf("ORIG: %d %d %d %d\n",
+		atoi("+-5"), atoi("--5"), atoi("abc"), atoi(""));
+	printf("\n");
+
+	/*
+		Testa zero e limites de int:
+		"  0" deve ignorar espacos e retornar 0.
+		"2147483647" e INT_MAX.
+		"-2147483648" e INT_MIN.
+		Esses dois ainda cabem em int.
+	*/
+	printf("Test: \"  0\" \"2147483647\" \"-2147483648\"\n");
+	printf("FT  : %d %d %d\n",
+		ft_atoi("  0"), ft_atoi("2147483647"), ft_atoi("-2147483648"));
+	printf("ORIG: %d %d %d\n",
+		atoi("  0"), atoi("2147483647"), atoi("-2147483648"));
+	return (0);
+}

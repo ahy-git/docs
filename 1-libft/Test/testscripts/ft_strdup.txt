@@ -1,0 +1,104 @@
+/*
+	Resumo dos testes:
+	1. Testa copia de uma string normal.
+	2. Compara o conteudo retornado com strdup original da libc.
+	3. Testa string vazia, que deve retornar uma string alocada vazia.
+	4. Testa se a copia e independente da string original.
+	5. Testa string com apenas um caractere.
+	6. Verifica se a copia tem endereco diferente da string original.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+static void	print_str(char *label, char *str)
+{
+	if (!str)
+		printf("%s(NULL)\n", label);
+	else
+		printf("%s%s\n", label, str);
+}
+
+static void	test_copia_normal(void)
+{
+	char	*ft_r;
+	char	*orig_r;
+
+	ft_r = ft_strdup("Hello, World!");
+	orig_r = strdup("Hello, World!");
+	printf("Test: ft_strdup(\"Hello, World!\") | string normal\n");
+	printf("      copia deve ter mesmo conteudo e endereco diferente\n");
+	printf("      entrada : s=\"Hello, World!\"\n");
+	printf("      esperado: \"Hello, World!\"\n");
+	print_str("FT  : ", ft_r);
+	print_str("ORIG: ", orig_r);
+	free(ft_r);
+	free(orig_r);
+	printf("\n");
+}
+
+static void	test_string_vazia(void)
+{
+	char	*ft_r;
+	char	*orig_r;
+
+	ft_r = ft_strdup("");
+	orig_r = strdup("");
+	printf("Test: ft_strdup(\"\") | string vazia\n");
+	printf("      deve alocar e retornar copia do nulo\n");
+	printf("      entrada : s=\"\"\n");
+	printf("      esperado: \"\"\n");
+	printf("FT  : \"%s\"\n", ft_r ? ft_r : "NULL");
+	printf("ORIG: \"%s\"\n", orig_r ? orig_r : "NULL");
+	free(ft_r);
+	free(orig_r);
+	printf("\n");
+}
+
+static void	test_independencia(void)
+{
+	char	*original;
+	char	*copy;
+
+	original = strdup("original");
+	copy = ft_strdup(original);
+	original[0] = 'X';
+	printf("Test: modificar original apos ft_strdup | independencia\n");
+	printf("      copia deve ser independente, nao afetada por mudancas\n");
+	printf("      entrada : s=\"original\", original[0]='X' apos copia\n");
+	printf("      esperado: copy[0]=o ptr_diff=sim\n");
+	printf("FT  : copy[0]=%c ptr_diff=%s\n",
+		copy[0], copy != original ? "sim" : "nao");
+	printf("ORIG: copy[0]=o ptr_diff=sim\n");
+	free(original);
+	free(copy);
+	printf("\n");
+}
+
+static void	test_um_char(void)
+{
+	char	*ft_r;
+	char	*orig_r;
+
+	ft_r = ft_strdup("a");
+	orig_r = strdup("a");
+	printf("Test: ft_strdup(\"a\") | um unico caractere\n");
+	printf("      menor string nao vazia possivel\n");
+	printf("      entrada : s=\"a\"\n");
+	printf("      esperado: \"a\"\n");
+	print_str("FT  : ", ft_r);
+	print_str("ORIG: ", orig_r);
+	free(ft_r);
+	free(orig_r);
+}
+
+int	main(void)
+{
+	test_copia_normal();
+	test_string_vazia();
+	test_independencia();
+	test_um_char();
+	return (0);
+}

@@ -1,0 +1,37 @@
+/*
+	Resumo dos testes:
+	1. Testa conversao da primeira letra maiuscula: 'A' para 'a'.
+	2. Testa conversao da ultima letra maiuscula: 'Z' para 'z'.
+	3. Testa letras minusculas, que devem continuar iguais.
+	4. Testa numero, que deve continuar igual.
+	5. Testa pontuacao, que deve continuar igual.
+	6. Testa uma letra maiuscula no meio do alfabeto.
+	7. Compara o resultado com tolower original da libc.
+*/
+
+#include "libft.h"
+#include <ctype.h>
+#include <stdio.h>
+
+static void	test_tolower(int c, char *desc)
+{
+	printf("Test: ft_tolower('%c') | %s\n", c, desc);
+	printf("      converte maiuscula para minuscula\n");
+	printf("      entrada : '%c'\n", c);
+	printf("      esperado: mesmo resultado da tolower original\n");
+	printf("FT  : %c\n", ft_tolower(c));
+	printf("ORIG: %c\n", tolower(c));
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_tolower('A', "primeira letra maiuscula");
+	test_tolower('Z', "ultima letra maiuscula");
+	test_tolower('a', "minuscula deve continuar igual");
+	test_tolower('z', "minuscula deve continuar igual");
+	test_tolower('5', "numero deve continuar igual");
+	test_tolower('!', "pontuacao deve continuar igual");
+	test_tolower('M', "letra maiuscula no meio do alfabeto");
+	return (0);
+}

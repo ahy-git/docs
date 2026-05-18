@@ -1,0 +1,88 @@
+#include "libft.h"
+#include <strings.h>
+#include <stdio.h>
+
+static void	fill(char *buf, int size, char c)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		buf[i] = c;
+		i++;
+	}
+}
+
+static void	print_bytes(const char *label, char *buf, int size)
+{
+	int	i;
+
+	printf("%s", label);
+	i = 0;
+	while (i < size)
+	{
+		printf("%d ", (unsigned char)buf[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+int	main(void)
+{
+	char	buf_ft[10];
+	char	buf_orig[10];
+
+	/*
+		Testa o caso basico:
+		O buffer inteiro comeca preenchido com 'X', que vale 88 em ASCII.
+		A funcao deve zerar apenas os 5 primeiros bytes.
+		Os 5 ultimos devem continuar com o valor original.
+	*/
+	fill(buf_ft, 10, 'X');
+	fill(buf_orig, 10, 'X');
+	ft_bzero(buf_ft, 5);
+	bzero(buf_orig, 5);
+	printf("Test: ft_bzero(buf, 5) | buf[10]='X'(88), n=5\n");
+	printf("      zera so os 5 primeiros, resto intacto\n");
+	printf("      entrada : 88 88 88 88 88 88 88 88 88 88\n");
+	printf("      esperado: 0 0 0 0 0 88 88 88 88 88\n");
+	print_bytes("FT  : ", buf_ft, 10);
+	print_bytes("ORIG: ", buf_orig, 10);
+	printf("\n");
+
+	/*
+		Testa n=0:
+		Quando n e zero, a funcao nao deve alterar nenhum byte.
+		O buffer comeca todo com 'A', que vale 65 em ASCII.
+		Depois da chamada, tudo deve continuar igual.
+	*/
+	fill(buf_ft, 10, 'A');
+	fill(buf_orig, 10, 'A');
+	ft_bzero(buf_ft, 0);
+	bzero(buf_orig, 0);
+	printf("Test: ft_bzero(buf, 0) | buf[10]='A'(65), n=0\n");
+	printf("      n=0 nao deve tocar nada no buffer\n");
+	printf("      entrada : 65 65 65 65 65 65 65 65 65 65\n");
+	printf("      esperado: 65 65 65 65 65 65 65 65 65 65\n");
+	print_bytes("FT  : ", buf_ft, 10);
+	print_bytes("ORIG: ", buf_orig, 10);
+	printf("\n");
+
+	/*
+		Testa zerar o buffer inteiro:
+		O buffer comeca todo com 'Z', que vale 90 em ASCII.
+		Como n=10, todos os 10 bytes devem virar 0.
+	*/
+	fill(buf_ft, 10, 'Z');
+	fill(buf_orig, 10, 'Z');
+	ft_bzero(buf_ft, 10);
+	bzero(buf_orig, 10);
+	printf("Test: ft_bzero(buf, 10) | buf[10]='Z'(90), n=10\n");
+	printf("      n=tamanho, deve zerar tudo\n");
+	printf("      entrada : 90 90 90 90 90 90 90 90 90 90\n");
+	printf("      esperado: 0 0 0 0 0 0 0 0 0 0\n");
+	print_bytes("FT  : ", buf_ft, 10);
+	print_bytes("ORIG: ", buf_orig, 10);
+	return (0);
+}

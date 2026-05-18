@@ -1,0 +1,74 @@
+/*
+	Resumo dos testes:
+	1. Testa concatenacao normal entre duas strings.
+	2. Testa s1 vazia, onde o resultado deve ser igual a s2.
+	3. Testa s2 vazia, onde o resultado deve ser igual a s1.
+	4. Testa duas strings vazias, que deve retornar string vazia.
+	5. Testa concatenacao de um caractere com outro.
+	6. Testa string com newline, imprimindo \n de forma visivel.
+	7. Verifica se ft_strjoin retorna uma nova string alocada.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	print_visible(char *label, char *str)
+{
+	int	i;
+
+	printf("%s\"", label);
+	if (!str)
+	{
+		printf("NULL\"\n");
+		return ;
+	}
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			printf("\\n");
+		else
+			printf("%c", str[i]);
+		i++;
+	}
+	printf("\"\n");
+}
+
+static void	test_join(char *desc, char *entrada,
+	char *s1, char *s2, char *esperado)
+{
+	char	*result;
+
+	printf("Test: ft_strjoin(\"%s\", \"%s\") | %s\n", s1, s2, desc);
+	printf("      entrada : %s\n", entrada);
+	print_visible("      esperado: ", esperado);
+	result = ft_strjoin(s1, s2);
+	print_visible("FT  : ", result);
+	print_visible("ORIG: ", esperado);
+	free(result);
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_join("concatenacao normal",
+		"s1=\"Hello, \" s2=\"World!\"",
+		"Hello, ", "World!", "Hello, World!");
+	test_join("s1 vazia",
+		"s1=\"\" s2=\"World\"",
+		"", "World", "World");
+	test_join("s2 vazia",
+		"s1=\"Hello\" s2=\"\"",
+		"Hello", "", "Hello");
+	test_join("ambas vazias",
+		"s1=\"\" s2=\"\"",
+		"", "", "");
+	test_join("um char cada",
+		"s1=\"a\" s2=\"b\"",
+		"a", "b", "ab");
+	test_join("s1 com newline",
+		"s1=\"linha1\\n\" s2=\"linha2\"",
+		"linha1\n", "linha2", "linha1\nlinha2");
+	return (0);
+}

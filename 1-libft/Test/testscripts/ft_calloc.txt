@@ -1,0 +1,124 @@
+/*
+	Resumo dos testes:
+	1. ft_calloc(5, 4):
+	   verifica se aloca 20 bytes e se todos vem zerados.
+	2. ft_calloc(0, 100):
+	   verifica comportamento quando count e zero.
+	3. ft_calloc(100, 0):
+	   verifica comportamento quando size e zero.
+	4. ft_calloc(valor_muito_grande, 2):
+	   verifica se trata overflow de count * size retornando NULL.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	print_bytes(char *label, void *ptr, size_t n)
+{
+	unsigned char	*p;
+	size_t			i;
+
+	if (!ptr)
+	{
+		printf("%s(null)\n", label);
+		return ;
+	}
+	p = (unsigned char *)ptr;
+	printf("%s", label);
+	i = 0;
+	while (i < n)
+	{
+		printf("%02x ", p[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+static void	test_zero_init(void)
+{
+	void	*ft_ptr;
+	void	*libc_ptr;
+
+	/*
+		Testa o comportamento principal da calloc:
+		A funcao deve alocar count * size bytes.
+		Alem disso, todos os bytes alocados devem vir zerados.
+		Neste caso, 5 * 4 = 20 bytes.
+		Comparamos byte por byte com a calloc original.
+	*/
+	printf("Test: ft_calloc(5, 4) | 5 ints, zero-init\n");
+	printf("      todos os bytes devem ser 0x00 apos alocacao\n");
+	printf("      entrada : count=5, size=4\n");
+	printf("      esperado: 20 bytes todos 00\n");
+	ft_ptr = ft_calloc(5, 4);
+	libc_ptr = calloc(5, 4);
+	print_bytes("FT  : ", ft_ptr, 20);
+	print_bytes("ORIG: ", libc_ptr, 20);
+	free(ft_ptr);
+	free(libc_ptr);
+	printf("\n");
+}
+
+static void	test_zero_case(size_t count, size_t size, char *desc)
+{
+	void	*ft_ptr;
+	void	*libc_ptr;
+
+	/*
+		Testa casos em que count ou size sao zero.
+		Na libc, calloc(0, n) ou calloc(n, 0) pode retornar
+		um ponteiro valido ou NULL, dependendo do sistema.
+		Por isso comparamos com a calloc original do ambiente.
+		O importante e nao crashar e poder passar o retorno para free.
+	*/
+	printf("Test: ft_calloc(%zu, %zu) | %s\n", count, size, desc);
+	printf("      testa comportamento quando um argumento e zero\n");
+	printf("      entrada : count=%zu, size=%zu\n", count, size);
+	printf("      esperado: mesmo comportamento da calloc original\n");
+	ft_ptr = ft_calloc(count, size);
+	libc_ptr = calloc(count, size);
+	printf("FT  : %s\n", ft_ptr ? "ptr" : "NULL");
+	printf("ORIG: %s\n", libc_ptr ? "ptr" : "NULL");
+	free(ft_ptr);
+	free(libc_ptr);
+	printf("\n");
+}
+
+static void	test_overflow(void)
+{
+	void			*ft_ptr;
+	void			*libc_ptr;
+	volatile size_t	count;
+	volatile size_t	size;
+
+	/*
+		Testa overflow na multiplicacao count * size.
+		Se count * size estourar o limite de size_t, a funcao
+		nao deve alocar um tamanho errado.
+		O esperado e retornar NULL, como a calloc original.
+		Usamos volatile para evitar warning do compilador com -Werror.
+	*/
+	count = ((size_t)-1 / 2) + 1;
+	size = 2;
+	printf("Test: ft_calloc((SIZE_MAX / 2) + 1, 2) | overflow\n");
+	printf("      count * size estoura size_t\n");
+	printf("      entrada : count muito grande, size=2\n");
+	printf("      esperado: NULL\n");
+	ft_ptr = ft_calloc(count, size);
+	libc_ptr = calloc(count, size);
+	printf("FT  : %s\n", ft_ptr ? "ptr" : "NULL");
+	printf("ORIG: %s\n", libc_ptr ? "ptr" : "NULL");
+	free(ft_ptr);
+	free(libc_ptr);
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_zero_init();
+	test_zero_case(0, 100, "count=0");
+	test_zero_case(100, 0, "size=0");
+	test_overflow();
+	return (0);
+}

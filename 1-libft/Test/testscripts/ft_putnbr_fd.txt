@@ -1,0 +1,78 @@
+/*
+	Resumo dos testes:
+	1. Testa escrita do numero zero.
+	2. Testa numero positivo simples.
+	3. Testa numero negativo simples.
+	4. Testa numeros de um digito positivo e negativo.
+	5. Testa INT_MAX, maior valor possivel de int.
+	6. Testa INT_MIN, caso critico para conversao de sinal.
+	7. Usa pipe para capturar os bytes escritos sem sujar stdout.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <limits.h>
+#include <unistd.h>
+
+static void	print_result(char *label, char *buf, ssize_t count)
+{
+	int	i;
+
+	printf("%s count=%zd bytes=", label, count);
+	i = 0;
+	while (i < count)
+	{
+		printf("%u", (unsigned char)buf[i]);
+		if (i + 1 < count)
+			printf(" ");
+		i++;
+	}
+	printf("\n");
+}
+
+static void	test_putnbr(char *desc, char *entrada,
+	char *expected, int n)
+{
+	int		fd[2];
+	char	buf[20];
+	ssize_t	count;
+
+	printf("Test: ft_putnbr_fd(%d, fd) | %s\n", n, desc);
+	printf("      escreve o numero no file descriptor informado\n");
+	printf("      entrada : %s\n", entrada);
+	printf("      esperado: %s\n", expected);
+	if (pipe(fd) == -1)
+	{
+		printf("FT  : pipe error\n");
+		printf("ORIG: %s\n", expected);
+		return ;
+	}
+	ft_putnbr_fd(n, fd[1]);
+	close(fd[1]);
+	count = read(fd[0], buf, 20);
+	close(fd[0]);
+	print_result("FT  :", buf, count);
+	printf("ORIG: %s\n", expected);
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_putnbr("zero absoluto",
+		"n=0", "count=1 bytes=48", 0);
+	test_putnbr("positivo simples",
+		"n=42", "count=2 bytes=52 50", 42);
+	test_putnbr("negativo simples",
+		"n=-42", "count=3 bytes=45 52 50", -42);
+	test_putnbr("um digito positivo",
+		"n=7", "count=1 bytes=55", 7);
+	test_putnbr("um digito negativo",
+		"n=-1", "count=2 bytes=45 49", -1);
+	test_putnbr("INT_MAX limite superior",
+		"n=2147483647",
+		"count=10 bytes=50 49 52 55 52 56 51 54 52 55", INT_MAX);
+	test_putnbr("INT_MIN limite inferior critico",
+		"n=-2147483648",
+		"count=11 bytes=45 50 49 52 55 52 56 51 54 52 56", INT_MIN);
+	return (0);
+}

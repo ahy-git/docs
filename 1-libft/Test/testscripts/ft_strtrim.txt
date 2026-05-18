@@ -1,0 +1,58 @@
+/*
+	Resumo dos testes:
+	1. Testa remocao de espacos nas duas pontas da string.
+	2. Testa remocao de um caractere especifico nas pontas.
+	3. Testa set com varios caracteres.
+	4. Testa quando o set remove a string inteira.
+	5. Testa set vazio, onde nada deve ser removido.
+	6. Testa quando nenhum caractere do set aparece nas pontas.
+	7. Testa remocao apenas no inicio.
+	8. Testa que caracteres do set no meio nao sao removidos.
+	9. Testa string vazia.
+	10. Testa whitespace como espaco, tab, newline e carriage return.
+	11. Testa mistura de caracteres especiais nas pontas.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	print_value(char *label, char *result)
+{
+	if (!result)
+		printf("%s: (null)\n", label);
+	else
+		printf("%s: \"%s\"\n", label, result);
+}
+
+static void	test_strtrim(char *s1, char *set, char *expected, char *desc)
+{
+	char	*result;
+
+	printf("Test: ft_strtrim(\"%s\", \"%s\") | %s\n", s1, set, desc);
+	printf("      remove do inicio e do fim os chars do set\n");
+	printf("      entrada : \"%s\", \"%s\"\n", s1, set);
+	printf("      esperado: \"%s\"\n", expected);
+	result = ft_strtrim(s1, set);
+	print_value("FT  ", result);
+	print_value("ORIG", expected);
+	printf("\n");
+	free(result);
+}
+
+int	main(void)
+{
+	test_strtrim("   Hello World   ", " ", "Hello World",
+		"espacos nas pontas");
+	test_strtrim("xxHelloxx", "x", "Hello", "x nas pontas");
+	test_strtrim("abcHelloabc", "abc", "Hello", "varios chars");
+	test_strtrim("aaaa", "a", "", "set remove tudo");
+	test_strtrim("Hello", "", "Hello", "set vazio");
+	test_strtrim("Hello", "xyz", "Hello", "nada para tirar");
+	test_strtrim("  Hello", " ", "Hello", "remove so do inicio");
+	test_strtrim("ab Hello ab", "ab", " Hello ", "nao remove do meio");
+	test_strtrim("", "abc", "", "string vazia");
+	test_strtrim(" \t\n\r ", " \t\n\r", "", "tudo whitespace");
+	test_strtrim("/-*Hello*-/", "/*-", "Hello", "mix de chars");
+	return (0);
+}

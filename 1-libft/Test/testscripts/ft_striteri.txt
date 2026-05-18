@@ -1,0 +1,88 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_striteri aplicando to_upper em uma string normal.
+	2. Verifica se a funcao modifica a string original in-place.
+	3. Testa preservacao de espacos, digitos e pontuacao.
+	4. Testa funcao que usa o indice para alterar cada caractere.
+	5. Testa string vazia, onde f nao deve alterar nada.
+	6. Testa protecao com f=NULL para nao crashar.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+
+static void	to_upper(unsigned int i, char *c)
+{
+	(void)i;
+	if (*c >= 'a' && *c <= 'z')
+		*c = *c - 32;
+}
+
+static void	add_index(unsigned int i, char *c)
+{
+	*c = *c + i;
+}
+
+static void	test_to_upper(void)
+{
+	char	buf_hello[10];
+	char	buf_mixed[10];
+
+	ft_memcpy(buf_hello, "hello", 6);
+	ft_memcpy(buf_mixed, "Hi 42!", 7);
+	printf("Test: ft_striteri(\"hello\", to_upper) | maiuscula tudo\n");
+	printf("      f recebe indice e ponteiro, modifica in-place\n");
+	printf("      entrada : s=\"hello\", f=to_upper\n");
+	printf("      esperado: HELLO\n");
+	ft_striteri(buf_hello, to_upper);
+	printf("FT  : %s\n", buf_hello);
+	printf("ORIG: HELLO\n");
+	printf("\n");
+	printf("Test: ft_striteri(\"Hi 42!\", to_upper) | nao-letras\n");
+	printf("      espacos, digitos e '!' devem ficar intactos\n");
+	printf("      entrada : s=\"Hi 42!\", f=to_upper\n");
+	printf("      esperado: HI 42!\n");
+	ft_striteri(buf_mixed, to_upper);
+	printf("FT  : %s\n", buf_mixed);
+	printf("ORIG: HI 42!\n");
+	printf("\n");
+}
+
+static void	test_add_index_e_protecoes(void)
+{
+	char	buf[10];
+
+	ft_memcpy(buf, "AAAA", 5);
+	printf("Test: ft_striteri(\"AAAA\", add_index) | soma indice\n");
+	printf("      A=65: A+0=A A+1=B A+2=C A+3=D\n");
+	printf("      entrada : s=\"AAAA\", f=add_index\n");
+	printf("      esperado: ABCD\n");
+	ft_striteri(buf, add_index);
+	printf("FT  : %s\n", buf);
+	printf("ORIG: ABCD\n");
+	printf("\n");
+	ft_memcpy(buf, "", 1);
+	printf("Test: ft_striteri(\"\", to_upper) | string vazia\n");
+	printf("      f nao deve alterar nada, sem crash\n");
+	printf("      entrada : s=\"\", f=to_upper\n");
+	printf("      esperado: \"\"\n");
+	ft_striteri(buf, to_upper);
+	printf("FT  : \"%s\"\n", buf);
+	printf("ORIG: \"\"\n");
+	printf("\n");
+	ft_memcpy(buf, "hello", 6);
+	printf("Test: ft_striteri(s, NULL) | f=NULL\n");
+	printf("      deve proteger contra f nula sem crashar\n");
+	printf("      entrada : s=\"hello\", f=NULL\n");
+	printf("      esperado: sem crash\n");
+	ft_striteri(buf, NULL);
+	printf("FT  : sem crash\n");
+	printf("ORIG: sem crash\n");
+}
+
+int	main(void)
+{
+	test_to_upper();
+	test_add_index_e_protecoes();
+	return (0);
+}

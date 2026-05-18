@@ -1,0 +1,65 @@
+/*
+	Resumo dos testes:
+	1. Testa busca de substring presente dentro do limite len.
+	2. Testa substring existente, mas fora do limite len.
+	3. Testa needle vazia, que deve retornar haystack.
+	4. Testa substring inexistente.
+	5. Testa needle igual a haystack inteira.
+	6. Testa quando len nao permite copiar a needle inteira.
+	7. Testa busca no meio da string quando len permite.
+	8. Testa haystack vazia com needle vazia.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+
+static void	print_expected(char *expected)
+{
+	if (!expected)
+		printf("ORIG: (null)\n");
+	else
+		printf("ORIG: \"%s\"\n", expected);
+}
+
+static void	print_value(char *label, char *result)
+{
+	if (!result)
+		printf("%s: (null)\n", label);
+	else
+		printf("%s: \"%s\"\n", label, result);
+}
+
+static void	print_expected_text(char *expected)
+{
+	if (!expected)
+		printf("      esperado: (null)\n");
+	else
+		printf("      esperado: \"%s\"\n", expected);
+}
+
+static void	test_strnstr(char *h, char *n, size_t len, char *expected)
+{
+	char	*result;
+
+	printf("Test: ft_strnstr(\"%s\", \"%s\", %zu)\n", h, n, len);
+	printf("      procura a substring dentro do limite len\n");
+	printf("      entrada : \"%s\", \"%s\", %zu\n", h, n, len);
+	print_expected_text(expected);
+	result = ft_strnstr(h, n, len);
+	print_value("FT  ", result);
+	print_expected(expected);
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_strnstr("Hello World", "World", 11, "World");
+	test_strnstr("Hello World", "World", 9, NULL);
+	test_strnstr("Hello World", "", 5, "Hello World");
+	test_strnstr("aaa", "ab", 3, NULL);
+	test_strnstr("abc", "abc", 3, "abc");
+	test_strnstr("abc", "bc", 2, NULL);
+	test_strnstr("abc", "bc", 3, "bc");
+	test_strnstr("", "", 0, "");
+	return (0);
+}

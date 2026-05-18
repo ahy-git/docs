@@ -1,0 +1,40 @@
+/*
+	Resumo dos testes:
+	1. Testa strings iguais, que devem retornar 0.
+	2. Testa diferenca dentro do limite n.
+	3. Testa diferenca fora do limite n, que deve ser ignorada.
+	4. Testa quando uma string termina antes da outra.
+	5. Testa duas strings vazias.
+	6. Testa diferenca entre maiuscula e minuscula.
+	7. Testa n=0, que sempre deve retornar 0.
+	8. Compara o resultado com strncmp original da libc.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <string.h>
+
+static void	test_strncmp(char *s1, char *s2, size_t n, char *desc)
+{
+	printf("Test: ft_strncmp(\"%s\", \"%s\", %zu) | %s\n",
+		s1, s2, n, desc);
+	printf("      compara no maximo n caracteres\n");
+	printf("      entrada : \"%s\", \"%s\", %zu\n", s1, s2, n);
+	printf("      esperado: mesmo sinal da strncmp original\n");
+	printf("FT  : %d\n", ft_strncmp(s1, s2, n));
+	printf("ORIG: %d\n", strncmp(s1, s2, n));
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_strncmp("abc", "abc", 3, "strings iguais");
+	test_strncmp("abc", "abd", 3, "diferenca no terceiro char");
+	test_strncmp("abc", "abd", 2, "igual porque n limita em 2");
+	test_strncmp("abc", "abcdef", 3, "igual nos 3 primeiros chars");
+	test_strncmp("abc", "abcdef", 5, "s1 termina antes de s2");
+	test_strncmp("", "", 5, "duas strings vazias");
+	test_strncmp("a", "A", 1, "minuscula maior que maiuscula");
+	test_strncmp("abc", "abd", 0, "n zero deve retornar 0");
+	return (0);
+}

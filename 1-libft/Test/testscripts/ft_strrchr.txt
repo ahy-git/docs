@@ -1,0 +1,47 @@
+/*
+	Resumo dos testes:
+	1. Testa caractere que aparece mais de uma vez.
+	2. Verifica se retorna a ultima ocorrencia, nao a primeira.
+	3. Testa caractere no inicio da string.
+	4. Testa caractere no fim da string.
+	5. Testa caractere ausente, que deve retornar NULL.
+	6. Testa string vazia.
+	7. Testa busca pelo proprio '\0', que deve retornar o fim da string.
+	8. Compara o resultado com strrchr original da libc.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <string.h>
+
+static void	print_value(char *label, char *result)
+{
+	if (!result)
+		printf("%s: (null)\n", label);
+	else
+		printf("%s: \"%s\"\n", label, result);
+}
+
+static void	test_strrchr(char *s, int c, char *desc)
+{
+	printf("Test: ft_strrchr(\"%s\", '%c') | %s\n", s, c, desc);
+	printf("      procura a ultima ocorrencia do char na string\n");
+	printf("      entrada : \"%s\", '%c'\n", s, c);
+	printf("      esperado: mesmo resultado da strrchr original\n");
+	print_value("FT  ", ft_strrchr(s, c));
+	print_value("ORIG", strrchr(s, c));
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_strrchr("Hello World", 'o', "char aparece mais de uma vez");
+	test_strrchr("Hello World", 'H', "char aparece no comeco");
+	test_strrchr("Hello World", 'd', "char aparece no fim");
+	test_strrchr("Hello World", 'x', "char nao existe");
+	test_strrchr("banana", 'a', "pega o ultimo a");
+	test_strrchr("banana", 'b', "unico char no inicio");
+	test_strrchr("", 'a', "string vazia");
+	test_strrchr("abc", '\0', "procura o terminador nulo");
+	return (0);
+}

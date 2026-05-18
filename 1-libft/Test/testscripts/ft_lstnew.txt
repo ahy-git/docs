@@ -1,0 +1,74 @@
+/*
+	Resumo dos testes:
+	1. Testa ft_lstnew com content sendo uma string alocada.
+	2. Verifica se content guarda o ponteiro recebido.
+	3. Verifica se next sempre nasce como NULL.
+	4. Testa ft_lstnew com content=NULL.
+	5. Testa duas chamadas de ft_lstnew para confirmar nos independentes.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	test_content_string(void)
+{
+	t_list	*node;
+
+	node = ft_lstnew(ft_strdup("Hello"));
+	printf("Test: ft_lstnew(ft_strdup(\"Hello\")) | content string\n");
+	printf("      content deve guardar o ponteiro, next deve ser NULL\n");
+	printf("      entrada : content=ft_strdup(\"Hello\")\n");
+	printf("      esperado: content=Hello next=NULL\n");
+	printf("FT  : content=%s next=%s\n",
+		(char *)node->content, node->next ? "ptr" : "NULL");
+	printf("ORIG: content=Hello next=NULL\n");
+	free(node->content);
+	free(node);
+	printf("\n");
+}
+
+static void	test_content_null(void)
+{
+	t_list	*node;
+
+	node = ft_lstnew(NULL);
+	printf("Test: ft_lstnew(NULL) | content nulo\n");
+	printf("      node deve ser alocado, content e next NULL\n");
+	printf("      entrada : content=NULL\n");
+	printf("      esperado: content=NULL next=NULL\n");
+	printf("FT  : content=%s next=%s\n",
+		node->content ? "ptr" : "NULL",
+		node->next ? "ptr" : "NULL");
+	printf("ORIG: content=NULL next=NULL\n");
+	free(node);
+	printf("\n");
+}
+
+static void	test_dois_nos(void)
+{
+	t_list	*a;
+	t_list	*b;
+
+	a = ft_lstnew("primeiro");
+	b = ft_lstnew("segundo");
+	printf("Test: ft_lstnew x2 | dois nos independentes\n");
+	printf("      cada chamada aloca um no distinto na memoria\n");
+	printf("      entrada : \"primeiro\", \"segundo\"\n");
+	printf("      esperado: enderecos diferentes, next ambos NULL\n");
+	printf("FT  : diferentes=%s next_a=%s next_b=%s\n",
+		a != b ? "sim" : "nao",
+		a->next ? "ptr" : "NULL",
+		b->next ? "ptr" : "NULL");
+	printf("ORIG: diferentes=sim next_a=NULL next_b=NULL\n");
+	free(a);
+	free(b);
+}
+
+int	main(void)
+{
+	test_content_string();
+	test_content_null();
+	test_dois_nos();
+	return (0);
+}

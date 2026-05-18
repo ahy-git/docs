@@ -1,0 +1,56 @@
+/*
+	Resumo dos testes:
+	1. Testa escrita de caractere normal: 'A'.
+	2. Testa escrita de newline: '\n', verificando o byte 10.
+	3. Testa escrita de byte nulo: '\0', verificando o byte 0.
+	4. Testa outro caractere comum: 'E'.
+	5. Usa pipe para capturar o byte escrito sem sujar o stdout.
+	6. Compara a quantidade de bytes e o valor escrito.
+*/
+
+#include "libft.h"
+#include <stdio.h>
+#include <unistd.h>
+
+static void	print_result(char *label, ssize_t count, unsigned char c)
+{
+	printf("%s count=%zd byte=%u\n", label, count, c);
+}
+
+static void	test_putchar(char c, char *name, unsigned char expected)
+{
+	int				fd[2];
+	char			buf[1];
+	ssize_t			count;
+	unsigned char	byte;
+
+	byte = 0;
+	printf("Test: ft_putchar_fd(%s, fd) | escreve 1 byte\n", name);
+	printf("      escreve o caractere no file descriptor informado\n");
+	printf("      entrada : c=%s\n", name);
+	printf("      esperado: count=1 byte=%u\n", expected);
+	if (pipe(fd) == -1)
+	{
+		printf("FT  : pipe error\n");
+		printf("ORIG: count=1 byte=%u\n", expected);
+		return ;
+	}
+	ft_putchar_fd(c, fd[1]);
+	close(fd[1]);
+	count = read(fd[0], buf, 1);
+	close(fd[0]);
+	if (count == 1)
+		byte = (unsigned char)buf[0];
+	print_result("FT  :", count, byte);
+	printf("ORIG: count=1 byte=%u\n", expected);
+	printf("\n");
+}
+
+int	main(void)
+{
+	test_putchar('A', "'A'", 65);
+	test_putchar('\n', "'\\n'", 10);
+	test_putchar('\0', "'\\0'", 0);
+	test_putchar('E', "'E'", 69);
+	return (0);
+}
