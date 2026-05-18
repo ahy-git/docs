@@ -1,139 +1,94 @@
 # Descrição
-libft.h -
-O libft.h é o cabeçalho público da biblioteca. Ele tem o header guard, os includes que minhas funções usam (stddef.h, stdlib.h, unistd.h), a definição da struct t_list da Parte 3, e os protótipos de todas as funções da libft, divididos em três blocos: libc, adicionais e lista ligada.
+[<u>**libft.h**</u>](#libft-h) - O libft.h é o cabeçalho público da biblioteca. Ele tem o header guard, os includes que minhas funções usam (stddef.h, stdlib.h, unistd.h), a definição da struct t_list da Parte 3, e os protótipos de todas as funções da libft, divididos em três blocos: libc, adicionais e lista ligada.
 
-Makefile -
-Makefile define NAME = libft.a, lista todos os .c, gera os .o com cc -Wall -Wextra -Werror -c, e empacota com ar rcs na regra $(NAME). As regras all, clean, fclean e re estão presentes e marcadas como .PHONY. O %.o: %.c libft.h garante que se eu alterar o header, tudo recompila, e que arquivos não modificados não são recompilados, evitando relink desnecessário
+[<u>**Makefile**</u>](#makefile) - Makefile define NAME = libft.a, lista todos os .c, gera os .o com cc -Wall -Wextra -Werror -c, e empacota com ar rcs na regra $(NAME). As regras all, clean, fclean e re estão presentes e marcadas como .PHONY. O %.o: %.c libft.h garante que se eu alterar o header, tudo recompila, e que arquivos não modificados não são recompilados, evitando relink desnecessário
 
-ft_isalpha -
-A função ft_isalpha verifica se o caractere recebido está no intervalo das letras maiúsculas ('A' a 'Z') ou minúsculas ('a' a 'z'). Como o enunciado da 42 exige retorno exatamente 1 ou 0, eu uso um if com os dois intervalos ligados por || e retorno 1 se entrar, 0 caso contrário.
+[<u>**ft_isalpha**</u>](#ft-isalpha-c) - A função [ft_isalpha](#ft-isalpha-c) verifica se o caractere recebido está no intervalo das letras maiúsculas ('A' a 'Z') ou minúsculas ('a' a 'z'). Como o enunciado da 42 exige retorno exatamente 1 ou 0, eu uso um if com os dois intervalos ligados por || e retorno 1 se entrar, 0 caso contrário.
 
-ft_isdigit -
-A função ft_isdigit verifica se o caractere recebido é um dígito decimal. Em ASCII, os dígitos '0' a '9' ocupam posições consecutivas (48 a 57), então basta um if checando se c está nesse intervalo. Retorno 1 se for dígito, 0 caso contrário, conforme o enunciado da 42 exige.
+[<u>**ft_isdigit**</u>](#ft-isdigit-c) - A função [ft_isdigit](#ft-isdigit-c) verifica se o caractere recebido é um dígito decimal. Em ASCII, os dígitos '0' a '9' ocupam posições consecutivas (48 a 57), então basta um if checando se c está nesse intervalo. Retorno 1 se for dígito, 0 caso contrário, conforme o enunciado da 42 exige.
 
-ft_isalnum -
-A função ft_isalnum verifica se o caractere é alfanumérico, ou seja, letra ou dígito. Eu reaproveito as funções ft_isalpha e ft_isdigit que já escrevi, ligando-as com ||. Se alguma das duas retorna 1, é alfanumérico, então retorno 1; caso contrário, retorno 0.
+[<u>**ft_isalnum**</u>](#ft-isalnum-c) - A função [ft_isalnum](#ft-isalnum-c) verifica se o caractere é alfanumérico, ou seja, letra ou dígito. Eu reaproveito as funções [ft_isalpha](#ft-isalpha-c) e [ft_isdigit](#ft-isdigit-c) que já escrevi, ligando-as com ||. Se alguma das duas retorna 1, é alfanumérico, então retorno 1; caso contrário, retorno 0.
 
-ft_isascii -
-A função ft_isascii verifica se o valor recebido cabe na tabela ASCII padrão, que vai de 0 a 127. Um if simples checa esse intervalo e retorno 1 se estiver dentro, 0 caso contrário. É a função mais direta do bloco — nenhum caractere específico, só o intervalo numérico da tabela inteira.
+[<u>**ft_isascii**</u>](#ft-isascii-c) - A função [ft_isascii](#ft-isascii-c) verifica se o valor recebido cabe na tabela ASCII padrão, que vai de 0 a 127. Um if simples checa esse intervalo e retorno 1 se estiver dentro, 0 caso contrário. É a função mais direta do bloco — nenhum caractere específico, só o intervalo numérico da tabela inteira.
 
-ft_isprint -
-A função ft_isprint verifica se o caractere recebido é imprimível, ou seja, se aparece visualmente na tela. Em ASCII, os imprimíveis vão do espaço ' ' (32) até o til '~' (126), um bloco contínuo. Um if checa esse intervalo: retorno 1 se está dentro, 0 caso contrário. Importante: o espaço entra como imprimível, e o DEL (127) e os caracteres de controle (0 a 31) ficam de fora.
+[<u>**ft_isprint**</u>](#ft-isprint-c) - A função [ft_isprint](#ft-isprint-c) verifica se o caractere recebido é imprimível, ou seja, se aparece visualmente na tela. Em ASCII, os imprimíveis vão do espaço ' ' (32) até o til '~' (126), um bloco contínuo. Um if checa esse intervalo: retorno 1 se está dentro, 0 caso contrário. Importante: o espaço entra como imprimível, e o DEL (127) e os caracteres de controle (0 a 31) ficam de fora.
 
-ft_strlen -
-A função ft_strlen retorna o tamanho de uma string, sem contar o \0 final. Eu uso um contador i que começa em 0 e um while (s[i]) que avança enquanto o caractere não é nulo — como \0 vale 0 e zero é falso em C, o loop para sozinho no terminador. No final, i tem exatamente o número de caracteres lidos, e é o que eu retorno.
+[<u>**ft_strlen**</u>](#ft-strlen-c) - A função [ft_strlen](#ft-strlen-c) retorna o tamanho de uma string, sem contar o \0 final. Eu uso um contador i que começa em 0 e um while (s[i]) que avança enquanto o caractere não é nulo — como \0 vale 0 e zero é falso em C, o loop para sozinho no terminador. No final, i tem exatamente o número de caracteres lidos, e é o que eu retorno.
 
-ft_memset -
-A função ft_memset preenche len bytes a partir do endereço b com o valor c. Como o ponteiro chega como void *, eu converto para unsigned char * para conseguir acessar a memória byte a byte. Faço um loop de 0 até len - 1, escrevendo (unsigned char)c em cada posição, e no final devolvo o ponteiro original b, seguindo a convenção da família mem* da libc.
+[<u>**ft_memset**</u>](#ft-memset-c) - A função [ft_memset](#ft-memset-c) preenche len bytes a partir do endereço b com o valor c. Como o ponteiro chega como void *, eu converto para unsigned char * para conseguir acessar a memória byte a byte. Faço um loop de 0 até len - 1, escrevendo (unsigned char)c em cada posição, e no final devolvo o ponteiro original b, seguindo a convenção da família mem* da libc.
 
-ft_bzero -
-A função ft_bzero zera n bytes a partir do ponteiro s. Como o comportamento é equivalente a memset(s, 0, n), eu reaproveito o ft_memset que já escrevi, passando 0 como o byte de preenchimento. Não retorno nada porque o protótipo é void, igual ao da libc
+[<u>**ft_bzero**</u>](#ft-bzero-c) - A função [ft_bzero](#ft-bzero-c) zera n bytes a partir do ponteiro s. Como o comportamento é equivalente a memset(s, 0, n), eu reaproveito o [ft_memset](#ft-memset-c) que já escrevi, passando 0 como o byte de preenchimento. Não retorno nada porque o protótipo é void, igual ao da libc
 
-ft_memcpy -
-A função ft_memcpy copia n bytes de src para dst, byte a byte. Como os ponteiros chegam como void *, eu converto ambos para unsigned char * (com const no de origem, para preservar constância). Faço uma proteção contra o caso dst e src serem ambos NULL, retornando NULL nesse caso. Senão, percorro de 0 até n - 1 copiando s[i] em d[i] e devolvo dst no final. Importante: memcpy não trata sobreposição — para isso existe o memmove.
+[<u>**ft_memcpy**</u>](#ft-memcpy-c) - A função [ft_memcpy](#ft-memcpy-c) copia n bytes de src para dst, byte a byte. Como os ponteiros chegam como void *, eu converto ambos para unsigned char * (com const no de origem, para preservar constância). Faço uma proteção contra o caso dst e src serem ambos NULL, retornando NULL nesse caso. Senão, percorro de 0 até n - 1 copiando s[i] em d[i] e devolvo dst no final. Importante: memcpy não trata sobreposição — para isso existe o memmove.
 
-ft_memmove -
-A função ft_memmove copia len bytes de src para dst lidando com sobreposição. A ideia é simples: comparo os endereços. Se o destino vem antes da fonte (d < s), copio do começo para o final, normal. Se vem depois (d >= s), copio de trás para frente, para não sobrescrever bytes da fonte antes de lê-los. Uso unsigned char * para trabalhar byte a byte, faço a proteção contra dst e src ambos NULL, e devolvo dst no final. Para o loop decrescente, uso i = len e decremento i antes de usar, evitando o problema de size_t nunca ser negativo.
+[<u>**ft_memmove**</u>](#ft-memmove-c) - A função [ft_memmove](#ft-memmove-c) copia len bytes de src para dst lidando com sobreposição. A ideia é simples: comparo os endereços. Se o destino vem antes da fonte (d < s), copio do começo para o final, normal. Se vem depois (d >= s), copio de trás para frente, para não sobrescrever bytes da fonte antes de lê-los. Uso unsigned char * para trabalhar byte a byte, faço a proteção contra dst e src ambos NULL, e devolvo dst no final. Para o loop decrescente, uso i = len e decremento i antes de usar, evitando o problema de size_t nunca ser negativo.
 
-ft_strlcpy -
-A função ft_strlcpy copia src para dst respeitando o tamanho do buffer e sempre fechando com \0. Trato primeiro o caso dstsize == 0, retornando direto o tamanho da fonte sem escrever nada — isso evita o underflow de dstsize - 1 em size_t. Senão, um while copia enquanto há caractere na fonte e ainda há espaço (i < dstsize - 1, deixando 1 byte para o terminador). No final, escrevo o \0 na posição onde o loop parou e retorno ft_strlen(src) — esse retorno permite ao chamador detectar truncamento.
+[<u>**ft_strlcpy**</u>](#ft-strlcpy-c) - A função [ft_strlcpy](#ft-strlcpy-c) copia src para dst respeitando o tamanho do buffer e sempre fechando com \0. Trato primeiro o caso dstsize == 0, retornando direto o tamanho da fonte sem escrever nada — isso evita o underflow de dstsize - 1 em size_t. Senão, um while copia enquanto há caractere na fonte e ainda há espaço (i < dstsize - 1, deixando 1 byte para o terminador). No final, escrevo o \0 na posição onde o loop parou e retorno [ft_strlen](#ft-strlen-c)(src) — esse retorno permite ao chamador detectar truncamento.
 
-ft_strlcat -
-A função ft_strlcat concatena src no final de dst, respeitando o tamanho do buffer e sempre fechando com \0. Primeiro calculo dst_len e src_len reusando ft_strlen. Trato o caso patológico em que dstsize <= dst_len: aqui dst não tem \0 dentro do buffer informado, então retorno direto dstsize + src_len sem mexer em nada. Senão, percorro src escrevendo em dst[dst_len + i] enquanto há caractere e enquanto dst_len + i < dstsize - 1, para deixar espaço pro terminador. Fecho com \0 e retorno dst_len + src_len — o tamanho que a string teria se coubesse, padrão BSD que permite detectar truncamento.
+[<u>**ft_strlcat**</u>](#ft-strlcat-c) - A função [ft_strlcat](#ft-strlcat-c) concatena src no final de dst, respeitando o tamanho do buffer e sempre fechando com \0. Primeiro calculo dst_len e src_len reusando [ft_strlen](#ft-strlen-c). Trato o caso patológico em que dstsize <= dst_len: aqui dst não tem \0 dentro do buffer informado, então retorno direto dstsize + src_len sem mexer em nada. Senão, percorro src escrevendo em dst[dst_len + i] enquanto há caractere e enquanto dst_len + i < dstsize - 1, para deixar espaço pro terminador. Fecho com \0 e retorno dst_len + src_len — o tamanho que a string teria se coubesse, padrão BSD que permite detectar truncamento.
 
-ft_toupper -
-A função ft_toupper converte uma letra minúscula para maiúscula, e devolve qualquer outro caractere inalterado. Em ASCII, as minúsculas vão de 97 a 122 e as maiúsculas de 65 a 90 — sempre 32 a menos. Então um if testa se c está no intervalo das minúsculas; se está, retorno c - 32, senão retorno c direto. O parâmetro é int para manter compatibilidade com EOF, igual à libc.
+[<u>**ft_toupper**</u>](#ft-toupper-c) - A função [ft_toupper](#ft-toupper-c) converte uma letra minúscula para maiúscula, e devolve qualquer outro caractere inalterado. Em ASCII, as minúsculas vão de 97 a 122 e as maiúsculas de 65 a 90 — sempre 32 a menos. Então um if testa se c está no intervalo das minúsculas; se está, retorno c - 32, senão retorno c direto. O parâmetro é int para manter compatibilidade com EOF, igual à libc.
 
-ft_tolower -
-A função ft_tolower converte uma letra maiúscula em minúscula, e devolve qualquer outro caractere inalterado. Como a distância ASCII entre maiúsculas (65–90) e minúsculas (97–122) é sempre 32, um if testa o intervalo das maiúsculas e, se entrar, retorno c + 32. Senão, retorno c direto. É o espelho do ft_toupper: muda só o intervalo testado e o sinal da operação
+[<u>**ft_tolower**</u>](#ft-tolower-c) - A função [ft_tolower](#ft-tolower-c) converte uma letra maiúscula em minúscula, e devolve qualquer outro caractere inalterado. Como a distância ASCII entre maiúsculas (65–90) e minúsculas (97–122) é sempre 32, um if testa o intervalo das maiúsculas e, se entrar, retorno c + 32. Senão, retorno c direto. É o espelho do [ft_toupper](#ft-toupper-c): muda só o intervalo testado e o sinal da operação
 
-ft_strchr -
-A função ft_strchr busca a primeira ocorrência do caractere c na string s. Eu percorro com um while (s[i]) e, a cada passo, comparo s[i] com (char)c. O cast para char é importante porque c chega como int por compatibilidade com EOF. Se acho, retorno (char *)&s[i], com cast para tirar a constância imposta pelo const char *s. Saí do loop e não achei? Trato o caso especial: se c for \0, retorno o endereço do terminador (porque o \0 é considerado parte da string para strchr). Senão, retorno NULL.
+[<u>**ft_strchr**</u>](#ft-strchr-c) - A função [ft_strchr](#ft-strchr-c) busca a primeira ocorrência do caractere c na string s. Eu percorro com um while (s[i]) e, a cada passo, comparo s[i] com (char)c. O cast para char é importante porque c chega como int por compatibilidade com EOF. Se acho, retorno (char *)&s[i], com cast para tirar a constância imposta pelo const char *s. Saí do loop e não achei? Trato o caso especial: se c for \0, retorno o endereço do terminador (porque o \0 é considerado parte da string para strchr). Senão, retorno NULL.
 
-ft_strrchr -
-A função ft_strrchr busca a última ocorrência de c em s. Em vez de percorrer do final para frente, eu percorro do começo pro final e mantenho um ponteiro last que vai sendo atualizado sempre que acho c. Quando o loop termina, o last aponta naturalmente para a última ocorrência. Para cobrir o caso especial em que c == '\0', eu uso while (1) e testo a comparação com c antes de checar se cheguei no \0 — assim o \0 final também é considerado como um caractere válido na busca. Se nada casar, last continua NULL e é o que retorno.
+[<u>**ft_strrchr**</u>](#ft-strrchr-c) - A função [ft_strrchr](#ft-strrchr-c) busca a última ocorrência de c em s. Em vez de percorrer do final para frente, eu percorro do começo pro final e mantenho um ponteiro last que vai sendo atualizado sempre que acho c. Quando o loop termina, o last aponta naturalmente para a última ocorrência. Para cobrir o caso especial em que c == '\0', eu uso while (1) e testo a comparação com c antes de checar se cheguei no \0 — assim o \0 final também é considerado como um caractere válido na busca. Se nada casar, last continua NULL e é o que retorno.
 
-ft_strncmp -
-A função ft_strncmp compara duas strings byte a byte até no máximo n caracteres. O while continua enquanto i < n e enquanto pelo menos uma das strings ainda tem caractere (s1[i] || s2[i]). Se acho diferença, retorno (unsigned char)s1[i] - (unsigned char)s2[i] — o cast para unsigned char é importante porque o man exige comparação como bytes não sinalizados, evitando que valores acima de 127 sejam interpretados como negativos e quebrem o sinal do retorno. Se chego ao final sem diferença, retorno 0.
+[<u>**ft_strncmp**</u>](#ft-strncmp-c) - A função [ft_strncmp](#ft-strncmp-c) compara duas strings byte a byte até no máximo n caracteres. O while continua enquanto i < n e enquanto pelo menos uma das strings ainda tem caractere (s1[i] || s2[i]). Se acho diferença, retorno (unsigned char)s1[i] - (unsigned char)s2[i] — o cast para unsigned char é importante porque o man exige comparação como bytes não sinalizados, evitando que valores acima de 127 sejam interpretados como negativos e quebrem o sinal do retorno. Se chego ao final sem diferença, retorno 0.
 
-ft_memchr -
-A função ft_memchr procura o primeiro byte igual a c dentro dos primeiros n bytes do bloco apontado por s. Converto s para const unsigned char * para acessar byte a byte preservando a constância, e comparo cada byte com (unsigned char)c. Diferente do strchr, o memchr não para no \0 — ele trabalha com memória bruta, percorrendo exatamente n bytes. Se acho, retorno o endereço como void * (com cast); se chego ao final sem achar, retorno NULL.
+[<u>**ft_memchr**</u>](#ft-memchr-c) - A função [ft_memchr](#ft-memchr-c) procura o primeiro byte igual a c dentro dos primeiros n bytes do bloco apontado por s. Converto s para const unsigned char * para acessar byte a byte preservando a constância, e comparo cada byte com (unsigned char)c. Diferente do strchr, o memchr não para no \0 — ele trabalha com memória bruta, percorrendo exatamente n bytes. Se acho, retorno o endereço como void * (com cast); se chego ao final sem achar, retorno NULL.
 
-ft_memcmp -
-A função ft_memcmp compara dois blocos de memória byte a byte, exatamente n bytes. Converto os dois ponteiros para const unsigned char * — preservando a constância e garantindo que a comparação seja como bytes não sinalizados, conforme o man. Diferente do strncmp, não paro no \0: o memcmp é puro byte-a-byte. Quando acho a primeira diferença, retorno p1[i] - p2[i] (a subtração entre unsigned char dá o sinal correto). Se percorro n bytes sem diferença, retorno 0.
+[<u>**ft_memcmp**</u>](#ft-memcmp-c) - A função [ft_memcmp](#ft-memcmp-c) compara dois blocos de memória byte a byte, exatamente n bytes. Converto os dois ponteiros para const unsigned char * — preservando a constância e garantindo que a comparação seja como bytes não sinalizados, conforme o man. Diferente do strncmp, não paro no \0: o memcmp é puro byte-a-byte. Quando acho a primeira diferença, retorno p1[i] - p2[i] (a subtração entre unsigned char dá o sinal correto). Se percorro n bytes sem diferença, retorno 0.
 
-ft_strnstr -
-A função ft_strnstr procura a primeira ocorrência de needle dentro dos primeiros len bytes de haystack. Trato primeiro o caso clássico de needle vazia, retornando o próprio haystack. Senão, calculo needle_len com ft_strlen e percorro haystack com um índice i, parando quando chego no \0 ou quando i + needle_len > len (a needle não caberia mais inteira). Em cada posição, comparo needle_len bytes com ft_strncmp; se forem iguais, retorno &haystack[i] com cast. Se nada bate, retorno NULL.
+[<u>**ft_strnstr**</u>](#ft-strnstr-c) - A função [ft_strnstr](#ft-strnstr-c) procura a primeira ocorrência de needle dentro dos primeiros len bytes de haystack. Trato primeiro o caso clássico de needle vazia, retornando o próprio haystack. Senão, calculo needle_len com [ft_strlen](#ft-strlen-c) e percorro haystack com um índice i, parando quando chego no \0 ou quando i + needle_len > len (a needle não caberia mais inteira). Em cada posição, comparo needle_len bytes com [ft_strncmp](#ft-strncmp-c); se forem iguais, retorno &haystack[i] com cast. Se nada bate, retorno NULL.
 
-ft_atoi -
-A função ft_atoi converte uma string em int seguindo três fases: primeiro pula whitespace (os 6 caracteres clássicos do man atoi: espaço, \t, \n, \v, \f, \r); depois lê opcionalmente um sinal + ou - — apenas uma vez, sem aceitar múltiplos sinais; e finalmente acumula dígitos com a fórmula result = result * 10 + (str[i] - '0'), parando no primeiro caractere não-dígito. No final, retorno result * sign. Uso 3 variáveis além do parâmetro: índice i, sign e result. Sigo o padrão da libft de não tratar overflow, que é comportamento indefinido segundo o man. Mas para tratar seria possível colocando um if para verificar se o resultado (* 10 + dígito) ultrapassa o MAX_INT possível.
+[<u>**ft_atoi**</u>](#ft-atoi-c) - A função [ft_atoi](#ft-atoi-c) converte uma string em int seguindo três fases: primeiro pula whitespace (os 6 caracteres clássicos do man atoi: espaço, \t, \n, \v, \f, \r); depois lê opcionalmente um sinal + ou - — apenas uma vez, sem aceitar múltiplos sinais; e finalmente acumula dígitos com a fórmula result = result * 10 + (str[i] - '0'), parando no primeiro caractere não-dígito. No final, retorno result * sign. Uso 3 variáveis além do parâmetro: índice i, sign e result. Sigo o padrão da libft de não tratar overflow, que é comportamento indefinido segundo o man. Mas para tratar seria possível colocando um if para verificar se o resultado (* 10 + dígito) ultrapassa o MAX_INT possível.
 
-ft_calloc -
-A função ft_calloc aloca um bloco de count * size bytes e o zera com ft_bzero. Antes de chamar malloc, faço proteção contra overflow: se count > (size_t)-1 / size, retorno NULL direto. Uso (size_t)-1 porque em C atribuir -1 a um tipo unsigned dá o valor máximo do tipo, garantido pelo padrão — é equivalente a SIZE_MAX, mas sem precisar incluir <stdint.h>. Testo size != 0 antes para evitar divisão por zero. Quando count ou size é 0, deixo o malloc(0) do sistema lidar — ele retorna um ponteiro único válido para free, conforme o enunciado da 42 pede.
+[<u>**ft_calloc**</u>](#ft-calloc-c) - A função [ft_calloc](#ft-calloc-c) aloca um bloco de count * size bytes e o zera com [ft_bzero](#ft-bzero-c). Antes de chamar malloc, faço proteção contra overflow: se count > (size_t)-1 / size, retorno NULL direto. Uso (size_t)-1 porque em C atribuir -1 a um tipo unsigned dá o valor máximo do tipo, garantido pelo padrão — é equivalente a SIZE_MAX, mas sem precisar incluir <stdint.h>. Testo size != 0 antes para evitar divisão por zero. Quando count ou size é 0, deixo o malloc(0) do sistema lidar — ele retorna um ponteiro único válido para free, conforme o enunciado da 42 pede.
 Eu uso (size_t)-1 em vez de SIZE_MAX por dois motivos: primeiro, é o mesmo valor — em C, atribuir -1 a um tipo unsigned dá o valor máximo do tipo, garantido pelo padrão. Segundo, evito um include a mais. A lógica é: se count * size daria overflow, isto é, se count > (size_t)-1 / size, retorno NULL antes de chamar malloc. Testo size != 0 primeiro para evitar divisão por zero
 
-ft_strdup -
-A função ft_strdup cria uma cópia da string s1 em memória nova. Primeiro calculo o tamanho com ft_strlen e alloco len + 1 bytes — o +1 é para o terminador \0. Se o malloc falha, retorno NULL. Senão, copio os len bytes com um while, escrevo o \0 na posição len e retorno o ponteiro novo. O usuário é responsável por liberar com free.
+[<u>**ft_strdup**</u>](#ft-strdup-c) - A função [ft_strdup](#ft-strdup-c) cria uma cópia da string s1 em memória nova. Primeiro calculo o tamanho com [ft_strlen](#ft-strlen-c) e alloco len + 1 bytes — o +1 é para o terminador \0. Se o malloc falha, retorno NULL. Senão, copio os len bytes com um while, escrevo o \0 na posição len e retorno o ponteiro novo. O usuário é responsável por liberar com free.
 
-ft_substr -
-A função ft_substr extrai uma substring de s, começando em start, com no máximo len caracteres. Trato dois casos: primeiro, se start >= strlen(s), retorno uma string vazia alocada via ft_strdup("") — substring válida porém vazia. Segundo, se len é maior do que o que sobra após start, ajusto len = strlen(s) - start para não passar do final. Depois aloco len + 1 bytes, copio com um while, coloco o \0 e retorno. Esse +1 é sempre para o terminador.
+[<u>**ft_substr**</u>](#ft-substr-c) - A função [ft_substr](#ft-substr-c) extrai uma substring de s, começando em start, com no máximo len caracteres. Trato dois casos: primeiro, se start >= strlen(s), retorno uma string vazia alocada via [ft_strdup](#ft-strdup-c)("") — substring válida porém vazia. Segundo, se len é maior do que o que sobra após start, ajusto len = strlen(s) - start para não passar do final. Depois aloco len + 1 bytes, copio com um while, coloco o \0 e retorno. Esse +1 é sempre para o terminador.
 
-ft_strjoin -
-A função ft_strjoin cria uma nova string concatenando s1 e s2. Aloco com malloc o tamanho total mais 1 byte para o \0. Depois faço dois loops simples: o primeiro copia s1 para o começo do buffer, deixando i igual ao tamanho de s1; o segundo copia s2 começando na posição i + j. No final, escrevo \0 em i + j, que é a posição exata do terminador. Se o malloc falhar, retorno NULL.
+[<u>**ft_strjoin**</u>](#ft-strjoin-c) - A função [ft_strjoin](#ft-strjoin-c) cria uma nova string concatenando s1 e s2. Aloco com malloc o tamanho total mais 1 byte para o \0. Depois faço dois loops simples: o primeiro copia s1 para o começo do buffer, deixando i igual ao tamanho de s1; o segundo copia s2 começando na posição i + j. No final, escrevo \0 em i + j, que é a posição exata do terminador. Se o malloc falhar, retorno NULL.
 
-ft_strtrim -
-A função ft_strtrim cria uma nova string baseada em s1 removendo das pontas todos os caracteres que aparecem em set. Uso um helper static chamado is_in_set que diz se um caractere está no set. Depois movo dois índices: start avança enquanto o caractere estiver no set; end começa no \0 e recua testando s1[end - 1]. A condição end > start no segundo loop é essencial para não passar do começo quando a string inteira é do set. No final, alloco end - start + 1 bytes, copio com ft_strlcpy (que já fecha com \0) e retorno.
+[<u>**ft_strtrim**</u>](#ft-strtrim-c) - A função [ft_strtrim](#ft-strtrim-c) cria uma nova string baseada em s1 removendo das pontas todos os caracteres que aparecem em set. Uso um helper static chamado is_in_set que diz se um caractere está no set. Depois movo dois índices: start avança enquanto o caractere estiver no set; end começa no \0 e recua testando s1[end - 1]. A condição end > start no segundo loop é essencial para não passar do começo quando a string inteira é do set. No final, alloco end - start + 1 bytes, copio com [ft_strlcpy](#ft-strlcpy-c) (que já fecha com \0) e retorno.
 
-ft_split -
-A função ft_split divide uma string em pedaços usando um caractere delimitador, retornando um array de strings terminado em NULL. Eu uso 4 helpers static: count_words conta quantos pedaços tem (com dois whiles aninhados: um pula separadores, outro pula não-separadores); word_len mede o tamanho do próximo pedaço; copy_word aloca e copia uma palavra individualmente; e free_all libera tudo se algum malloc interno falhar. Na função principal, alloco (n+1) * sizeof(char *) para o array (o +1 é para o NULL sentinela), percorro a string pulando separadores e copiando palavras uma a uma. Se qualquer alocação falhar, libero o que já tinha alocado e retorno NULL — sem leaks.
+[<u>**ft_split**</u>](#ft-split-c) - A função [ft_split](#ft-split-c) divide uma string em pedaços usando um caractere delimitador, retornando um array de strings terminado em NULL. Eu uso 4 helpers static: count_words conta quantos pedaços tem (com dois whiles aninhados: um pula separadores, outro pula não-separadores); word_len mede o tamanho do próximo pedaço; copy_word aloca e copia uma palavra individualmente; e free_all libera tudo se algum malloc interno falhar. Na função principal, alloco (n+1) * sizeof(char *) para o array (o +1 é para o NULL sentinela), percorro a string pulando separadores e copiando palavras uma a uma. Se qualquer alocação falhar, libero o que já tinha alocado e retorno NULL — sem leaks.
 
-ft_itoa -
-A função ft_itoa converte um int em string decimal. Primeiro chamo count_digits que conta quantos caracteres a string vai ter, incluindo o '-' se n for negativo — para isso uso o truque if (n <= 0) count = 1 que cobre o sinal e também o caso n == 0. Depois alloco len + 1 bytes. O passo crítico é copiar n para uma variável long: isso permite fazer -nb mesmo quando n == INT_MIN, em que o valor absoluto não caberia em int. Trato o sinal, trato o caso n == 0, e preencho de trás para frente usando nb % 10 + '0' para cada dígito. O \0 vai na última posição antes do loop começar.
+[<u>**ft_itoa**</u>](#ft-itoa-c) - A função [ft_itoa](#ft-itoa-c) converte um int em string decimal. Primeiro chamo count_digits que conta quantos caracteres a string vai ter, incluindo o '-' se n for negativo — para isso uso o truque if (n <= 0) count = 1 que cobre o sinal e também o caso n == 0. Depois alloco len + 1 bytes. O passo crítico é copiar n para uma variável long: isso permite fazer -nb mesmo quando n == INT_MIN, em que o valor absoluto não caberia em int. Trato o sinal, trato o caso n == 0, e preencho de trás para frente usando nb % 10 + '0' para cada dígito. O \0 vai na última posição antes do loop começar.
 
-ft_strmapi -
-"A função ft_strmapi cria uma nova string aplicando uma função f a cada caractere de s, passando também o índice. Alloco ft_strlen(s) + 1 bytes e itero com unsigned int i — mesmo tipo que f espera no contrato, sem nenhuma conversão. Uso while (s[i]) para parar no \0, o que dispensa uma variável separada para o tamanho. No final, escrevo \0 e retorno o ponteiro.
+[<u>**ft_strmapi**</u>](#ft-strmapi-c) - "A função [ft_strmapi](#ft-strmapi-c) cria uma nova string aplicando uma função f a cada caractere de s, passando também o índice. Alloco [ft_strlen](#ft-strlen-c)(s) + 1 bytes e itero com unsigned int i — mesmo tipo que f espera no contrato, sem nenhuma conversão. Uso while (s[i]) para parar no \0, o que dispensa uma variável separada para o tamanho. No final, escrevo \0 e retorno o ponteiro.
 
-ft_striteri -
-A função ft_striteri aplica f a cada caractere de s in-place, passando o índice e o endereço do caractere. Como f recebe char *, ela pode modificar diretamente a string original — não preciso alocar nada nem retornar nova string. Uso unsigned int i para o índice, alinhado com o tipo que f espera no contrato — evito downcast silencioso. O loop usa while (s[i]), parando no \0
+[<u>**ft_striteri**</u>](#ft-striteri-c) - A função [ft_striteri](#ft-striteri-c) aplica f a cada caractere de s in-place, passando o índice e o endereço do caractere. Como f recebe char *, ela pode modificar diretamente a string original — não preciso alocar nada nem retornar nova string. Uso unsigned int i para o índice, alinhado com o tipo que f espera no contrato — evito downcast silencioso. O loop usa while (s[i]), parando no \0
 
-ft_putchar_fd -
-A função ft_putchar_fd escreve um caractere no file descriptor indicado, usando a syscall write. Como write espera um ponteiro para o buffer, passo &c — o endereço do caractere local. O tamanho é 1 byte. A função é void: ignoro o retorno do write, que normalmente indica quantos bytes foram escritos.
+[<u>**ft_putchar_fd**</u>](#ft-putchar-fd-c) - A função [ft_putchar_fd](#ft-putchar-fd-c) escreve um caractere no file descriptor indicado, usando a syscall write. Como write espera um ponteiro para o buffer, passo &c — o endereço do caractere local. O tamanho é 1 byte. A função é void: ignoro o retorno do write, que normalmente indica quantos bytes foram escritos.
 
-ft_putstr_fd -
-A função ft_putstr_fd escreve uma string inteira no file descriptor usando write. Em vez de fazer um loop chamando ft_putchar_fd para cada caractere, faço uma única chamada a write passando o tamanho calculado por ft_strlen — uma syscall em vez de várias, mais eficiente. O s já é char *, então não precisa de cast. O retorno de write é ignorado conforme o protótipo void do enunciado.
+[<u>**ft_putstr_fd**</u>](#ft-putstr-fd-c) - A função [ft_putstr_fd](#ft-putstr-fd-c) escreve uma string inteira no file descriptor usando write. Em vez de fazer um loop chamando [ft_putchar_fd](#ft-putchar-fd-c) para cada caractere, faço uma única chamada a write passando o tamanho calculado por [ft_strlen](#ft-strlen-c) — uma syscall em vez de várias, mais eficiente. O s já é char *, então não precisa de cast. O retorno de write é ignorado conforme o protótipo void do enunciado.
 
-ft_putendl_fd -
-A função ft_putendl_fd escreve uma string no file descriptor seguida por uma quebra de linha. Reaproveito as duas funções já prontas: ft_putstr_fd(s, fd) para a string completa, depois ft_putchar_fd('\n', fd) para o \n. É o exemplo clássico de composição na libft — funções pequenas que se encaixam em outras maiores.
+[<u>**ft_putendl_fd**</u>](#ft-putendl-fd-c) - A função [ft_putendl_fd](#ft-putendl-fd-c) escreve uma string no file descriptor seguida por uma quebra de linha. Reaproveito as duas funções já prontas: [ft_putstr_fd](#ft-putstr-fd-c)(s, fd) para a string completa, depois [ft_putchar_fd](#ft-putchar-fd-c)('\n', fd) para o \n. É o exemplo clássico de composição na libft — funções pequenas que se encaixam em outras maiores.
 
-ft_putnbr_fd -
-A função ft_putnbr_fd escreve um inteiro no file descriptor de forma recursiva. Primeiro copio n para uma variável long, o que me permite tratar INT_MIN sem overflow ao calcular -n. Se é negativo, imprimo - e inverto o sinal. Depois, se nb >= 10, faço recursão com nb / 10 — isso imprime os dígitos mais à esquerda primeiro. No final de cada nível, imprimo o dígito atual com (nb % 10) + '0'. O cast (int) na recursão é explícito porque nb / 10 é long, mas depois da divisão o valor cabe em int com folga.
+[<u>**ft_putnbr_fd**</u>](#ft-putnbr-fd-c) - A função [ft_putnbr_fd](#ft-putnbr-fd-c) escreve um inteiro no file descriptor de forma recursiva. Primeiro copio n para uma variável long, o que me permite tratar INT_MIN sem overflow ao calcular -n. Se é negativo, imprimo - e inverto o sinal. Depois, se nb >= 10, faço recursão com nb / 10 — isso imprime os dígitos mais à esquerda primeiro. No final de cada nível, imprimo o dígito atual com (nb % 10) + '0'. O cast (int) na recursão é explícito porque nb / 10 é long, mas depois da divisão o valor cabe em int com folga.
 
-ft_lstnew -
-A função ft_lstnew cria um nó novo da lista ligada. Alloco sizeof(t_list) bytes — o tamanho exato da struct — e checo se o malloc falhou. Depois preencho os dois campos: content recebe o ponteiro genérico passado, e next recebe NULL para indicar que o nó está solto. Esse next = NULL é essencial: sem ele, ficaria lixo, e qualquer operação posterior na lista seguiria por um endereço inválido.
+[<u>**ft_lstnew**</u>](#ft-lstnew-c) - A função [ft_lstnew](#ft-lstnew-c) cria um nó novo da lista ligada. Alloco sizeof(t_list) bytes — o tamanho exato da struct — e checo se o malloc falhou. Depois preencho os dois campos: content recebe o ponteiro genérico passado, e next recebe NULL para indicar que o nó está solto. Esse next = NULL é essencial: sem ele, ficaria lixo, e qualquer operação posterior na lista seguiria por um endereço inválido.
 
-ft_lstadd_front -
-A função ft_lstadd_front adiciona um nó no começo da lista. Recebo um ponteiro duplo t_list **lst para poder modificar o ponteiro de cabeça do chamador. Faço duas atribuições na ordem certa: primeiro new->next = *lst (o novo nó aponta para a antiga cabeça), depois *lst = new (a cabeça da lista vira o novo nó). A ordem importa: se invertesse, eu faria new->next = new, criando uma auto-referência. Protejo contra lst ou new serem NULL.
+[<u>**ft_lstadd_front**</u>](#ft-lstadd-front-c) - A função [ft_lstadd_front](#ft-lstadd-front-c) adiciona um nó no começo da lista. Recebo um ponteiro duplo t_list **lst para poder modificar o ponteiro de cabeça do chamador. Faço duas atribuições na ordem certa: primeiro new->next = *lst (o novo nó aponta para a antiga cabeça), depois *lst = new (a cabeça da lista vira o novo nó). A ordem importa: se invertesse, eu faria new->next = new, criando uma auto-referência. Protejo contra lst ou new serem NULL.
 
-ft_lstsize -
-A função ft_lstsize percorre a lista contando nós. Uso um ponteiro current inicializado com lst e um contador count = 0. O while (current) avança enquanto não chegou ao final — cada iteração incrementa count e faz current = current->next. Quando current vira NULL, saio e retorno count. Se a lista é vazia (lst == NULL), o loop não entra e retorno 0 naturalmente, sem precisar de if extra.
+[<u>**ft_lstsize**</u>](#ft-lstsize-c) - A função [ft_lstsize](#ft-lstsize-c) percorre a lista contando nós. Uso um ponteiro current inicializado com lst e um contador count = 0. O while (current) avança enquanto não chegou ao final — cada iteração incrementa count e faz current = current->next. Quando current vira NULL, saio e retorno count. Se a lista é vazia (lst == NULL), o loop não entra e retorno 0 naturalmente, sem precisar de if extra.
 
-ft_lstlast -
-A função ft_lstlast retorna o último nó da lista. Inicializo current = lst e avanço com um while (current && current->next). A condição é importante: primeiro testo current para não desreferenciar NULL em lista vazia (graças ao curto-circuito do &&); depois testo current->next para ver se ainda há próximo. Quando o loop sai, current aponta para o último nó (ou continua sendo NULL se a lista estava vazia). Retorno current direto — cobre os dois casos
+[<u>**ft_lstlast**</u>](#ft-lstlast-c) - A função [ft_lstlast](#ft-lstlast-c) retorna o último nó da lista. Inicializo current = lst e avanço com um while (current && current->next). A condição é importante: primeiro testo current para não desreferenciar NULL em lista vazia (graças ao curto-circuito do &&); depois testo current->next para ver se ainda há próximo. Quando o loop sai, current aponta para o último nó (ou continua sendo NULL se a lista estava vazia). Retorno current direto — cobre os dois casos
 
-ft_lstadd_back -
-A função ft_lstadd_back adiciona um nó no final da lista. Trato dois casos: se a lista está vazia (*lst == NULL), o new vira a cabeça com *lst = new — preciso do ponteiro duplo justamente para modificar o ponteiro de cabeça do chamador. Se a lista tem nós, reaproveito ft_lstlast para achar o último e faço ultimo->next = new. Sem o caso especial da lista vazia, ft_lstlast retornaria NULL e tentar acessar NULL->next segfaltaria.
+[<u>**ft_lstadd_back**</u>](#ft-lstadd-back-c) - A função [ft_lstadd_back](#ft-lstadd-back-c) adiciona um nó no final da lista. Trato dois casos: se a lista está vazia (*lst == NULL), o new vira a cabeça com *lst = new — preciso do ponteiro duplo justamente para modificar o ponteiro de cabeça do chamador. Se a lista tem nós, reaproveito [ft_lstlast](#ft-lstlast-c) para achar o último e faço ultimo->next = new. Sem o caso especial da lista vazia, [ft_lstlast](#ft-lstlast-c) retornaria NULL e tentar acessar NULL->next segfaltaria.
 
-ft_lstdelone -
-A função ft_lstdelone libera um único nó. Chamo del(lst->content) para liberar o conteúdo (a função foi passada pelo usuário porque a libft não sabe o tipo do content), e depois free(lst) para liberar a struct do nó. Não toco em lst->next — o nome delone diz isso explicitamente; a responsabilidade do resto da lista é de outra função (ft_lstclear). A ordem importa: liberar content primeiro, depois o nó, para não usar memória já liberada.
+[<u>**ft_lstdelone**</u>](#ft-lstdelone-c) - A função [ft_lstdelone](#ft-lstdelone-c) libera um único nó. Chamo del(lst->content) para liberar o conteúdo (a função foi passada pelo usuário porque a libft não sabe o tipo do content), e depois free(lst) para liberar a struct do nó. Não toco em lst->next — o nome delone diz isso explicitamente; a responsabilidade do resto da lista é de outra função ([ft_lstclear](#ft-lstclear-c)). A ordem importa: liberar content primeiro, depois o nó, para não usar memória já liberada.
 
-ft_lstclear -
-A função ft_lstclear libera toda a lista. O detalhe crítico é guardar current->next em uma variável antes de chamar ft_lstdelone(current, del) — depois do free, acessar current->next é use-after-free. Reaproveito o ft_lstdelone que já faz del(content) + free(nó) para cada nó. No final, faço *lst = NULL para deixar o ponteiro do chamador limpo e indicar lista vazia.
+[<u>**ft_lstclear**</u>](#ft-lstclear-c) - A função [ft_lstclear](#ft-lstclear-c) libera toda a lista. O detalhe crítico é guardar current->next em uma variável antes de chamar [ft_lstdelone](#ft-lstdelone-c)(current, del) — depois do free, acessar current->next é use-after-free. Reaproveito o [ft_lstdelone](#ft-lstdelone-c) que já faz del(content) + free(nó) para cada nó. No final, faço *lst = NULL para deixar o ponteiro do chamador limpo e indicar lista vazia.
 
-ft_lstiter -
-A função ft_lstiter aplica uma função f ao content de cada nó da lista. Inicializo current = lst e percorro com while (current), chamando f(current->content) em cada iteração e depois avançando com current = current->next. Como content é void * e f recebe void *, a chamada é direta sem cast. A função f pode modificar o conteúdo apontado, mas a estrutura da lista não muda — número de nós e encadeamento permanecem iguais. Faço proteção contra lst ou f NULL no início.
+[<u>**ft_lstiter**</u>](#ft-lstiter-c) - A função [ft_lstiter](#ft-lstiter-c) aplica uma função f ao content de cada nó da lista. Inicializo current = lst e percorro com while (current), chamando f(current->content) em cada iteração e depois avançando com current = current->next. Como content é void * e f recebe void *, a chamada é direta sem cast. A função f pode modificar o conteúdo apontado, mas a estrutura da lista não muda — número de nós e encadeamento permanecem iguais. Faço proteção contra lst ou f NULL no início.
 
-ft_lstmap -
-A função ft_lstmap cria uma nova lista aplicando f a cada content da lista original. Para cada nó: calculo new_content = f(content), crio um nó novo com ft_lstnew(new_content) e ligo no final da nova lista com ft_lstadd_back. O ponto crítico é o tratamento de erro: se ft_lstnew falhar, eu já tenho new_content recém-criado por f que precisa ser liberado com del, e uma lista parcial que precisa ser destruída com ft_lstclear. Só assim evito leaks no caminho de falha. Reaproveito quatro funções da própria libft — lstnew, lstadd_back, lstclear e implicitamente lstdelone via lstclear.
+[<u>**ft_lstmap**</u>](#ft-lstmap-c) - A função [ft_lstmap](#ft-lstmap-c) cria uma nova lista aplicando f a cada content da lista original. Para cada nó: calculo new_content = f(content), crio um nó novo com [ft_lstnew](#ft-lstnew-c)(new_content) e ligo no final da nova lista com [ft_lstadd_back](#ft-lstadd-back-c). O ponto crítico é o tratamento de erro: se [ft_lstnew](#ft-lstnew-c) falhar, eu já tenho new_content recém-criado por f que precisa ser liberado com del, e uma lista parcial que precisa ser destruída com [ft_lstclear](#ft-lstclear-c). Só assim evito leaks no caminho de falha. Reaproveito quatro funções da própria libft — lstnew, lstadd_back, lstclear e implicitamente lstdelone via lstclear.
 
 ## Navegação rápida
 
@@ -222,11 +177,11 @@ Dentro da struct usamos `struct s_list *next` porque `t_list` ainda não existe 
 Pontos de atenção: não esquecer `#endif`, manter os `const`, declarar todos os protótipos e cuidar da Norminette com 'norminette -R CheckDefine'
 
 Teste possível:
-
 ```bash
 cc -Wall -Wextra -Werror -c libft.h
 ```
 ---
+<a id="makefile"></a>
 ## `Makefile`
 
 O `Makefile` automatiza a compilação da Libft e gera o arquivo final `libft.a`.
@@ -266,7 +221,6 @@ O `Makefile` existe para escrever as regras uma vez e depois somente rodar `make
 `$@` representa o arquivo de saida, normalmente o `.o`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["make"] --> B["all"]
@@ -290,7 +244,6 @@ Colocar `libft.h` na dependencia faz recompilar quando o header muda.
 `.PHONY` evita conflito com arquivos chamados `clean`, `fclean`, `all` ou `re`.
 
 ### Testes
-
 ```bash
 make
 make
@@ -301,6 +254,7 @@ make re
 
 No segundo `make`, se nada foi alterado, ele não deve recompilar tudo.
 
+<a id="ft-isalpha-c"></a>
 ## `ft_isalpha.c`
 
 `ft_isalpha` verifica se o caractere recebido é uma letra.
@@ -336,7 +290,6 @@ Se não cair, retorna `0`.
 Não da para escrever `'A' <= c <= 'Z'` em C, porque isso não funciona como na matematica.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c está entre A e Z?"}
@@ -361,7 +314,6 @@ Incluir `libft.h` para manter o protótipo certo.
 ### Testes
 
 Testar letras maiúsculas, minúsculas, números, simbolos e limites.
-
 ```bash
 cc -Wall -Wextra -Werror ft_isalpha.c main.c -o test
 ./test
@@ -369,6 +321,7 @@ cc -Wall -Wextra -Werror ft_isalpha.c main.c -o test
 
 Exemplos: `'A'`, `'z'`, `'g'` devem retornar `1`; `'5'`, `'!'`, `0` e `127` devem retornar `0`.
 
+<a id="ft-isdigit-c"></a>
 ## `ft_isdigit.c`
 
 `ft_isdigit` verifica se o caractere recebido é um número de `0` a `9`.
@@ -404,7 +357,6 @@ Se não estiver, retorna `0`.
 Usar `'0'` e `'9'` é melhor que usar `48` e `57`, porque fica mais legivel.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c está entre 0 e 9?"}
@@ -429,7 +381,6 @@ Retornar exatamente `1` ou `0`.
 ### Testes
 
 Testar inicio, final, meio do intervalo e caracteres fora dele.
-
 ```bash
 cc -Wall -Wextra -Werror ft_isdigit.c main.c -o test
 ./test
@@ -437,6 +388,7 @@ cc -Wall -Wextra -Werror ft_isdigit.c main.c -o test
 
 Exemplos: `'0'`, `'5'`, `'9'` devem retornar `1`; `'a'`, `'Z'`, `' '`, `0` devem retornar `0`.
 
+<a id="ft-isalnum-c"></a>
 ## `ft_isalnum.c`
 
 `ft_isalnum` verifica se o caractere recebido é letra ou número.
@@ -470,7 +422,6 @@ Se não for nenhum dos dois, retorna `0`.
 O `||` tem curto-circuito: se `ft_isalpha(c)` já for verdadeiro, o C nem precisa chamar `ft_isdigit(c)`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"ft_isalpha c?"}
@@ -495,7 +446,6 @@ Garantir que `ft_isalpha` e `ft_isdigit` estejam funcionando antes.
 ### Testes
 
 Testar letras, números, simbolos, espaco e valores fora do ASCII visível.
-
 ```bash
 cc -Wall -Wextra -Werror ft_isalnum.c ft_isalpha.c ft_isdigit.c main.c -o test
 ./test
@@ -503,6 +453,7 @@ cc -Wall -Wextra -Werror ft_isalnum.c ft_isalpha.c ft_isdigit.c main.c -o test
 
 Exemplos: `'A'`, `'z'`, `'5'` devem retornar `1`; `'!'`, `' '`, `0` e `127` devem retornar `0`.
 
+<a id="ft-isascii-c"></a>
 ## `ft_isascii.c`
 
 `ft_isascii` verifica se o valor recebido faz parte da tabela ASCII padrao.
@@ -540,7 +491,6 @@ Se for menor que `0` ou maior que `127`, retorna `0`.
 ASCII não é a mesma coisa que caractere imprimivel.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c >= 0?"}
@@ -570,7 +520,6 @@ Por que usar int e não char? Protótipo pede, e também Por que o char é pode 
 ### Testes
 
 Testar os limites e valores fora deles.
-
 ```bash
 cc -Wall -Wextra -Werror ft_isascii.c main.c -o test
 ./test
@@ -580,6 +529,7 @@ Exemplos: `0`, `65`, `127` e `'A'` devem retornar `1`; `-1`, `128` e `255` devem
 
 
 
+<a id="ft-strlen-c"></a>
 ## `ft_strlen.c`
 
 `ft_strlen` conta quantos caracteres uma string tem.
@@ -617,7 +567,6 @@ Quando encontra `\0`, o loop para e retorna `i`.
 Não conta o `\0`, porque ele somente marca o final da string.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe string s"] --> B["i = 0"]
@@ -644,7 +593,6 @@ Na Norminette, declare `i` primeiro e atribua depois.
 ### Testes
 
 Testar string vazia, string com 1 char e strings maiores.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strlen.c main.c -o test
 ./test
@@ -653,6 +601,7 @@ cc -Wall -Wextra -Werror ft_strlen.c main.c -o test
 Exemplos: `""` deve retornar `0`; `"a"` deve retornar `1`; `"hello"` deve retornar `5`.
 
 
+<a id="ft-memset-c"></a>
 ## `ft_memset.c`
 
 `ft_memset` preenche um bloco de memória com o mesmo byte varias vezes.
@@ -690,7 +639,6 @@ O loop roda enquanto `i < len`.
 No final, retorna `b`, como na libc.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe b c len"] --> B["i = 0"]
@@ -723,13 +671,11 @@ Testar preenchendo com letra, com zero e com `len = 0`.
 ### Curiosidade
 Por que fazer cast com unsigned char *? Não podiamos usar im int *?
 resposta principal é granulariadade, porque o memset "seta" o endereco, byte a byte e sizeof(int) = 4.
-Mas por outro lado temos essa curiosidade:
-```
+Mas por outro lado temos essa curiosidade:```
 A CPU lê a memória RAM de forma mais eficiente quando os dados estão alinhados com o tamanho da palavra do sistema. Um ponteiro do tipo int * geralmente exige que o endereço de memória seja múltiplo de 4.
 
 Se o usuário passar para o seu memset um endereço que comece em um byte ímpar (como 0x003 vindo de um substring ou um struct desalinhado) e você tentar fazer um cast para int * e manipular a memória nessa posição, algumas arquiteturas de processador (como ARM) vão disparar uma exceção de hardware imediatamente, resultando em um Bus Error. O tipo unsigned char * tem alinhamento de 1 byte, o que significa que ele pode apontar com segurança para qualquer endereço da memória sem nunca quebrar o processador.
 ```
-
 ```bash
 cc -Wall -Wextra -Werror ft_memset.c main.c -o test
 ./test
@@ -737,6 +683,7 @@ cc -Wall -Wextra -Werror ft_memset.c main.c -o test
 
 Exemplos: preencher `buf` com `'A'`, comparar com `memset`, e testar se os bytes viraram o valor esperado.
 
+<a id="ft-bzero-c"></a>
 ## `ft_bzero.c`
 
 `ft_bzero` zera um bloco de memória.
@@ -772,7 +719,6 @@ Como `ft_memset` já preenche memória com um byte especifico, basta chamar ela 
 A função não retorna nada, porque o protótipo é `void`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s e n"] --> B["chama ft_memset"]
@@ -798,7 +744,6 @@ Se `n = 0`, nada muda.
 ### Testes
 
 Testar zerando parte de um buffer e vendo se o resto ficou igual.
-
 ```bash
 cc -Wall -Wextra -Werror ft_bzero.c ft_memset.c main.c -o test
 ./test
@@ -809,6 +754,7 @@ Exemplo: buffer com `10` chars `X`, chamar `ft_bzero(buf, 5)` e conferir se some
 
 
 
+<a id="ft-memcpy-c"></a>
 ## `ft_memcpy.c`
 
 `ft_memcpy` copia `n` bytes de um bloco de memória para outro.
@@ -847,8 +793,7 @@ Mas ela não foi feita para lidar com sobreposição de memória.
 
 Se `dst` e `src` forem `NULL`, retorna `dst` sem mexer em nada.
 
-### Observação:
-```
+### Observação:```
 if (!dst && !src)
 	return (dst);
 ```
@@ -856,7 +801,6 @@ trata o caso que as duas entradas sao nulas e retorna nulo, mas não trato diret
 se um ou o outro forem nulos, porque o memcpy da libc não trata e da erro de segfail.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe dst src n"] --> B{"dst e src sao NULL?"}
@@ -889,7 +833,6 @@ Se `n = 0`, não copia nada e retorna `dst`.
 ### Testes
 
 Testar copia normal, copia com `n = 0` e comparar com `memcpy`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_memcpy.c main.c -o test
 ./test
@@ -898,6 +841,7 @@ cc -Wall -Wextra -Werror ft_memcpy.c main.c -o test
 Exemplos: copiar `"hello"` com `n = 6`, copiar array de `int` como bytes e testar `ft_memcpy(NULL, NULL, 10)`.
 
 
+<a id="ft-memmove-c"></a>
 ## `ft_memmove.c`
 
 `ft_memmove` copia `len` bytes de `src` para `dst`.
@@ -939,7 +883,6 @@ Se `d >= s`, copia do final pro comeco.
 Isso evita sobrescrever bytes da origem antes de ler.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe dst src len"] --> B{"dst e src sao NULL?"}
@@ -975,7 +918,6 @@ antes de , não sobrescreve s antes e o caso inverso do do d estar após o s.
 ### Testes
 
 Testar sem overlap, com `dst > src`, com `dst < src`, `len = 0` e `NULL + NULL`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_memmove.c main.c -o test
 ./test
@@ -986,6 +928,7 @@ Exemplos: `ft_memmove(str + 2, str, 4)` em `"abcdef"` deve gerar `"ababcd"`.
 
 
 
+<a id="ft-strlcpy-c"></a>
 ## `ft_strlcpy.c`
 
 `ft_strlcpy` copia uma string para `dst` respeitando o tamanho do buffer.
@@ -1027,7 +970,6 @@ Depois do loop, faz `dst[i] = '\0'`.
 O retorno é sempre `ft_strlen(src)`, não a quantidade copiada.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe dst src dstsize"] --> B{"i = 0"}
@@ -1058,7 +1000,6 @@ Não precisa tratar `src == NULL`, porque a original também não trata.
 ### Testes
 
 Testar buffer pequeno, buffer grande, `dstsize = 1` e `dstsize = 0`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strlcpy.c ft_strlen.c main.c -o test
 ./test
@@ -1067,6 +1008,7 @@ cc -Wall -Wextra -Werror ft_strlcpy.c ft_strlen.c main.c -o test
 Exemplos: copiar `"Hello World"` em buffer 5 deve gerar `"Hell"` e retornar `11`.
 
 
+<a id="ft-strlcat-c"></a>
 ## `ft_strlcat.c`
 
 `ft_strlcat` adiciona `src` no final de `dst`, respeitando o tamanho total do buffer.
@@ -1110,7 +1052,6 @@ A condicao `dst_len + i < dstsize - 1` deixa espaco pro `\0`.
 No final, fecha com `\0` e retorna `dst_len + src_len`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe dst src dstsize"] --> B["calcula dst_len e src_len"]
@@ -1144,7 +1085,6 @@ Não precisa tratar `NULL`, porque a original também não trata.
 ### Testes
 
 Testar quando cabe tudo, quando trunca e quando `dstsize <= dst_len`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strlcat.c ft_strlen.c main.c -o test
 ./test
@@ -1153,6 +1093,7 @@ cc -Wall -Wextra -Werror ft_strlcat.c ft_strlen.c main.c -o test
 Exemplos: `"Hi "` + `"World"` com buffer 20 deve virar `"Hi World"` e retornar `8`.
 
 
+<a id="ft-toupper-c"></a>
 ## `ft_toupper.c`
 
 `ft_toupper` transforma letra minúscula em maiúscula.
@@ -1190,7 +1131,6 @@ Se não for minúscula, retorna `c` sem alterar.
 Não usa `ft_isalpha`, porque maiúsculas não devem ser convertidas.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c está entre a e z?"}
@@ -1213,7 +1153,6 @@ O retorno é `int`, como na libc, por compatibilidade com `EOF`.
 ### Testes
 
 Testar minúsculas, maiúsculas, números, simbolos e espaco.
-
 ```bash
 cc -Wall -Wextra -Werror ft_toupper.c main.c -o test
 ./test
@@ -1225,6 +1164,7 @@ Exemplos: `'a'` vira `'A'`, `'z'` vira `'Z'`; `'A'`, `'5'`, `'!'` e `' '` ficam 
 
 
 
+<a id="ft-tolower-c"></a>
 ## `ft_tolower.c`
 
 `ft_tolower` transforma letra maiúscula em minúscula.
@@ -1262,7 +1202,6 @@ Se não for maiúscula, retorna `c` sem alterar.
 Não usa `ft_isalpha`, porque minúsculas não devem ser convertidas.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c está entre A e Z?"}
@@ -1285,7 +1224,6 @@ O retorno é `int`, como na libc, por compatibilidade com `EOF`.
 ### Testes
 
 Testar maiúsculas, minúsculas, números, simbolos e espaco.
-
 ```bash
 cc -Wall -Wextra -Werror ft_tolower.c main.c -o test
 ./test
@@ -1294,6 +1232,7 @@ cc -Wall -Wextra -Werror ft_tolower.c main.c -o test
 Exemplos: `'A'` vira `'a'`, `'Z'` vira `'z'`; `'a'`, `'5'`, `'!'` e `' '` ficam iguais.
 
 
+<a id="ft-strchr-c"></a>
 ## `ft_strchr.c`
 
 `ft_strchr` procura a primeira vez que um caractere aparece dentro de uma string.
@@ -1333,7 +1272,6 @@ Depois do loop, se `c == '\0'`, retorna o endereco do terminador.
 Se não achar nada, retorna `NULL`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s e c"] --> B["i = 0"]
@@ -1364,7 +1302,6 @@ Não precisa tratar `s == NULL`, porque a original também não trata.
 ### Testes
 
 Testar caractere existente, inexistente, string vazia e busca por `\0`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strchr.c main.c -o test
 ./test
@@ -1373,6 +1310,7 @@ cc -Wall -Wextra -Werror ft_strchr.c main.c -o test
 Exemplos: buscar `'W'` em `"Hello, World!"` deve retornar `"World!"`; buscar `'z'` deve retornar `NULL`; buscar `'\0'` deve retornar o final da string.
 
 
+<a id="ft-strrchr-c"></a>
 ## `ft_strrchr.c`
 
 `ft_strrchr` procura a ultima vez que um caractere aparece dentro de uma string.
@@ -1412,7 +1350,6 @@ O loop também testa o `\0`, porque buscar `'\0'` deve retornar o final da strin
 No final, retorna `last`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s e c"] --> B["i = 0 e last = NULL"]
@@ -1444,7 +1381,6 @@ Não precisa tratar `s == NULL`, porque a original também não trata.
 ### Testes
 
 Testar caractere repetido, inexistente, string vazia e busca por `\0`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strrchr.c main.c -o test
 ./test
@@ -1453,6 +1389,7 @@ cc -Wall -Wextra -Werror ft_strrchr.c main.c -o test
 Exemplos: buscar `'l'` em `"Hello"` deve retornar `"lo"`; buscar `'z'` deve retornar `NULL`; buscar `'\0'` deve retornar o final da string.
 
 
+<a id="ft-strncmp-c"></a>
 ## `ft_strncmp.c`
 
 `ft_strncmp` compara duas strings, mas no maximo até `n` bytes.
@@ -1492,7 +1429,6 @@ O cast `(unsigned char)` evita erro com chars de valor alto.
 Se não achar diferenca, retorna `0`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s1 s2 n"] --> B["i = 0"]
@@ -1523,7 +1459,6 @@ Não precisa tratar `NULL`, porque a original também não trata.
 ### Testes
 
 Testar strings iguais, diferentes, limite menor que a diferenca e string que acaba antes.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strncmp.c main.c -o test
 ./test
@@ -1532,6 +1467,7 @@ cc -Wall -Wextra -Werror ft_strncmp.c main.c -o test
 Exemplos: `"abc"` com `"abc"` retorna `0`; `"abc"` com `"abd"` em `n = 3` retorna negativo; em `n = 2` retorna `0`.
 
 
+<a id="ft-memchr-c"></a>
 ## `ft_memchr.c`
 
 `ft_memchr` procura a primeira ocorrência de um byte dentro de um bloco de memória.
@@ -1571,7 +1507,6 @@ Se `ptr[i] == (unsigned char)c`, retorna o endereco daquele byte.
 Se terminar o loop sem achar, retorna `NULL`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s c n"] --> B["i = 0"]
@@ -1606,7 +1541,6 @@ A função `memchr` opera inspecionando a memória byte a byte, o que exige que 
 ### Testes
 
 Testar byte existente, inexistente, limite menor que a posição e `\0` no meio.
-
 ```bash
 cc -Wall -Wextra -Werror ft_memchr.c main.c -o test
 ./test
@@ -1615,6 +1549,7 @@ cc -Wall -Wextra -Werror ft_memchr.c main.c -o test
 Exemplos: buscar `'W'` em `"Hello, World!"` com `n = 13` deve achar; com `n = 5` deve retornar `NULL`.
 
 
+<a id="ft-memcmp-c"></a>
 ## `ft_memcmp.c`
 
 `ft_memcmp` compara dois blocos de memória byte por byte.
@@ -1654,7 +1589,6 @@ Se `p1[i] != p2[i]`, retorna `p1[i] - p2[i]`.
 Se terminar sem diferenca, retorna `0`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s1 s2 n"] --> B["i = 0"]
@@ -1686,7 +1620,6 @@ Não precisa tratar `NULL`, porque a original também não trata.
 ### Testes
 
 Testar blocos iguais, diferentes, `n = 0` e diferenca depois de `\0`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_memcmp.c main.c -o test
 ./test
@@ -1695,6 +1628,7 @@ cc -Wall -Wextra -Werror ft_memcmp.c main.c -o test
 Exemplos: `"abc"` com `"abc"` retorna `0`; `"abc"` com `"abd"` retorna negativo; `"abc\0def"` com `"abc\0xyz"` em `n = 7` deve achar diferenca depois do `\0`.
 
 
+<a id="ft-strnstr-c"></a>
 ## `ft_strnstr.c`
 
 `ft_strnstr` procura a primeira ocorrência de `needle` dentro de `haystack`.
@@ -1740,7 +1674,6 @@ Se der `0`, encontrou e retorna `&haystack[i]`.
 Se não achar nada, retorna `NULL`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe haystack needle len"] --> B{"needle vazia?"}
@@ -1772,7 +1705,6 @@ Não precisa tratar `NULL`, porque a original também não trata.
 ### Testes
 
 Testar match normal, sem match, limite curto, needle vazia e match no limite exato.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strnstr.c ft_strlen.c ft_strncmp.c main.c -o test
 ./test
@@ -1781,6 +1713,7 @@ cc -Wall -Wextra -Werror ft_strnstr.c ft_strlen.c ft_strncmp.c main.c -o test
 Exemplos: `"Hello World"` com `"World"` e `len = 11` acha; com `len = 9` retorna `NULL`.
 
 
+<a id="ft-atoi-c"></a>
 ## `ft_atoi.c`
 
 `ft_atoi` converte uma string em um número `int`.
@@ -1820,7 +1753,6 @@ Para no primeiro caractere que não for dígito.
 No final, retorna `result * sign`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe str"] --> B["pula whitespaces"]
@@ -1852,7 +1784,6 @@ Não tratar overflow na versao classica da Libft.
 ### Testes
 
 Testar números positivos, negativos, espacos, sinais invalidos e texto depois do número.
-
 ```bash
 cc -Wall -Wextra -Werror ft_atoi.c main.c -o test
 ./test
@@ -1862,6 +1793,7 @@ Exemplos: `"42"` retorna `42`; `"   -42abc"` retorna `-42`; `"+-5"`, `"--5"`, `"
 
 
 
+<a id="ft-calloc-c"></a>
 ## `ft_calloc.c`
 
 `ft_calloc` aloca memória para `count` elementos de `size` bytes.
@@ -1905,7 +1837,6 @@ Se der certo, chama `ft_bzero(ptr, count * size)`.
 No final, retorna o ponteiro zerado.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe count e size"] --> B{"tem overflow?"}
@@ -1934,7 +1865,6 @@ Precisa de `SIZE_MAX`, entao incluir `<stdint.h>` no `libft.h`.
 ### Testes
 
 Testar alocação normal, memória zerada, `count = 0`, `size = 0` e overflow.
-
 ```bash
 cc -Wall -Wextra -Werror ft_calloc.c ft_bzero.c ft_memset.c main.c -o test
 ./test
@@ -1943,6 +1873,7 @@ cc -Wall -Wextra -Werror ft_calloc.c ft_bzero.c ft_memset.c main.c -o test
 Exemplos: `ft_calloc(5, sizeof(int))` deve criar 5 ints zerados; `ft_calloc(SIZE_MAX, 2)` deve retornar `NULL`.
 
 
+<a id="ft-strdup-c"></a>
 ## `ft_strdup.c`
 
 `ft_strdup` cria uma copia nova de uma string.
@@ -1982,7 +1913,6 @@ Depois coloca `dup[i] = '\0'`.
 No final, retorna `dup`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s1"] --> B["calcula len com ft_strlen"]
@@ -2013,7 +1943,6 @@ Não precisa tratar `s1 == NULL`, porque a original também não trata.
 ### Testes
 
 Testar string normal, string vazia e se a copia é independente da original.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strdup.c ft_strlen.c main.c -o test
 ./test
@@ -2024,6 +1953,7 @@ Exemplos: `ft_strdup("Hello")` deve criar outra string `"Hello"` em outro endere
 
 # Part 2
 
+<a id="ft-substr-c"></a>
 ## `ft_substr.c`
 
 `ft_substr` cria uma nova string pegando um pedaco de `s`.
@@ -2065,7 +1995,6 @@ Copia `s[start + i]` para `sub[i]`.
 No final, fecha com `\0` e retorna `sub`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s start len"] --> B["calcula s_len"]
@@ -2099,7 +2028,6 @@ Não esquecer o `\0` final.
 ### Testes
 
 Testar substring no meio, no comeco, no final, `len = 0` e `start` alem do final.
-
 ```bash
 cc -Wall -Wextra -Werror ft_substr.c ft_strlen.c ft_strdup.c main.c -o test
 ./test
@@ -2107,6 +2035,7 @@ cc -Wall -Wextra -Werror ft_substr.c ft_strlen.c ft_strdup.c main.c -o test
 
 Exemplos: `"Hello World", 6, 5` retorna `"World"`; `"Hello", 10, 5` retorna `""`; `"Hello", 0, 100` retorna `"Hello"`.
 
+<a id="ft-strjoin-c"></a>
 ## `ft_strjoin.c`
 
 `ft_strjoin` junta duas strings em uma nova string.
@@ -2148,7 +2077,6 @@ No final, coloca `result[i + j] = '\0'`.
 Retorna `result`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s1 e s2"] --> B["calcula strlen s1 + strlen s2 + 1"]
@@ -2180,7 +2108,6 @@ A string retornada precisa ser liberada com `free`.
 ### Testes
 
 Testar duas strings normais, `s1` vazia, `s2` vazia e as duas vazias.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strjoin.c ft_strlen.c main.c -o test
 ./test
@@ -2188,6 +2115,7 @@ cc -Wall -Wextra -Werror ft_strjoin.c ft_strlen.c main.c -o test
 
 Exemplos: `"Hello, " + "World!"` deve retornar `"Hello, World!"`; `"" + "World"` retorna `"World"`; `"Hello" + ""` retorna `"Hello"`.
 
+<a id="ft-strtrim-c"></a>
 ## `ft_strtrim.c`
 
 `ft_strtrim` cria uma nova string removendo chars do `set` do comeco e do final de `s1`.
@@ -2231,7 +2159,6 @@ Copia o trecho com `ft_strlcpy(result, s1 + start, end - start + 1)`.
 Retorna `result`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s1 e set"] --> B["start = 0"]
@@ -2268,7 +2195,6 @@ Não precisa tratar `s1 == NULL` ou `set == NULL`, porque o padrao da Libft gera
 ### Testes
 
 Testar espacos, varios chars no set, set vazio, tudo removido e chars no meio.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strtrim.c ft_strlen.c ft_strlcpy.c main.c -o test
 ./test
@@ -2277,6 +2203,7 @@ cc -Wall -Wextra -Werror ft_strtrim.c ft_strlen.c ft_strlcpy.c main.c -o test
 Exemplos: `"   Hello   "` com `" "` retorna `"Hello"`; `"abcHelloabc"` com `"abc"` retorna `"Hello"`; `"ab Hello ab"` com `"ab"` retorna `" Hello "`.
 
 
+<a id="ft-split-c"></a>
 ## `ft_split.c`
 
 `ft_split` divide uma string em varias strings menores usando um char separador.
@@ -2318,7 +2245,6 @@ Se algum `malloc` falhar, chama `free_all` para liberar o que já foi alocado.
 No final, coloca `result[w] = NULL`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s e c"] --> B["count_words conta palavras"]
@@ -2358,7 +2284,6 @@ Não precisa tratar `s == NULL`, porque o padrao da Libft geralmente não trata.
 ### Testes
 
 Testar frase normal, separadores consecutivos, string vazia, somente separadores e sem separador.
-
 ```bash
 cc -Wall -Wextra -Werror ft_split.c main.c -o test
 ./test
@@ -2367,6 +2292,7 @@ cc -Wall -Wextra -Werror ft_split.c main.c -o test
 Exemplos: `"Hello World 42"` com `' '` retorna `["Hello", "World", "42", NULL]`; `",,abc,,def,,"` com `','` retorna `["abc", "def", NULL]`; `"aaaa"` com `'a'` retorna `[NULL]`.
 
 
+<a id="ft-itoa-c"></a>
 ## `ft_itoa.c`
 
 `ft_itoa` converte um número `int` em uma string.
@@ -2410,7 +2336,6 @@ Se `nb == 0`, coloca `'0'`.
 Depois preenche os dígitos de tras para frente usando `nb % 10 + '0'`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe n"] --> B["count_digits calcula len"]
@@ -2451,7 +2376,6 @@ Somar `'0'` transforma número em caractere.
 ### Testes
 
 Testar zero, positivos, negativos, `INT_MAX` e `INT_MIN`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_itoa.c main.c -o test
 ./test
@@ -2460,6 +2384,7 @@ cc -Wall -Wextra -Werror ft_itoa.c main.c -o test
 Exemplos: `42` retorna `"42"`; `-42` retorna `"-42"`; `0` retorna `"0"`; `INT_MIN` retorna `"-2147483648"`.
 
 
+<a id="ft-strmapi-c"></a>
 ## `ft_strmapi.c`
 
 `ft_strmapi` cria uma nova string aplicando uma função `f` em cada char de `s`.
@@ -2501,7 +2426,6 @@ Depois fecha com `result[i] = '\0'`.
 Retorna `result`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s e função f"] --> B["calcula len com ft_strlen"]
@@ -2536,7 +2460,6 @@ Não altera `s`, cria uma nova string.
 ### Testes
 
 Testar função que ignora índice, função que usa índice e string vazia.
-
 ```bash
 cc -Wall -Wextra -Werror ft_strmapi.c ft_strlen.c main.c -o test
 ./test
@@ -2546,6 +2469,7 @@ Exemplos: `to_upper("hello")` deve retornar `"HELLO"`; `add_index("AAAA")` deve 
 
 
 
+<a id="ft-striteri-c"></a>
 ## `ft_striteri.c`
 
 `ft_striteri` aplica uma função `f` em cada char de uma string.
@@ -2585,7 +2509,6 @@ O `&s[i]` passa o endereco do caractere.
 Assim, `f` pode mudar o valor usando `*c`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s e função f"] --> B["i = 0"]
@@ -2615,7 +2538,6 @@ Não usar string literal direto, porque a função modifica a string.
 ### Testes
 
 Testar função que muda para maiúscula, função que usa índice e string vazia.
-
 ```bash
 cc -Wall -Wextra -Werror ft_striteri.c main.c -o test
 ./test
@@ -2624,6 +2546,7 @@ cc -Wall -Wextra -Werror ft_striteri.c main.c -o test
 Exemplos: `"hello"` vira `"HELLO"`; `"AAAA"` com função que soma índice vira `"ABCD"`; `""` continua `""`.
 
 
+<a id="ft-putchar-fd-c"></a>
 ## `ft_putchar_fd.c`
 
 `ft_putchar_fd` escreve um unico caractere em um file descriptor.
@@ -2661,7 +2584,6 @@ O `1` significa que somente 1 byte será escrito.
 A função é `void`, entao ignora o retorno do `write`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe c e fd"] --> B["pega endereco de c"]
@@ -2687,7 +2609,6 @@ Não precisa tratar erro de `write`, porque o protótipo da função é `void`.
 ### Testes
 
 Testar escrevendo no stdout, stderr, newline, tab e caractere nulo.
-
 ```bash
 cc -Wall -Wextra -Werror ft_putchar_fd.c main.c -o test
 ./test
@@ -2697,6 +2618,7 @@ Exemplos: `ft_putchar_fd('A', 1)` imprime `A`; `ft_putchar_fd('!', 2)` escreve n
 
 
 
+<a id="ft-putstr-fd-c"></a>
 ## `ft_putstr_fd.c`
 
 `ft_putstr_fd` escreve uma string inteira em um file descriptor.
@@ -2736,7 +2658,6 @@ A função é `void`, entao ignora o retorno de `write`.
 Não adiciona `\n`; isso é trabalho da `ft_putendl_fd`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s e fd"] --> B["calcula tamanho com ft_strlen"]
@@ -2764,7 +2685,6 @@ Não precisa tratar `s == NULL`, porque o padrao da Libft geralmente não trata.
 ### Testes
 
 Testar stdout, stderr, string vazia, newline embutido e tabs.
-
 ```bash
 cc -Wall -Wextra -Werror ft_putstr_fd.c ft_strlen.c main.c -o test
 ./test
@@ -2773,6 +2693,7 @@ cc -Wall -Wextra -Werror ft_putstr_fd.c ft_strlen.c main.c -o test
 Exemplos: `ft_putstr_fd("Hello", 1)` imprime `Hello`; `ft_putstr_fd("erro\n", 2)` escreve no stderr.
 
 
+<a id="ft-putendl-fd-c"></a>
 ## `ft_putendl_fd.c`
 
 `ft_putendl_fd` escreve uma string em um file descriptor e adiciona `\n` no final.
@@ -2810,7 +2731,6 @@ O `'\n'` é um char, valor ASCII `10`.
 A função é `void`, entao não retorna nada.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe s e fd"] --> B["chama ft_putstr_fd s fd"]
@@ -2837,7 +2757,6 @@ Não adicionar `\0`, porque isso é terminador de string, não saida visível.
 ### Testes
 
 Testar stdout, stderr, string vazia e string que já tem `\n` no meio.
-
 ```bash
 cc -Wall -Wextra -Werror ft_putendl_fd.c ft_putstr_fd.c ft_putchar_fd.c ft_strlen.c main.c -o test
 ./test
@@ -2846,6 +2765,7 @@ cc -Wall -Wextra -Werror ft_putendl_fd.c ft_putstr_fd.c ft_putchar_fd.c ft_strle
 Exemplos: `ft_putendl_fd("Hello", 1)` imprime `Hello` e pula linha; `ft_putendl_fd("", 1)` imprime somente uma quebra de linha.
 
 
+<a id="ft-putnbr-fd-c"></a>
 ## `ft_putnbr_fd.c`
 
 `ft_putnbr_fd` escreve um número inteiro em um file descriptor.
@@ -2885,7 +2805,6 @@ Depois imprime o ultimo dígito com `(nb % 10) + '0'`.
 O `+ '0'` transforma número em caractere.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe n e fd"] --> B["nb = n em long"]
@@ -2919,7 +2838,6 @@ Zero já funciona: imprime `'0'` direto.
 ### Testes
 
 Testar zero, positivo, negativo, `INT_MAX` e `INT_MIN`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_putnbr_fd.c ft_putchar_fd.c main.c -o test
 ./test
@@ -2930,6 +2848,7 @@ Exemplos: `42` imprime `42`; `-42` imprime `-42`; `0` imprime `0`; `INT_MIN` imp
 
 # Part 3
 
+<a id="ft-lstnew-c"></a>
 ## `ft_lstnew.c`
 
 `ft_lstnew` cria um novo no de lista ligada.
@@ -2967,7 +2886,6 @@ Se `malloc` falhar, retorna `NULL`.
 Depois retorna `new_node`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe content"] --> B["malloc sizeof t_list"]
@@ -2995,7 +2913,6 @@ Checar se `malloc` falhou antes de acessar os campos.
 ### Testes
 
 Testar content string, content int, content `NULL` e dois nos diferentes.
-
 ```bash
 cc -Wall -Wextra -Werror ft_lstnew.c main.c -o test
 ./test
@@ -3004,6 +2921,7 @@ cc -Wall -Wextra -Werror ft_lstnew.c main.c -o test
 Exemplos: `ft_lstnew("Hello")` deve criar um no com `content = "Hello"` e `next = NULL`; `ft_lstnew(NULL)` também deve criar um no valido.
 
 
+<a id="ft-lstadd-front-c"></a>
 ## `ft_lstadd_front.c`
 
 `ft_lstadd_front` adiciona um no no comeco da lista ligada.
@@ -3045,7 +2963,6 @@ Agora a cabeca da lista é o novo no.
 A ordem importa muito.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe lst e new"] --> B{"lst ou new é NULL?"}
@@ -3074,7 +2991,6 @@ Lista vazia funciona naturalmente, porque `*lst` é `NULL`.
 ### Testes
 
 Testar adicionando em lista vazia, lista com nos e casos `NULL`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_lstadd_front.c ft_lstnew.c main.c -o test
 ./test
@@ -3084,6 +3000,7 @@ Exemplos: lista `[A, B]` com novo `X` deve virar `[X, A, B]`; lista vazia com `X
 
 
 
+<a id="ft-lstsize-c"></a>
 ## `ft_lstsize.c`
 
 `ft_lstsize` conta quantos nos existem em uma lista ligada.
@@ -3125,7 +3042,6 @@ Quando `current` vira `NULL`, chegou no final.
 Retorna `count`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe lst"] --> B["count = 0"]
@@ -3156,7 +3072,6 @@ Cada volta do loop conta exatamente 1 no.
 ### Testes
 
 Testar lista vazia, lista com 1 no, lista com 3 nos e lista maior.
-
 ```bash
 cc -Wall -Wextra -Werror ft_lstsize.c ft_lstnew.c ft_lstadd_front.c main.c -o test
 ./test
@@ -3165,6 +3080,7 @@ cc -Wall -Wextra -Werror ft_lstsize.c ft_lstnew.c ft_lstadd_front.c main.c -o te
 Exemplos: lista `[A, B, C]` retorna `3`; lista vazia `NULL` retorna `0`; lista `[A]` retorna `1`.
 
 
+<a id="ft-lstlast-c"></a>
 ## `ft_lstlast.c`
 
 `ft_lstlast` retorna o ultimo no de uma lista ligada.
@@ -3202,7 +3118,6 @@ Quando `current->next == NULL`, `current` é o ultimo.
 Se `lst == NULL`, `current` já comeca como `NULL` e retorna `NULL`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe lst"] --> B["current = lst"]
@@ -3229,7 +3144,6 @@ Não precisa de `if` separado para lista vazia.
 ### Testes
 
 Testar lista vazia, lista com 1 no e lista com varios nos.
-
 ```bash
 cc -Wall -Wextra -Werror ft_lstlast.c ft_lstnew.c ft_lstadd_front.c main.c -o test
 ./test
@@ -3238,6 +3152,7 @@ cc -Wall -Wextra -Werror ft_lstlast.c ft_lstnew.c ft_lstadd_front.c main.c -o te
 Exemplos: lista `[A, B, C]` retorna o no `C`; lista `[A]` retorna `A`; lista vazia retorna `NULL`.
 
 
+<a id="ft-lstadd-back-c"></a>
 ## `ft_lstadd_back.c`
 
 `ft_lstadd_back` adiciona um no no final da lista ligada.
@@ -3277,7 +3192,6 @@ Se a lista já tem nos, usa `ft_lstlast(*lst)` para achar o ultimo.
 Depois faz `ultimo->next = new`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe lst e new"] --> B{"lst ou new é NULL?"}
@@ -3309,7 +3223,6 @@ Proteger contra `lst == NULL` e `new == NULL`.
 ### Testes
 
 Testar lista vazia, lista com varios nos, mistura com `add_front` e casos `NULL`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_lstadd_back.c ft_lstlast.c ft_lstnew.c ft_lstadd_front.c main.c -o test
 ./test
@@ -3318,6 +3231,7 @@ cc -Wall -Wextra -Werror ft_lstadd_back.c ft_lstlast.c ft_lstnew.c ft_lstadd_fro
 Exemplos: lista `[A, B]` com novo `X` deve virar `[A, B, X]`; lista vazia com `X` deve virar `[X]`.
 
 
+<a id="ft-lstdelone-c"></a>
 ## `ft_lstdelone.c`
 
 `ft_lstdelone` libera um unico no da lista.
@@ -3357,7 +3271,6 @@ Não toca em `lst->next`.
 O resto da lista continua responsabilidade de quem chamou.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe lst e del"] --> B{"lst ou del é NULL?"}
@@ -3386,7 +3299,6 @@ Se `del == NULL`, não libera nada.
 ### Testes
 
 Testar no com `content` alocado, content estatico, `lst NULL`, `del NULL` e se não toca no proximo.
-
 ```bash
 cc -Wall -Wextra -Werror ft_lstdelone.c ft_lstnew.c main.c -o test
 ./test
@@ -3394,6 +3306,7 @@ cc -Wall -Wextra -Werror ft_lstdelone.c ft_lstnew.c main.c -o test
 
 Exemplos: no com `strdup("Hello")` deve chamar `del` no content e liberar o no; lista `[A, B]` deletando `A` não deve liberar `B`.
 
+<a id="ft-lstclear-c"></a>
 ## `ft_lstclear.c`
 
 `ft_lstclear` libera a lista inteira.
@@ -3435,7 +3348,6 @@ Entao faz `current = next`.
 No final, faz `*lst = NULL`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe lst e del"] --> B{"lst ou del é NULL?"}
@@ -3469,7 +3381,6 @@ Proteger contra `lst == NULL` e `del == NULL`.
 ### Testes
 
 Testar lista com varios nos, lista com 1 no, lista vazia, `lst NULL` e `del NULL`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_lstclear.c ft_lstdelone.c ft_lstnew.c ft_lstadd_back.c ft_lstsize.c main.c -o test
 ./test
@@ -3478,6 +3389,7 @@ cc -Wall -Wextra -Werror ft_lstclear.c ft_lstdelone.c ft_lstnew.c ft_lstadd_back
 Exemplos: lista `[A, B, C]` deve chamar `del` 3 vezes e deixar `lst == NULL`; lista vazia não deve chamar `del`.
 
 
+<a id="ft-lstiter-c"></a>
 ## `ft_lstiter.c`
 
 `ft_lstiter` aplica uma função `f` no `content` de cada no da lista.
@@ -3517,7 +3429,6 @@ Depois avanca com `current = current->next`.
 A lista continua com os mesmos nos e os mesmos links.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe lst e f"] --> B{"lst ou f é NULL?"}
@@ -3547,7 +3458,6 @@ Não existe índice aqui, diferente de `ft_striteri`.
 ### Testes
 
 Testar imprimindo strings, modificando ints, alterando strings e casos `NULL`.
-
 ```bash
 cc -Wall -Wextra -Werror ft_lstiter.c ft_lstnew.c ft_lstadd_back.c main.c -o test
 ./test
@@ -3555,6 +3465,7 @@ cc -Wall -Wextra -Werror ft_lstiter.c ft_lstnew.c ft_lstadd_back.c main.c -o tes
 
 Exemplos: lista `["alpha", "beta"]` com `print_string` imprime todos; lista `[10, 20, 30]` com `double_int` vira `[20, 40, 60]`.
 
+<a id="ft-lstmap-c"></a>
 ## `ft_lstmap.c`
 
 `ft_lstmap` cria uma nova lista aplicando uma função `f` em cada `content` da lista original.
@@ -3600,7 +3511,6 @@ Se deu certo, adiciona o no no final com `ft_lstadd_back`.
 No final, retorna `new_list`.
 
 ### Fluxo
-
 ```mermaid
 flowchart TD
 	A["recebe lst f del"] --> B{"lst f ou del é NULL?"}
@@ -3640,7 +3550,6 @@ Proteger contra `lst`, `f` ou `del` `NULL`.
 ### Testes
 
 Testar lista de ints, lista de strings, lista vazia, `f NULL`, `del NULL` e falha de alocação se possível.
-
 ```bash
 cc -Wall -Wextra -Werror ft_lstmap.c ft_lstnew.c ft_lstadd_back.c ft_lstclear.c ft_lstdelone.c ft_lstsize.c main.c -o test
 ./test
