@@ -270,10 +270,10 @@ O `Makefile` existe pra escrever as regras uma vez e depois so rodar `make`.
 ```mermaid
 flowchart TD
 	A["make"] --> B["all"]
-	B --> C["$(NAME)"]
+	B --> C["NAME"]
 	C --> D["precisa dos OBJS"]
-	D --> E["compila cada .c em .o"]
-	E --> F["ar rcs libft.a"]
+	D --> E["compila cada arquivo C em objeto"]
+	E --> F["cria libft.a"]
 	F --> G["libft.a pronto"]
 ```
 
