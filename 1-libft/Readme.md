@@ -340,10 +340,10 @@ Não da para escrever `'A' <= c <= 'Z'` em C, porque isso não funciona como na 
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c está entre A e Z?"}
-	B -- sim --> C["retorna 1"]
-	B -- não --> D{"c está entre a e z?"}
-	D -- sim --> C
-	D -- não --> E["retorna 0"]
+	B --> C["retorna 1"]
+	B --> D{"c está entre a e z?"}
+	D --> C
+	D --> E["retorna 0"]
 ```
 
 ### Pontos de atenção
@@ -408,8 +408,8 @@ Usar `'0'` e `'9'` é melhor que usar `48` e `57`, porque fica mais legivel.
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c está entre 0 e 9?"}
-	B -- sim --> C["retorna 1"]
-	B -- não --> D["retorna 0"]
+	B --> C["retorna 1"]
+	B --> D["retorna 0"]
 ```
 
 ### Pontos de atenção
@@ -474,10 +474,10 @@ O `||` tem curto-circuito: se `ft_isalpha(c)` já for verdadeiro, o C nem precis
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"ft_isalpha c?"}
-	B -- sim --> C["retorna 1"]
-	B -- não --> D{"ft_isdigit c?"}
-	D -- sim --> C
-	D -- não --> E["retorna 0"]
+	B --> C["retorna 1"]
+	B --> D{"ft_isdigit c?"}
+	D --> C
+	D --> E["retorna 0"]
 ```
 
 ### Pontos de atenção
@@ -544,10 +544,10 @@ ASCII não é a mesma coisa que caractere imprimivel.
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c >= 0?"}
-	B -- não --> C["retorna 0"]
-	B -- sim --> D{"c <= 127?"}
-	D -- sim --> E["retorna 1"]
-	D -- não --> C
+	B --> C["retorna 0"]
+	B --> D{"c <= 127?"}
+	D --> E["retorna 1"]
+	D --> C
 ```
 
 ### Pontos de atenção
@@ -622,9 +622,9 @@ Não conta o `\0`, porque ele somente marca o final da string.
 flowchart TD
 	A["recebe string s"] --> B["i = 0"]
 	B --> C{"s['i'] é diferente de zero?"}
-	C -- sim --> D["i++"]
+	C --> D["i++"]
 	D --> C
-	C -- não --> E["retorna i"]
+	C --> E["retorna i"]
 ```
 
 ### Pontos de atenção
@@ -696,10 +696,10 @@ flowchart TD
 	A["recebe b c len"] --> B["i = 0"]
 	B --> C["ptr aponta pra b como unsigned char"]
 	C --> D{"i < len?"}
-	D -- sim --> E["ptr i recebe c"]
+	D --> E["ptr i recebe c"]
 	E --> F["i++"]
 	F --> D
-	D -- não --> G["retorna b"]
+	D --> G["retorna b"]
 ```
 
 ### Pontos de atenção
@@ -860,14 +860,14 @@ se um ou o outro forem nulos, porque o memcpy da libc não trata e da erro de se
 ```mermaid
 flowchart TD
 	A["recebe dst src n"] --> B{"dst e src sao NULL?"}
-	B -- sim --> C["retorna dst"]
-	B -- não --> D["i = 0"]
+	B --> C["retorna dst"]
+	B --> D["i = 0"]
 	D --> E["converte dst e src pra unsigned char"]
 	E --> F{"i < n?"}
-	F -- sim --> G["d i recebe s i"]
+	F --> G["d i recebe s i"]
 	G --> H["i++"]
 	H --> F
-	F -- não --> I["retorna dst"]
+	F --> I["retorna dst"]
 ```
 
 ### Pontos de atenção
@@ -943,11 +943,11 @@ Isso evita sobrescrever bytes da origem antes de ler.
 ```mermaid
 flowchart TD
 	A["recebe dst src len"] --> B{"dst e src sao NULL?"}
-	B -- sim --> C["retorna dst"]
-	B -- não --> D["converte pra unsigned char"]
+	B --> C["retorna dst"]
+	B --> D["converte pra unsigned char"]
 	D --> E{"d < s?"}
-	E -- sim --> F["copia do comeco pro fim"]
-	E -- não --> G["copia do fim pro comeco"]
+	E --> F["copia do comeco pro fim"]
+	E --> G["copia do fim pro comeco"]
 	F --> H["retorna dst"]
 	G --> H
 ```
@@ -1032,12 +1032,12 @@ O retorno é sempre `ft_strlen(src)`, não a quantidade copiada.
 flowchart TD
 	A["recebe dst src dstsize"] --> B{"i = 0"}
 	B --> C{"dstsize == 0?"}
-	C -- sim --> D["retorna strlen src"]
-	C -- não --> E{"src i existe e i < dstsize - 1?"}
-	E -- sim --> F["dst i recebe src i"]
+	C --> D["retorna strlen src"]
+	C --> E{"src i existe e i < dstsize - 1?"}
+	E --> F["dst i recebe src i"]
 	F --> G["i++"]
 	G --> E
-	E -- não --> H["dst i recebe \0"]
+	E --> H["dst i recebe \0"]
 	H --> I["retorna strlen src"]
 ```
 
@@ -1115,13 +1115,13 @@ No final, fecha com `\0` e retorna `dst_len + src_len`.
 flowchart TD
 	A["recebe dst src dstsize"] --> B["calcula dst_len e src_len"]
 	B --> C{"dstsize <= dst_len?"}
-	C -- sim --> D["retorna dstsize + src_len"]
-	C -- não --> E["i = 0"]
+	C --> D["retorna dstsize + src_len"]
+	C --> E["i = 0"]
 	E --> F{"src i existe e dst_len + i < dstsize - 1?"}
-	F -- sim --> G["dst dst_len+i recebe src i"]
+	F --> G["dst dst_len+i recebe src i"]
 	G --> H["i++"]
 	H --> F
-	F -- não --> I["fecha com \0"]
+	F --> I["fecha com \0"]
 	I --> J["retorna dst_len + src_len"]
 ```
 
@@ -1194,8 +1194,8 @@ Não usa `ft_isalpha`, porque maiúsculas não devem ser convertidas.
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c está entre a e z?"}
-	B -- sim --> C["retorna c - 32"]
-	B -- não --> D["retorna c"]
+	B --> C["retorna c - 32"]
+	B --> D["retorna c"]
 ```
 
 ### Pontos de atenção
@@ -1266,8 +1266,8 @@ Não usa `ft_isalpha`, porque minúsculas não devem ser convertidas.
 ```mermaid
 flowchart TD
 	A["recebe c"] --> B{"c está entre A e Z?"}
-	B -- sim --> C["retorna c + 32"]
-	B -- não --> D["retorna c"]
+	B --> C["retorna c + 32"]
+	B --> D["retorna c"]
 ```
 
 ### Pontos de atenção
@@ -1338,13 +1338,13 @@ Se não achar nada, retorna `NULL`.
 flowchart TD
 	A["recebe s e c"] --> B["i = 0"]
 	B --> C{"s i existe?"}
-	C -- sim --> D{"s i == c?"}
-	D -- sim --> E["retorna endereço de s i"]
-	D -- não --> F["i++"]
+	C --> D{"s i == c?"}
+	D --> E["retorna endereço de s i"]
+	D --> F["i++"]
 	F --> C
-	C -- não --> G{"c é \0?"}
-	G -- sim --> H["retorna endereço do terminador"]
-	G -- não --> I["retorna NULL"]
+	C --> G{"c é \0?"}
+	G --> H["retorna endereço do terminador"]
+	G --> I["retorna NULL"]
 ```
 
 ### Pontos de atenção
@@ -1417,11 +1417,11 @@ No final, retorna `last`.
 flowchart TD
 	A["recebe s e c"] --> B["i = 0 e last = NULL"]
 	B --> C{"s i == c?"}
-	C -- sim --> D["last recebe endereco de s i"]
-	C -- não --> E{"s i é \0?"}
+	C --> D["last recebe endereco de s i"]
+	C --> E{"s i é \0?"}
 	D --> E
-	E -- sim --> F["retorna last"]
-	E -- não --> G["i++"]
+	E --> F["retorna last"]
+	E --> G["i++"]
 	G --> C
 ```
 
@@ -1497,10 +1497,10 @@ Se não achar diferenca, retorna `0`.
 flowchart TD
 	A["recebe s1 s2 n"] --> B["i = 0"]
 	B --> C{"i < n e alguma string ainda tem char?"}
-	C -- não --> D["retorna 0"]
-	C -- sim --> E{"s1 i diferente de s2 i?"}
-	E -- sim --> F["retorna uchar s1 i - uchar s2 i"]
-	E -- não --> G["i++"]
+	C --> D["retorna 0"]
+	C --> E{"s1 i diferente de s2 i?"}
+	E --> F["retorna uchar s1 i - uchar s2 i"]
+	E --> G["i++"]
 	G --> C
 ```
 
@@ -1577,10 +1577,10 @@ flowchart TD
 	A["recebe s c n"] --> B["i = 0"]
 	B --> C["converte s pra unsigned char"]
 	C --> D{"i < n?"}
-	D -- não --> E["retorna NULL"]
-	D -- sim --> F{"ptr i == c?"}
-	F -- sim --> G["retorna endereço de ptr i"]
-	F -- não --> H["i++"]
+	D --> E["retorna NULL"]
+	D --> F{"ptr i == c?"}
+	F --> G["retorna endereço de ptr i"]
+	F --> H["i++"]
 	H --> D
 ```
 
@@ -1660,10 +1660,10 @@ flowchart TD
 	A["recebe s1 s2 n"] --> B["i = 0"]
 	B --> C["converte s1 e s2 pra unsigned char"]
 	C --> D{"i < n?"}
-	D -- não --> E["retorna 0"]
-	D -- sim --> F{"p1 i diferente de p2 i?"}
-	F -- sim --> G["retorna p1 i - p2 i"]
-	F -- não --> H["i++"]
+	D --> E["retorna 0"]
+	D --> F{"p1 i diferente de p2 i?"}
+	F --> G["retorna p1 i - p2 i"]
+	F --> H["i++"]
 	H --> D
 ```
 
@@ -1744,14 +1744,14 @@ Se não achar nada, retorna `NULL`.
 ```mermaid
 flowchart TD
 	A["recebe haystack needle len"] --> B{"needle vazia?"}
-	B -- sim --> C["retorna haystack"]
-	B -- não --> D["calcula needle_len"]
+	B --> C["retorna haystack"]
+	B --> D["calcula needle_len"]
 	D --> E["i = 0"]
 	E --> F{"haystack i existe e i + needle_len <= len?"}
-	F -- não --> G["retorna NULL"]
-	F -- sim --> H{"strncmp do bloco == 0?"}
-	H -- sim --> I["retorna endereço de haystack i"]
-	H -- não --> J["i++"]
+	F --> G["retorna NULL"]
+	F --> H{"strncmp do bloco == 0?"}
+	H --> I["retorna endereço de haystack i"]
+	H --> J["i++"]
 	J --> F
 ```
 
@@ -1825,14 +1825,14 @@ No final, retorna `result * sign`.
 flowchart TD
 	A["recebe str"] --> B["pula whitespaces"]
 	B --> C{"tem sinal + ou -?"}
-	C -- sim --> D["ajusta sign e avanca"]
-	C -- não --> E["le digitos"]
+	C --> D["ajusta sign e avanca"]
+	C --> E["le digitos"]
 	D --> E
 	E --> F{"str i é digito?"}
-	F -- sim --> G["result = result * 10 + digito"]
+	F --> G["result = result * 10 + digito"]
 	G --> H["i++"]
 	H --> F
-	F -- não --> I["retorna result * sign"]
+	F --> I["retorna result * sign"]
 ```
 
 ### Pontos de atenção
@@ -1909,11 +1909,11 @@ No final, retorna o ponteiro zerado.
 ```mermaid
 flowchart TD
 	A["recebe count e size"] --> B{"tem overflow?"}
-	B -- sim --> C["retorna NULL"]
-	B -- não --> D["malloc count * size"]
+	B --> C["retorna NULL"]
+	B --> D["malloc count * size"]
 	D --> E{"malloc falhou?"}
-	E -- sim --> C
-	E -- não --> F["zera memoria com ft_bzero"]
+	E --> C
+	E --> F["zera memoria com ft_bzero"]
 	F --> G["retorna ptr"]
 ```
 
@@ -1988,8 +1988,8 @@ flowchart TD
 	A["recebe s1"] --> B["calcula len com ft_strlen"]
 	B --> C["malloc len + 1"]
 	C --> D{"malloc falhou?"}
-	D -- sim --> E["retorna NULL"]
-	D -- não --> F["copia chars de s1 pra dup"]
+	D --> E["retorna NULL"]
+	D --> F["copia chars de s1 pra dup"]
 	F --> G["coloca \0 no fim"]
 	G --> H["retorna dup"]
 ```
@@ -2070,14 +2070,14 @@ No final, fecha com `\0` e retorna `sub`.
 flowchart TD
 	A["recebe s start len"] --> B["calcula s_len"]
 	B --> C{"start >= s_len?"}
-	C -- sim --> D["retorna strdup vazio"]
-	C -- não --> E{"len > s_len - start?"}
-	E -- sim --> F["ajusta len"]
-	E -- não --> G["malloc len + 1"]
+	C --> D["retorna strdup vazio"]
+	C --> E{"len > s_len - start?"}
+	E --> F["ajusta len"]
+	E --> G["malloc len + 1"]
 	F --> G
 	G --> H{"malloc falhou?"}
-	H -- sim --> I["retorna NULL"]
-	H -- não --> J["copia s start+i pra sub i"]
+	H --> I["retorna NULL"]
+	H --> J["copia s start+i pra sub i"]
 	J --> K["fecha com \0"]
 	K --> L["retorna sub"]
 ```
@@ -2154,8 +2154,8 @@ flowchart TD
 	A["recebe s1 e s2"] --> B["calcula strlen s1 + strlen s2 + 1"]
 	B --> C["malloc result"]
 	C --> D{"malloc falhou?"}
-	D -- sim --> E["retorna NULL"]
-	D -- não --> F["copia s1 pra result"]
+	D --> E["retorna NULL"]
+	D --> F["copia s1 pra result"]
 	F --> G["copia s2 depois de s1"]
 	G --> H["coloca \0 no fim"]
 	H --> I["retorna result"]
@@ -2236,16 +2236,16 @@ Retorna `result`.
 flowchart TD
 	A["recebe s1 e set"] --> B["start = 0"]
 	B --> C{"char da esquerda está no set?"}
-	C -- sim --> D["start++"]
+	C --> D["start++"]
 	D --> C
-	C -- não --> E["end = strlen s1"]
+	C --> E["end = strlen s1"]
 	E --> F{"end > start e char da direita está no set?"}
-	F -- sim --> G["end--"]
+	F --> G["end--"]
 	G --> F
-	F -- não --> H["malloc end - start + 1"]
+	F --> H["malloc end - start + 1"]
 	H --> I{"malloc falhou?"}
-	I -- sim --> J["retorna NULL"]
-	I -- não --> K["copia trecho com strlcpy"]
+	I --> J["retorna NULL"]
+	I --> K["copia trecho com strlcpy"]
 	K --> L["retorna result"]
 ```
 
@@ -2324,15 +2324,15 @@ flowchart TD
 	A["recebe s e c"] --> B["count_words conta palavras"]
 	B --> C["malloc array count + 1"]
 	C --> D{"malloc falhou?"}
-	D -- sim --> E["retorna NULL"]
-	D -- não --> F["pula separadores"]
+	D --> E["retorna NULL"]
+	D --> F["pula separadores"]
 	F --> G{"chegou no fim?"}
-	G -- sim --> H["coloca NULL final"]
-	G -- não --> I["mede palavra com word_len"]
+	G --> H["coloca NULL final"]
+	G --> I["mede palavra com word_len"]
 	I --> J["copia palavra com copy_word"]
 	J --> K{"copy_word falhou?"}
-	K -- sim --> L["free_all e retorna NULL"]
-	K -- não --> M["avanca i e w"]
+	K --> L["free_all e retorna NULL"]
+	K --> M["avanca i e w"]
 	M --> F
 	H --> N["retorna result"]
 ```
@@ -2416,20 +2416,20 @@ flowchart TD
 	A["recebe n"] --> B["count_digits calcula len"]
 	B --> C["malloc len + 1"]
 	C --> D{"malloc falhou?"}
-	D -- sim --> E["retorna NULL"]
-	D -- não --> F["nb = n em long"]
+	D --> E["retorna NULL"]
+	D --> F["nb = n em long"]
 	F --> G["coloca \0 no fim"]
 	G --> H{"nb < 0?"}
-	H -- sim --> I["coloca sinal e inverte nb"]
-	H -- não --> J{"nb == 0?"}
+	H --> I["coloca sinal e inverte nb"]
+	H --> J{"nb == 0?"}
 	I --> J
-	J -- sim --> K["str 0 recebe 0"]
-	J -- não --> L{"nb > 0?"}
+	J --> K["str 0 recebe 0"]
+	J --> L{"nb > 0?"}
 	K --> M["retorna str"]
-	L -- sim --> N["preenche digito de tras pra frente"]
+	L --> N["preenche digito de tras pra frente"]
 	N --> O["nb = nb / 10"]
 	O --> L
-	L -- não --> M
+	L --> M
 ```
 
 ### Pontos de atenção
@@ -2507,13 +2507,13 @@ flowchart TD
 	A["recebe s e função f"] --> B["calcula len com ft_strlen"]
 	B --> C["malloc len + 1"]
 	C --> D{"malloc falhou?"}
-	D -- sim --> E["retorna NULL"]
-	D -- não --> F["i = 0"]
+	D --> E["retorna NULL"]
+	D --> F["i = 0"]
 	F --> G{"i < len?"}
-	G -- sim --> H["result i recebe f i s i"]
+	G --> H["result i recebe f i s i"]
 	H --> I["i++"]
 	I --> G
-	G -- não --> J["coloca \0 no fim"]
+	G --> J["coloca \0 no fim"]
 	J --> K["retorna result"]
 ```
 
@@ -2590,8 +2590,8 @@ Assim, `f` pode mudar o valor usando `*c`.
 flowchart TD
 	A["recebe s e função f"] --> B["i = 0"]
 	B --> C{"s i existe?"}
-	C -- não --> D["termina sem return"]
-	C -- sim --> E["chama f i endereco de s i"]
+	C --> D["termina sem return"]
+	C --> E["chama f i endereco de s i"]
 	E --> F["i++"]
 	F --> C
 ```
@@ -2890,13 +2890,13 @@ O `+ '0'` transforma número em caractere.
 flowchart TD
 	A["recebe n e fd"] --> B["nb = n em long"]
 	B --> C{"nb < 0?"}
-	C -- sim --> D["imprime sinal -"]
+	C --> D["imprime sinal -"]
 	D --> E["nb = -nb"]
-	C -- não --> F{"nb >= 10?"}
+	C --> F{"nb >= 10?"}
 	E --> F
-	F -- sim --> G["chama ft_putnbr_fd nb / 10"]
+	F --> G["chama ft_putnbr_fd nb / 10"]
 	G --> H["imprime nb % 10 + 0"]
-	F -- não --> H
+	F --> H
 	H --> I["termina sem return"]
 ```
 
@@ -2972,8 +2972,8 @@ Depois retorna `new_node`.
 flowchart TD
 	A["recebe content"] --> B["malloc sizeof t_list"]
 	B --> C{"malloc falhou?"}
-	C -- sim --> D["retorna NULL"]
-	C -- não --> E["content recebe content"]
+	C --> D["retorna NULL"]
+	C --> E["content recebe content"]
 	E --> F["next recebe NULL"]
 	F --> G["retorna new_node"]
 ```
@@ -3049,8 +3049,8 @@ A ordem importa muito.
 ```mermaid
 flowchart TD
 	A["recebe lst e new"] --> B{"lst ou new é NULL?"}
-	B -- sim --> C["return"]
-	B -- não --> D["new next recebe antiga cabeca"]
+	B --> C["return"]
+	B --> D["new next recebe antiga cabeca"]
 	D --> E["cabeca da lista recebe new"]
 	E --> F["termina sem return"]
 ```
@@ -3131,10 +3131,10 @@ flowchart TD
 	A["recebe lst"] --> B["count = 0"]
 	B --> C["current = lst"]
 	C --> D{"current existe?"}
-	D -- sim --> E["count++"]
+	D --> E["count++"]
 	E --> F["current = current next"]
 	F --> D
-	D -- não --> G["retorna count"]
+	D --> G["retorna count"]
 ```
 
 ### Pontos de atenção
@@ -3207,9 +3207,9 @@ Se `lst == NULL`, `current` já comeca como `NULL` e retorna `NULL`.
 flowchart TD
 	A["recebe lst"] --> B["current = lst"]
 	B --> C{"current existe e current next existe?"}
-	C -- sim --> D["current = current next"]
+	C --> D["current = current next"]
 	D --> C
-	C -- não --> E["retorna current"]
+	C --> E["retorna current"]
 ```
 
 ### Pontos de atenção
@@ -3281,11 +3281,11 @@ Depois faz `ultimo->next = new`.
 ```mermaid
 flowchart TD
 	A["recebe lst e new"] --> B{"lst ou new é NULL?"}
-	B -- sim --> C["return"]
-	B -- não --> D{"lista vazia?"}
-	D -- sim --> E["cabeca recebe new"]
+	B --> C["return"]
+	B --> D{"lista vazia?"}
+	D --> E["cabeca recebe new"]
 	E --> F["return"]
-	D -- não --> G["acha ultimo com ft_lstlast"]
+	D --> G["acha ultimo com ft_lstlast"]
 	G --> H["ultimo next recebe new"]
 	H --> I["termina sem return"]
 ```
@@ -3361,8 +3361,8 @@ O resto da lista continua responsabilidade de quem chamou.
 ```mermaid
 flowchart TD
 	A["recebe lst e del"] --> B{"lst ou del é NULL?"}
-	B -- sim --> C["return"]
-	B -- não --> D["chama del no content"]
+	B --> C["return"]
+	B --> D["chama del no content"]
 	D --> E["free no lst"]
 	E --> F["termina sem return"]
 ```
@@ -3439,14 +3439,14 @@ No final, faz `*lst = NULL`.
 ```mermaid
 flowchart TD
 	A["recebe lst e del"] --> B{"lst ou del é NULL?"}
-	B -- sim --> C["return"]
-	B -- não --> D["current = *lst"]
+	B --> C["return"]
+	B --> D["current = *lst"]
 	D --> E{"current existe?"}
-	E -- sim --> F["next = current next"]
+	E --> F["next = current next"]
 	F --> G["ft_lstdelone current del"]
 	G --> H["current = next"]
 	H --> E
-	E -- não --> I["*lst = NULL"]
+	E --> I["*lst = NULL"]
 	I --> J["termina sem return"]
 ```
 
@@ -3521,13 +3521,13 @@ A lista continua com os mesmos nos e os mesmos links.
 ```mermaid
 flowchart TD
 	A["recebe lst e f"] --> B{"lst ou f é NULL?"}
-	B -- sim --> C["return"]
-	B -- não --> D["current = lst"]
+	B --> C["return"]
+	B --> D["current = lst"]
 	D --> E{"current existe?"}
-	E -- sim --> F["chama f no content"]
+	E --> F["chama f no content"]
 	F --> G["current = current next"]
 	G --> E
-	E -- não --> H["termina sem return"]
+	E --> H["termina sem return"]
 ```
 
 ### Pontos de atenção
@@ -3604,17 +3604,17 @@ No final, retorna `new_list`.
 ```mermaid
 flowchart TD
 	A["recebe lst f del"] --> B{"lst f ou del é NULL?"}
-	B -- sim --> C["retorna NULL"]
-	B -- não --> D["new_list = NULL"]
+	B --> C["retorna NULL"]
+	B --> D["new_list = NULL"]
 	D --> E{"lst existe?"}
-	E -- não --> F["retorna new_list"]
-	E -- sim --> G["new_content = f content"]
+	E --> F["retorna new_list"]
+	E --> G["new_content = f content"]
 	G --> H["new_node = ft_lstnew new_content"]
 	H --> I{"new_node falhou?"}
-	I -- sim --> J["del new_content"]
+	I --> J["del new_content"]
 	J --> K["ft_lstclear new_list"]
 	K --> L["retorna NULL"]
-	I -- não --> M["ft_lstadd_back new_list new_node"]
+	I --> M["ft_lstadd_back new_list new_node"]
 	M --> N["lst = lst next"]
 	N --> E
 ```
