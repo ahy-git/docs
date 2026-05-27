@@ -1,3 +1,88 @@
+# Memory
+
+RAM / memória virtual do processo
+
+endereços baixos
+0x00000000
++------------------------------------------------+
+| Código do programa                             |
+| Ex: instruções compiladas do main, funções     |
++------------------------------------------------+
+| Dados globais / estáticos                      |
+| Ex: variáveis globais, static, constantes      |
++------------------------------------------------+
+| HEAP                                           |
+| Ex: malloc, calloc, realloc                    |
+|                                                |
+| cresce conforme você pede memória              |
+|                                                |
+| int *p = malloc(sizeof(int));                  |
+|             |                                  |
+|             v                                  |
+|        bloco reservado na heap                 |
++------------------------------------------------+
+|                                                |
+| Espaço livre / memória ainda não usada         |
+|                                                |
++------------------------------------------------+
+| STACK                                          |
+| Ex: variáveis locais, parâmetros, chamadas     |
+|                                                |
+| int main(void)                                 |
+| {                                              |
+|     int x;          -> stack                   |
+|     int *p;         -> stack                   |
+| }                                              |
+|                                                |
+| cresce conforme funções são chamadas           |
++------------------------------------------------+
+endereços altos
+0xffffffff
+
+
+| Critério    | Stack                     | Heap                       |
+| ----------- | ------------------------- | -------------------------- |
+| Velocidade  | Muito rápida              | Mais lenta                 |
+| Capacidade  | Menor                     | Maior                      |
+| Controle    | Automático                | Manual                     |
+| Uso típico  | Variáveis locais pequenas | Dados grandes ou dinâmicos |
+| Liberação   | Ao sair da função         | Com `free`                 |
+| Risco comum | Stack overflow            | Memory leak                |
+| Exemplo     | `int x;`                  | `malloc(sizeof(int))`      |
+
+| Critério                 |          Stack |                               Heap |
+| ------------------------ | -------------: | ---------------------------------: |
+| Alocação                 |   ~1–10 ciclos |                    ~50–500+ ciclos |
+| Diferença de alocação    |     referência | heap pode ser 10x–100x+ mais lenta |
+| Acesso depois de alocado |   muito rápido |                       muito rápido |
+| Diferença de acesso      |     referência |                 geralmente pequena |
+| Tamanho típico           |   ~1 MB a 8 MB |                          MBs a GBs |
+| Liberação                |     automática |                  manual com `free` |
+| Falha comum              | stack overflow |          memory leak / malloc NULL |
+
+stack allocation:
+~1 a 10 ciclos de CPU
+
+malloc/free pequeno:
+~50 a 500+ ciclos de CPU
+
+## Stack
+Linux:
+stack padrão por thread ≈ 8 MB
+
+macOS:
+stack da thread principal ≈ 8 MB
+threads secundárias podem ter menos
+
+Windows:
+stack padrão comum ≈ 1 MB
+
+## Heap
+memória RAM disponível
++ swap/memória virtual
++ limites do sistema/processo
+
+
 # Descrição
 [<u>**libft.h**</u>](#libft-h) - O libft.h é o cabeçalho público da biblioteca. Ele tem o header guard, os includes que minhas funções usam (stddef.h, stdlib.h, unistd.h), a definição da struct t_list da Parte 3, e os protótipos de todas as funções da libft, divididos em três blocos: libc, adicionais e lista ligada.
 
