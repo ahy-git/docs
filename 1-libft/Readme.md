@@ -1,3 +1,15 @@
+hoje é quarta
+   |
+i = 0 ;
+while s[i]
+
+	if i == 0 && s[i] != c
+		count++
+	if s[i-1] == c && s[i] !=c
+		count++;
+return (count);
+
+
 # Memory
 
 RAM / memória virtual do processo
