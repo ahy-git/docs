@@ -33,7 +33,7 @@ endereços baixos
 |             v                                  |
 |        bloco reservado na heap                 |
 +------------------------------------------------+
-|                                                |
+|                                                | t_list	*
 | Espaço livre / memória ainda não usada         |
 |                                                |
 +------------------------------------------------+
