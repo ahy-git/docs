@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>push_swap — operacoes vs n</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+  body  { font-family: sans-serif; background:#f7f8fa; margin:24px; color:#1a202c; }
+  h2    { margin-bottom:16px; }
+  .wrap { position:relative; width:95%; max-width:1100px; height:520px; margin:0 auto; }
+</style>
+</head>
+<body>
+<h2>push_swap &mdash; opera&ccedil;&otilde;es vs n por estrat&eacute;gia</h2>
+<div class="wrap"><canvas id="chart"></canvas></div>
+<script>
+const datasets = [{"label": "adaptive [adaptativo]", "data": [{"x": 5, "y": 9.2, "mn": 8.0, "mx": 12.0}, {"x": 50, "y": 356.3, "mn": 290.0, "mx": 467.0}, {"x": 100, "y": 930.9, "mn": 744.0, "mx": 1084.0}, {"x": 200, "y": 2271.4, "mn": 2034.0, "mx": 2468.0}, {"x": 300, "y": 3841.2, "mn": 3623.0, "mx": 4220.0}, {"x": 500, "y": 7185.5, "mn": 6784.0, "mx": 7672.0}, {"x": 1000, "y": 18153.3, "mn": 15068.0, "mx": 20306.0}, {"x": 5000, "y": 123394.2, "mn": 100196.0, "mx": 216289.0}, {"x": 10000, "y": 409691.8, "mn": 215392.0, "mx": 605488.0}], "borderColor": "#2b6cb0", "backgroundColor": "#2b6cb033", "pointRadius": 4, "borderWidth": 2, "tension": 0.1}, {"label": "__adaptive_min", "data": [{"x": 5, "y": 8.0}, {"x": 50, "y": 290.0}, {"x": 100, "y": 744.0}, {"x": 200, "y": 2034.0}, {"x": 300, "y": 3623.0}, {"x": 500, "y": 6784.0}, {"x": 1000, "y": 15068.0}, {"x": 5000, "y": 100196.0}, {"x": 10000, "y": 215392.0}], "borderColor": "#2b6cb055", "backgroundColor": "#2b6cb015", "pointRadius": 0, "borderWidth": 1, "borderDash": [4, 4], "tension": 0.1}, {"label": "__adaptive_max", "data": [{"x": 5, "y": 12.0}, {"x": 50, "y": 467.0}, {"x": 100, "y": 1084.0}, {"x": 200, "y": 2468.0}, {"x": 300, "y": 4220.0}, {"x": 500, "y": 7672.0}, {"x": 1000, "y": 20306.0}, {"x": 5000, "y": 216289.0}, {"x": 10000, "y": 605488.0}], "borderColor": "#2b6cb055", "backgroundColor": "#2b6cb015", "pointRadius": 0, "borderWidth": 1, "borderDash": [4, 4], "tension": 0.1}, {"label": "simple [O(n²)]", "data": [{"x": 5, "y": 9.5, "mn": 7.0, "mx": 12.0}, {"x": 50, "y": 425.6, "mn": 387.0, "mx": 459.0}, {"x": 100, "y": 1481.2, "mn": 1293.0, "mx": 1624.0}, {"x": 200, "y": 5281.7, "mn": 5026.0, "mx": 5538.0}, {"x": 300, "y": 11933.3, "mn": 11322.0, "mx": 12471.0}, {"x": 500, "y": 32579.8, "mn": 30566.0, "mx": 33764.0}], "borderColor": "#c05621", "backgroundColor": "#c0562133", "pointRadius": 4, "borderWidth": 2, "tension": 0.1}, {"label": "__simple_min", "data": [{"x": 5, "y": 7.0}, {"x": 50, "y": 387.0}, {"x": 100, "y": 1293.0}, {"x": 200, "y": 5026.0}, {"x": 300, "y": 11322.0}, {"x": 500, "y": 30566.0}], "borderColor": "#c0562155", "backgroundColor": "#c0562115", "pointRadius": 0, "borderWidth": 1, "borderDash": [4, 4], "tension": 0.1}, {"label": "__simple_max", "data": [{"x": 5, "y": 12.0}, {"x": 50, "y": 459.0}, {"x": 100, "y": 1624.0}, {"x": 200, "y": 5538.0}, {"x": 300, "y": 12471.0}, {"x": 500, "y": 33764.0}], "borderColor": "#c0562155", "backgroundColor": "#c0562115", "pointRadius": 0, "borderWidth": 1, "borderDash": [4, 4], "tension": 0.1}, {"label": "medium [O(n√n)]", "data": [{"x": 5, "y": 9.2, "mn": 7.0, "mx": 10.0}, {"x": 50, "y": 309.2, "mn": 298.0, "mx": 318.0}, {"x": 100, "y": 793.0, "mn": 770.0, "mx": 823.0}, {"x": 200, "y": 2060.3, "mn": 2011.0, "mx": 2100.0}, {"x": 300, "y": 3677.8, "mn": 3617.0, "mx": 3757.0}, {"x": 500, "y": 7536.2, "mn": 7399.0, "mx": 7691.0}, {"x": 1000, "y": 20281.3, "mn": 20071.0, "mx": 20442.0}, {"x": 5000, "y": 215645.3, "mn": 214817.0, "mx": 215956.0}], "borderColor": "#276749", "backgroundColor": "#27674933", "pointRadius": 4, "borderWidth": 2, "tension": 0.1}, {"label": "__medium_min", "data": [{"x": 5, "y": 7.0}, {"x": 50, "y": 298.0}, {"x": 100, "y": 770.0}, {"x": 200, "y": 2011.0}, {"x": 300, "y": 3617.0}, {"x": 500, "y": 7399.0}, {"x": 1000, "y": 20071.0}, {"x": 5000, "y": 214817.0}], "borderColor": "#27674955", "backgroundColor": "#27674915", "pointRadius": 0, "borderWidth": 1, "borderDash": [4, 4], "tension": 0.1}, {"label": "__medium_max", "data": [{"x": 5, "y": 10.0}, {"x": 50, "y": 318.0}, {"x": 100, "y": 823.0}, {"x": 200, "y": 2100.0}, {"x": 300, "y": 3757.0}, {"x": 500, "y": 7691.0}, {"x": 1000, "y": 20442.0}, {"x": 5000, "y": 215956.0}], "borderColor": "#27674955", "backgroundColor": "#27674915", "pointRadius": 0, "borderWidth": 1, "borderDash": [4, 4], "tension": 0.1}, {"label": "complex [O(n log n)]", "data": [{"x": 5, "y": 9.5, "mn": 8.0, "mx": 11.0}, {"x": 50, "y": 467.0, "mn": 467.0, "mx": 467.0}, {"x": 100, "y": 1084.0, "mn": 1084.0, "mx": 1084.0}, {"x": 200, "y": 2468.0, "mn": 2468.0, "mx": 2468.0}, {"x": 300, "y": 4220.0, "mn": 4220.0, "mx": 4220.0}, {"x": 500, "y": 6784.0, "mn": 6784.0, "mx": 6784.0}, {"x": 1000, "y": 15068.0, "mn": 15068.0, "mx": 15068.0}, {"x": 5000, "y": 100196.0, "mn": 100196.0, "mx": 100196.0}, {"x": 10000, "y": 215392.0, "mn": 215392.0, "mx": 215392.0}], "borderColor": "#6b46c1", "backgroundColor": "#6b46c133", "pointRadius": 4, "borderWidth": 2, "tension": 0.1}, {"label": "__complex_min", "data": [{"x": 5, "y": 8.0}, {"x": 50, "y": 467.0}, {"x": 100, "y": 1084.0}, {"x": 200, "y": 2468.0}, {"x": 300, "y": 4220.0}, {"x": 500, "y": 6784.0}, {"x": 1000, "y": 15068.0}, {"x": 5000, "y": 100196.0}, {"x": 10000, "y": 215392.0}], "borderColor": "#6b46c155", "backgroundColor": "#6b46c115", "pointRadius": 0, "borderWidth": 1, "borderDash": [4, 4], "tension": 0.1}, {"label": "__complex_max", "data": [{"x": 5, "y": 11.0}, {"x": 50, "y": 467.0}, {"x": 100, "y": 1084.0}, {"x": 200, "y": 2468.0}, {"x": 300, "y": 4220.0}, {"x": 500, "y": 6784.0}, {"x": 1000, "y": 15068.0}, {"x": 5000, "y": 100196.0}, {"x": 10000, "y": 215392.0}], "borderColor": "#6b46c155", "backgroundColor": "#6b46c115", "pointRadius": 0, "borderWidth": 1, "borderDash": [4, 4], "tension": 0.1}];
+
+new Chart(document.getElementById('chart'), {
+  type: 'line',
+  data: { datasets },
+  options: {
+    parsing: false,
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        type: 'linear',
+        title: { display: true, text: 'quantidade de numeros (n)' }
+      },
+      y: {
+        type: 'linear',
+        title: { display: true, text: 'operacoes geradas' }
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          filter: item => !item.text.startsWith('__')
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const d = ctx.raw;
+            if (d.mn !== undefined)
+              return ctx.dataset.label +
+                     ': avg=' + d.y.toFixed(0) +
+                     '  min=' + d.mn +
+                     '  max=' + d.mx;
+            return ctx.dataset.label + ': ' + d.y;
+          }
+        }
+      },
+      annotation: {
+        annotations: {
+          pass100: { type:'line', yMin:2000,  yMax:2000,  borderColor:'#c53030', borderWidth:1, borderDash:[6,3], label:{ content:'n=100 passa (<2000)',     display:true, position:'end', color:'#c53030', font:{size:10} } },
+          exc100:  { type:'line', yMin:700,   yMax:700,   borderColor:'#c53030', borderWidth:1, borderDash:[6,3], label:{ content:'n=100 excelente (<700)',  display:true, position:'end', color:'#c53030', font:{size:10} } },
+          pass500: { type:'line', yMin:12000, yMax:12000, borderColor:'#c53030', borderWidth:1, borderDash:[6,3], label:{ content:'n=500 passa (<12000)',    display:true, position:'end', color:'#c53030', font:{size:10} } },
+          exc500:  { type:'line', yMin:5500,  yMax:5500,  borderColor:'#c53030', borderWidth:1, borderDash:[6,3], label:{ content:'n=500 excelente (<5500)', display:true, position:'end', color:'#c53030', font:{size:10} } }
+        }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

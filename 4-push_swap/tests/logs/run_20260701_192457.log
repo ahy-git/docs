@@ -1,0 +1,456 @@
+========================================
+push_swap test suite
+Data:    Wed Jul  1 19:24:57 -03 2026
+PS_BIN:  /mnt/d/!!42SP_AHY/push_swap_git/push_swap
+CHK_BIN: /mnt/d/!!42SP_AHY/push_swap_git/checker
+========================================
+
+########## test_norminette.sh ##########
+
+=== Norminette em /mnt/d/!!42SP_AHY/push_swap_git (*.c *.h) ===
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_atoi.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_bzero.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_calloc.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_isalnum.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_isalpha.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_isascii.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_isdigit.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_isprint.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_itoa.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_lstadd_back.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_lstadd_front.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_lstclear.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_lstdelone.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_lstiter.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_lstlast.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_lstmap.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_lstnew.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_lstsize.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_memchr.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_memcmp.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_memcpy.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_memmove.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_memset.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_printf.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_putchar_fd.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_putendl_fd.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_putnbr_fd.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_putstr_fd.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_split.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strchr.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strdup.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_striteri.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strjoin.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strlcat.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strlcpy.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strlen.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strmapi.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strncmp.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strnstr.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strrchr.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_strtrim.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_substr.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_tolower.c
+  [FAIL] /mnt/d/!!42SP_AHY/push_swap_git/Libft/ft_toupper.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/handles_format.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/libft.h
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/print_char.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/print_hex.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/print_int.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/print_pointer.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/print_str.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/Libft/print_unsigned.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/include/push_swap.h
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/bench/bench_ops_push_rotate.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/bench/bench_ops_reverse.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/bench/bench_ops_swap.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/bench/bench_report.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/bench/bench_report_counts.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/checker/checker_bonus.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/checker/checker_read_bonus.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/core/disorder.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/core/error.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/main.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/operations/operations_push.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/operations/operations_reverse.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/operations/operations_rotate.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/operations/operations_swap.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/parser/parser.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/parser/parser_number.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/parser/parser_strategy.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/parser/parser_utils.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/ranks/rank_sort.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/ranks/ranks.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/sorting/insertion_utils.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/sorting/sort_dispatch.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/sorting/sort_insertion.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/sorting/sort_radix.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/sorting/sort_small.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/sorting/sort_stubs.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/stack/stack.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/stack/stack_bottom.c
+  [PASS] /mnt/d/!!42SP_AHY/push_swap_git/src/stack/stack_utils.c
+
+Resumo: 70 passou, 12 falhou
+
+########## test_globals.sh ##########
+
+=== Variaveis globais em push_swap ===
+  [PASS] nenhuma variavel global encontrada em push_swap
+
+=== Variaveis globais em checker ===
+  [INFO] checker nao compilado; pulando (execute 'make bonus' para compilar)
+
+=== Variaveis estaticas de arquivo (escopo local - informativo) ===
+  [INFO] static de arquivo encontradas (nao sao globais, apenas informativo):
+
+Resumo: 1 passou, 0 falhou
+
+########## test_makefile.sh ##########
+
+=== Regras obrigatorias presentes no Makefile ===
+  [PASS] regra 'all' encontrada
+  [PASS] regra 'clean' encontrada
+  [PASS] regra 'fclean' encontrada
+  [PASS] regra 're' encontrada
+  [PASS] regra 'bonus' encontrada
+
+=== Compilacao: make (all) ===
+  [PASS] push_swap compilado (exit 0)
+
+=== Sem relink: segunda execucao de make ===
+  [PASS] segunda execucao: nada recompilado
+
+=== make fclean remove os binarios ===
+  [PASS] push_swap removido por fclean
+  [PASS] checker removido por fclean (ou nunca existiu)
+
+=== make re reconstroi push_swap do zero ===
+  [PASS] make re: push_swap reconstruido (exit 0)
+
+=== make bonus compila o checker ===
+  [PASS] checker compilado por make bonus
+
+Resumo: 11 passou, 0 falhou
+
+########## test_errors.sh ##########
+
+=== Casos que NAO devem imprimir nada (EMPTY) ===
+  [PASS] sem argumentos
+  [PASS] um numero (42)
+  [PASS] um numero negativo (-42)
+  [PASS] um zero
+
+=== Argumentos nao numericos (ERROR) ===
+  [PASS] letra simples
+  [PASS] palavra
+  [PASS] num com letra (1a)
+  [PASS] letra com num (a1)
+  [PASS] num no meio (1 2 three)
+  [PASS] decimal (1.5)
+  [PASS] hex (0x10)
+  [PASS] virgula (1,2)
+
+=== Sinais e formatos malformados (ERROR) ===
+  [PASS] mais menos (+-5)
+  [PASS] menos mais (-+5)
+  [PASS] num com menos (1-2)
+  [PASS] num com mais (1+2)
+  [PASS] menos no fim (5-)
+  [PASS] so mais (+)
+  [PASS] so menos (-)
+  [PASS] dois menos (--)
+
+=== Overflow / fora do range int (ERROR) ===
+  [PASS] INT_MAX + 1
+  [PASS] INT_MIN - 1
+  [PASS] muito grande
+  [PASS] muito negativo
+  [PASS] overflow no meio
+
+=== Duplicados (ERROR) ===
+  [PASS] dup adjacente
+  [PASS] dup separado
+  [PASS] dup negativos
+  [PASS] dup zero
+  [PASS] dup em string
+
+=== Limites validos (NAO deve dar Error) ===
+  [INFO] INT_MAX sozinho -> aceita / nada impresso
+  [INFO] INT_MIN sozinho -> aceita / nada impresso
+  [INFO] INT_MAX e INT_MIN -> aceita / nada impresso
+
+=== Casos dependentes de politica (apenas reporta) ===
+  [INFO] string vazia -> rejeita (Error)
+  [INFO] so espacos -> rejeita (Error)
+  [INFO] tab -> rejeita (Error)
+  [INFO] vazia entre nums -> rejeita (Error)
+  [INFO] mais a esquerda (+5) -> aceita / nada impresso
+  [INFO] menos zero (-0) -> aceita / nada impresso
+  [INFO] mais zero (+0) -> aceita / nada impresso
+  [INFO] zeros a esquerda (007) -> aceita / nada impresso
+  [INFO] zero duplo (00) -> aceita / nada impresso
+  [INFO] espaco antes (' 5') -> aceita / nada impresso
+
+Resumo: 30 passou, 0 falhou
+
+########## test_basic.sh ##########
+
+=== Entrada ja ordenada nao deve gerar operacoes ===
+  [PASS] [1 2 3] -> 0 ops
+  [PASS] [1 2 3 4 5] -> 0 ops
+  [PASS] [-3 -1 0 2 7] -> 0 ops
+
+=== Entradas comuns ordenam corretamente ===
+  [PASS] [2 1] ordenou
+  [PASS] [3 2 1] ordenou
+  [PASS] [5 1 4 2 3] ordenou
+  [PASS] [10 -5 0 3 -1 8 2] ordenou
+
+=== Formato de saida (so operacoes validas, uma por linha) ===
+  [PASS] todas as linhas sao operacoes validas
+
+=== Sem espacos/caracteres extras nas linhas ===
+  [PASS] sem espacos/tabs na saida
+
+=== Argumentos separados vs string unica geram a mesma saida ===
+  [PASS] '5 3 1 4 2' separado == string unica
+
+=== Saida termina com newline ===
+  [PASS] saida termina com \n
+
+Resumo: 11 passou, 0 falhou
+
+########## test_correctness.sh ##########
+
+=== Casos triviais ===
+  [PASS] ja ordenado 1..5
+  [PASS] um elemento
+  [PASS] dois ordenados
+  [PASS] dois invertidos
+  [PASS] negativos ordenados
+  [PASS] mistura neg/pos
+
+=== Todas as permutacoes de 3 ===
+  [PASS] 1 2 3
+  [PASS] 1 3 2
+  [PASS] 2 1 3
+  [PASS] 2 3 1
+  [PASS] 3 1 2
+  [PASS] 3 2 1
+
+=== Permutacoes representativas de 4 e 5 ===
+  [PASS] 4 piores
+  [PASS] 4 meio
+  [PASS] 5 piores
+  [PASS] 5 meio
+  [PASS] 5 quase
+
+=== Entrada como string unica (split por espaco) ===
+  [PASS] string 5 4 3 2 1
+  [PASS] string mista
+
+=== Aleatorios: 20 rodadas de 100 numeros ===
+  [PASS] todas as 20 rodadas aleatorias ordenaram
+
+Resumo: 20 passou, 0 falhou
+
+########## test_flags.sh ##########
+
+=== Cada seletor ordena corretamente (100 numeros) ===
+  [PASS] --simple ordena corretamente (1502 ops)
+  [PASS] --medium ordena corretamente (807 ops)
+  [PASS] --complex ordena corretamente (1084 ops)
+  [PASS] --adaptive ordena corretamente (1084 ops)
+
+=== Default (sem flag) == adaptive ===
+  [PASS] default e --adaptive geram o mesmo numero de ops (1084)
+
+=== --bench manda metricas para STDERR, ops para STDOUT ===
+  [PASS] stdout contem apenas operacoes
+
+=== Campos obrigatorios no stderr do --bench ===
+  [PASS] campo 'bench' presente
+  [PASS] campo 'disorder' presente
+  [PASS] campo 'strategy' presente
+  [PASS] campo 'complexity' presente
+  [PASS] campo 'total' presente
+
+=== Contagem de cada operacao no --bench ===
+  [PASS] campo 'sa' presente
+  [PASS] campo 'sb' presente
+  [PASS] campo 'ss' presente
+  [PASS] campo 'pa' presente
+  [PASS] campo 'pb' presente
+  [PASS] campo 'ra' presente
+  [PASS] campo 'rb' presente
+  [PASS] campo 'rr' presente
+  [PASS] campo 'rra' presente
+  [PASS] campo 'rrb' presente
+  [PASS] campo 'rrr' presente
+
+=== Flag invalida deve ser Error ===
+  [PASS] --turbo rejeitada com Error
+
+=== Flag sem numeros nao deve quebrar ===
+  [PASS] --simple sem numeros nao imprime ops
+
+Resumo: 24 passou, 0 falhou
+
+########## test_bench_format.sh ##########
+
+=== Cabecalho 'bench' ===
+  [PASS] linha 'bench' presente como primeira linha de campo
+
+=== disorder: formato numerico com 2 casas decimais ===
+  [PASS] formato correto: 'disorder: 49.06%'
+
+=== strategy: formato esperado por modo ===
+  [PASS] --adaptive: 'strategy: adaptive/medium'
+
+=== strategy: --simple/--medium/--complex sem prefixo 'adaptive/' ===
+  [PASS] --simple: 'strategy: simple'
+  [PASS] --medium: 'strategy: medium'
+  [PASS] --complex: 'strategy: complex'
+
+=== complexity: classe valida de complexidade ===
+  [PASS] classe valida: 'complexity: O(n sqrt n)'
+
+=== complexity: coerencia entre strategy e complexity ===
+  [PASS] strategy='medium' e complexity='O(n sqrt n)' sao coerentes
+
+=== total: numero inteiro ===
+  [PASS] total numerico: 'total: 303'
+
+=== total: soma das contagens individuais ===
+  [PASS] total=303 == soma dos campos (303)
+
+=== Contadores individuais de operacao ===
+  [PASS] sa: 'sa: 0'
+  [PASS] sb: 'sb: 0'
+  [PASS] ss: 'ss: 0'
+  [PASS] pa: 'pa: 50'
+  [PASS] pb: 'pb: 50'
+  [PASS] ra: 'ra: 133'
+  [PASS] rb: 'rb: 37'
+  [PASS] rr: 'rr: 0'
+  [PASS] rra: 'rra: 0'
+  [PASS] rrb: 'rrb: 33'
+  [PASS] rrr: 'rrr: 0'
+
+=== --bench nao aparece sem a flag ===
+  [PASS] sem --bench -> stderr vazio
+
+Resumo: 22 passou, 0 falhou
+
+########## test_adaptive.sh ##########
+
+=== Disorders das entradas de teste ===
+  [INFO] baixo  : 1.63% (esperado <  20.00%) -> simple
+  [INFO] medio  : 24.49% (esperado 20-49.99%) -> medium
+  [INFO] alto   : 100.00% (esperado >= 50.00%) -> complex
+  [INFO] borda- : 18.95% (esperado <  20.00%) -> simple
+  [INFO] borda+ : 23.68% (esperado >= 20.00%) -> medium
+
+=== Roteamento --adaptive por faixa de disorder ===
+  [PASS] disorder baixo  (~1.6%) -> strategy: adaptive/simple  (disorder: 1.63%)
+  [PASS] disorder medio  (~24.5%) -> strategy: adaptive/medium  (disorder: 24.49%)
+  [PASS] disorder alto   (100%) -> strategy: adaptive/complex  (disorder: 100.00%)
+
+=== Limiares de borda (0.2) ===
+  [PASS] borda inferior (~18.9%, < 0.2) -> strategy: adaptive/simple  (disorder: 18.95%)
+  [PASS] borda superior (~23.7%, >= 0.2) -> strategy: adaptive/medium  (disorder: 23.68%)
+
+=== Limiar de borda (0.5): disorder exato >= 0.5 ===
+  [INFO] borda alta: 33.33% (esperado >= 50.00%) -> complex
+  [FAIL] borda alta (~86.7%, >= 0.5) -> esperado 'adaptive/complex', obtido: 'strategy: adaptive/medium'  (disorder: 33.33%)
+
+=== --adaptive ordena corretamente em cada faixa ===
+  [PASS] disorder baixo ordena corretamente
+  [PASS] disorder medio ordena corretamente
+  [PASS] disorder alto ordena corretamente
+
+=== disorder reportado pelo --bench bate com o calculado ===
+  [PASS] low: disorder=1.63% (bate com calculo)
+  [PASS] medium: disorder=24.49% (bate com calculo)
+  [PASS] high: disorder=100.00% (bate com calculo)
+
+Resumo: 11 passou, 1 falhou
+
+########## compare_algos.sh ##########
+
+=== Perfil: sorted (100 numeros) ===
+  [INFO] adaptive escolheu: adaptive/adaptive
+  [PASS] todas as 4 estrategias ordenaram (sorted)
+
+=== Perfil: nearly (100 numeros) ===
+  [INFO] adaptive escolheu: adaptive/simple
+  [PASS] todas as 4 estrategias ordenaram (nearly)
+
+=== Perfil: random (100 numeros) ===
+  [INFO] adaptive escolheu: adaptive/complex
+  [PASS] todas as 4 estrategias ordenaram (random)
+
+=== Perfil: reverse (100 numeros) ===
+  [INFO] adaptive escolheu: adaptive/complex
+  [PASS] todas as 4 estrategias ordenaram (reverse)
+
+=== Leitura rapida ===
+  [INFO] Esperado: simple bom em baixa desordem; complex bom em alta desordem;
+  [INFO] adaptive deve seguir o melhor dos tres conforme o disorder.
+
+Resumo: 4 passou, 0 falhou
+
+########## test_performance.sh ##########
+
+=== 100 numeros - 50 rodadas ===
+  [PASS] 100 nums: pior caso 1084 < 2000
+
+=== 500 numeros - 50 rodadas ===
+  [PASS] 500 nums: pior caso 7708 < 12000
+
+=== Sanidade extra: 3 e 5 numeros (limites classicos 3 e 12 ops) ===
+  [PASS] [2 1 3] -> 1 ops (<=3)
+  [PASS] [3 2 1] -> 2 ops (<=3)
+  [PASS] [3 1 2] -> 1 ops (<=3)
+  [FAIL] 5 nums: pior caso 25 (>12)
+
+Resumo: 5 passou, 1 falhou
+
+########## test_stability.sh ##########
+
+=== Stress: 20 rodadas de 500 numeros (timeout 10s) ===
+  [PASS] 20 rodadas de 500: sem crash, sem timeout, todas ordenaram
+  [INFO] pior contagem de operacoes: 7687
+
+=== Determinismo: mesma entrada -> mesma saida ===
+  [PASS] saida identica em 2 execucoes (deterministico)
+
+=== Entradas patologicas grandes ===
+  [PASS] invertido 500 ordenou (6784 ops)
+  [INFO] ja ordenado 500 -> 0 operacoes (ideal: 0)
+
+Resumo: 3 passou, 0 falhou
+
+########## test_leaks.sh ##########
+
+=== Caminhos validos ===
+  [PASS] ordenado 1..5
+  [PASS] invertido 5..1
+  [PASS] aleatorio 100
+
+=== Caminhos de erro (parser deve liberar tudo) ===
+  [PASS] nao numerico
+  [PASS] overflow
+  [PASS] duplicado
+  [PASS] malformado (--)
+  [PASS] string vazia
+
+=== Flags ===
+  [PASS] --bench aleatorio
+  [PASS] --complex aleatorio
+
+Resumo: 10 passou, 0 falhou
+
+===================================
+3 ETAPA(S) COM FALHA
